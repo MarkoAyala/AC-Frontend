@@ -1,9 +1,9 @@
-import './App.css';
+import Navbar from './Views/Navbar';
 
 function App() {
   return (
     <div className="App">
-     "hola manola"
+     <Navbar/>
     </div>
   );
 }
