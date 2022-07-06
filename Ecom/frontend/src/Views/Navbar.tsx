@@ -14,6 +14,7 @@ function Navbar() {
     <div style={{width:"100%", height:"80px", border:"1px solid green"}}>
         <LogginButton/>
         <LogOutButton/>
+        <div>hola</div>
     </div>
   )
 }
