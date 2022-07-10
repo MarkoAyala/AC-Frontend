@@ -13,6 +13,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import css from './Navbar.module.css'
 import { Typography } from '@mui/material';
 
+import {useAuth0} from '@auth0/auth0-react';
+
+import Logo from '../../img/logo.jpg';
+
 type Anchor ='left'
 
 interface Props {
@@ -30,7 +34,7 @@ interface Props {
 }
 
 export default function DrawerNav({toggleDrawer, state,isAuthenticated, user}:Props) {
-
+  const {logout} = useAuth0()
 
   const list = (anchor: Anchor) => (
     <Box
@@ -47,22 +51,53 @@ export default function DrawerNav({toggleDrawer, state,isAuthenticated, user}:Pr
         <img src={user?.picture} alt="no_user" className={css.userImg}/>
         </Box>
         <Typography textAlign={"center"}>{user?.nickname}</Typography>
+        <Typography textAlign={"center"} sx={{fontSize:"14px",color:"gray"}} onClick={()=> logout({returnTo: window.location.origin})} >Cerrar sesión</Typography>
         </>
-      ):null
+      ):(
+        <>
+        <Box sx={{width:"50%"}}>
+        <img src={Logo} alt="no_user" className={css.userImg}/>
+        </Box>
+        <Typography textAlign={"center"}>100% Cuero</Typography>
+        <Typography textAlign={"center"} sx={{fontSize:"14px",color:"gray"}} onClick={()=> logout({returnTo: window.location.origin})} >Iniciar Sesión</Typography>
+        </>
+      )
     }
     </Box>
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
+      
+          <ListItem key={"inicio"} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              
+              <ListItemText primary={"Inicio"} />
             </ListItemButton>
           </ListItem>
-        ))}
+          <ListItem key={"inicio1"} disablePadding>
+            <ListItemButton>
+              
+              <ListItemText primary={"Inicio1"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"inicio2"} disablePadding>
+            <ListItemButton>
+              
+              <ListItemText primary={"Inicio2"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"inicio3"} disablePadding>
+            <ListItemButton>
+              
+              <ListItemText primary={"Inicio3"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"inicio4"} disablePadding>
+            <ListItemButton>
+              
+              <ListItemText primary={"Inicio4"} />
+            </ListItemButton>
+          </ListItem>
+
       </List>
     </Box>
   );

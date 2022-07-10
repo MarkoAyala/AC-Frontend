@@ -23,7 +23,7 @@ import Logo from '../img/logo.jpg';
 // ===== Components ==========//
 import DrawerNav from "../Components/Navbar/DrawerNav";
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -70,7 +70,7 @@ const Navbar = () => {
           <Box 
           display={"flex"}
           alignItems="center"
-          sx={{border:"1px solid black", flexGrow:0}}
+          sx={{flexGrow:0}}
           >
           <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 1 , height:"9vh"}}>
           <img src={Logo} style={{width:"100%", height:"auto"}} alt="noimge" />
@@ -137,7 +137,7 @@ const Navbar = () => {
           </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={user?.picture} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -156,11 +156,13 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+  
+                  <MenuItem key={"Edit"} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Editar mi información</Typography>
                   </MenuItem>
-                ))}
+                  <MenuItem key={"Close"} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Cerrar sesión</Typography>
+                  </MenuItem>
               </Menu>
             </Box>
             ):(
