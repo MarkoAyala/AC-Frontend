@@ -20,6 +20,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // ====== Import imagenes ========= //
 import Logo from '../img/logo.jpg';
+// ===== Components ==========//
+import DrawerNav from "../Components/Navbar/DrawerNav";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -103,7 +105,7 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
-   
+            <DrawerNav toggleDrawer={toggleDrawer} state={state} isAuthenticated={isAuthenticated} user={user}/>
           </Box>
 
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
