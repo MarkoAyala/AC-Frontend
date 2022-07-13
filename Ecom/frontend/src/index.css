@@ -27,8 +27,8 @@ code {
 }
 .btn {		
 	position: relative;	
-	padding: 10px;
-    margin: auto;
+	padding: 7px;
+	margin:0px 7px 0px 7px;
 	font-size: 1rem;
 	color: var(--blanco);
 	letter-spacing: 0;

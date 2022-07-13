@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
+import Skeleton from '@mui/material/Skeleton';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -22,33 +23,39 @@ import MenuItem from '@mui/material/MenuItem';
 import Logo from '../img/logo.jpg';
 // ===== Components ==========//
 import DrawerNav from "../Components/Navbar/DrawerNav";
-
-
+import { useAppSelector } from "../app/hooks";
+/* 
+country: "Incomplete"
+createdAt: "2022-07-11T18:44:43.876Z"
+email: "markoayala3@hotmail.com"
+firstName: "Incomplete"
+lastName: "Incomplete"
+nickname: "markoayala3"
+picture: "https://s.gravatar.com/avatar/466b661626e32060fe96dff1f52eec54?s=480"
+role: 0
+shoppingCart: []
+updatedAt: "2022-07-12T02:51:22.576Z"
+__v: 0
+_id: "62cc6f9fb86b6aa844865dbd" */
 
 const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-  const {user , isAuthenticated, isLoading} = useAuth0();
-  useEffect(() => {
-    console.log(user)
-  }, [user])
+  const {user , isAuthenticated, isLoading , logout} = useAuth0();
+  const DBUser = useAppSelector((state)=> state.user.dataUser)
+  useEffect(()=> console.log("load",isLoading),[isLoading])
 
 
+  // Logic drawer //
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
-
-
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   type Anchor ='left'
   const [state, setState] = React.useState({
     left: false,
   });
-
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -59,10 +66,9 @@ const Navbar = () => {
       ) {
         return;
       }
-
       setState({ ...state, [anchor]: open });
     };
-
+// ================// 
   return (
     <AppBar position="fixed" sx={{backgroundColor:"var(--marron)"}}>
       <Container maxWidth="xl">
@@ -90,7 +96,7 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            100% CUERO
+            TITULARDO
           </Typography>
           </Box>
 
@@ -105,7 +111,7 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <DrawerNav toggleDrawer={toggleDrawer} state={state} isAuthenticated={isAuthenticated} user={user}/>
+            <DrawerNav toggleDrawer={toggleDrawer} state={state} isAuthenticated={isAuthenticated} user={DBUser}/>
           </Box>
 
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
@@ -116,28 +122,17 @@ const Navbar = () => {
           <div className="btn fromCenter">From Center</div>
           </Box>
 
-            {isAuthenticated?(
+            {isLoading?(
               <Box sx={{ flexGrow: 0, display:"flex"}}>
-                <Typography
-            variant="h6"
-            noWrap
-            component="span"
-            sx={{
-              mr: 2,
-              display: "flex",
-              fontFamily:"sans-serif",
-              fontWeight: 700,
-              letterSpacing: '.2rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              margin:"auto"
-            }}
-          >
-            {user?.nickname}
-          </Typography>
+                <Skeleton variant="text" width={100}/>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
-                  <Avatar alt="Remy Sharp" src={user?.picture} />
+                  {
+                    isLoading?(
+                      <Skeleton variant="circular" width={40} height={40} />
+                    ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
+                  }
+                 
                 </IconButton>
               </Tooltip>
               <Menu
@@ -165,9 +160,64 @@ const Navbar = () => {
                   </MenuItem>
               </Menu>
             </Box>
+            ):isAuthenticated?(
+              <Box sx={{ flexGrow: 0, display:"flex"}}>
+              <Typography
+          variant="h6"
+          noWrap
+          component="span"
+          sx={{
+            mr: 2,
+            display: "flex",
+            fontFamily:"sans-serif",
+            fontWeight: 700,
+            letterSpacing: '.2rem',
+            color: 'inherit',
+            textDecoration: 'none',
+            margin:"auto"
+          }}
+        >
+          {DBUser.nickname}
+        </Typography>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
+                {
+                  isLoading?(
+                    <Skeleton variant="circular" width={40} height={40} />
+                  ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
+                }
+               
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+
+                <MenuItem key={"Edit"} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Editar mi información</Typography>
+                </MenuItem>
+                <MenuItem key={"Close"} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={()=> logout({returnTo: window.location.origin})}>Cerrar sesión</Typography>
+                </MenuItem>
+            </Menu>
+          </Box>
             ):(
               <LogginButton/>
-            )}
+            )
+            }
        
         </Toolbar>
       </Container>
