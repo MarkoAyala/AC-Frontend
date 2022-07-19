@@ -23,8 +23,16 @@ const initialState:InitialState = {
 export const fetchUserByEmail = createAsyncThunk(
     "user/fetchUserById",
     async (date: any | undefined) => {
-      const response = (await axios(`/user?email=${date?.email}&picture=${date?.picture}&nickname=${date?.nickname}`)).data;
-      return response;
+      try{
+        const response = (await axios(`/user?email=${date?.email}&picture=${date?.picture}&nickname=${date?.nickname}`)).data;
+        return response;
+      }catch (err) {
+        if (err instanceof Error) {
+          console.log(err.message);
+        } else {
+          console.log('Unexpected error', err);
+        }
+      }
     }
   );
 

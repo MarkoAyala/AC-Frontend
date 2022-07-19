@@ -1,6 +1,11 @@
 import React from "react";
+import css from '../Components/Home/Home.module.css';
 // =========== IMAGENES ============ //
-import Portada from '../img/portada.jpg'
+import Portada from '../img/portada.jpg';
+import CardWomen from '../img/mujer.jpg';
+import CardMan from '../img/hombre.jpg';
+// =========== IMPORT COMPONENTS ================//
+import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
 function Home() {
@@ -17,12 +22,12 @@ function Home() {
         <img src={Portada} alt="alto cuero" style={{width:'100%', height:"auto"}} />
       </Grid>
       </Grid>
-      <Grid item xs={12} sx={{border:"2px solid white", display:"flex", padding:"0px !important", justifyContent:"center"}}>
-        <Grid item xs={5} sx={{color:"white", border:"2px solid blue"}}>
-    hola 1
+      <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"3rem"}}>
+        <Grid item xs={5} sx={{color:"white",display:"flex", justifyContent:"end"}}>
+         <CardsMOW imagen={CardMan}/>
         </Grid>
-        <Grid item xs={5} sx={{color:"white", border:"2px solid blue"}}>
-          hola 2
+        <Grid item xs={5} sx={{color:"white"}}>
+          <CardsMOW imagen={CardWomen}/>
         </Grid>
       </Grid>
 
