@@ -78,7 +78,7 @@ const Navbar = () => {
           alignItems="center"
           sx={{flexGrow:0}}
           >
-          <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 1 , height:"9vh"}}>
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 1 , height:"8vh"}}>
           <img src={Logo} style={{width:"100%", height:"auto"}} alt="noimge" />
           </Box>
           <Typography

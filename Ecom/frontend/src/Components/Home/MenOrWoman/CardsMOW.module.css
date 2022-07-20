@@ -1,0 +1,11 @@
+.cardsMOW{
+    width: 100%;
+    margin: 0px 15px 0px 15px;
+    cursor: pointer;
+}
+
+@media screen and (max-width:600px){
+    .cardsMOW{
+        margin: 0px 8px 0px 8px;
+    }
+}
