@@ -67,18 +67,22 @@ export default function DrawerNav({toggleDrawer, state,isAuthenticated, user}:Pr
       <Divider />
       <List>
       
-          <ListItem key={"inicio"} disablePadding>
+          <ListItem key={"Home"} disablePadding>
             <ListItemButton>
               
-              <ListItemText primary={"Inicio"} />
+              <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
-          <ListItem key={"inicio1"} disablePadding>
+          {
+            isAuthenticated?(
+          <ListItem key={"Favorites"} disablePadding>
             <ListItemButton>
               
-              <ListItemText primary={"Inicio1"} />
+              <ListItemText primary={"Favorites"} />
             </ListItemButton>
           </ListItem>
+            ):null
+          }
           <ListItem key={"inicio2"} disablePadding>
             <ListItemButton>
               

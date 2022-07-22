@@ -1,14 +1,17 @@
 import React from "react";
 import css from '../Components/Home/Home.module.css';
+import { useAuth0 } from '@auth0/auth0-react';
 // =========== IMAGENES ============ //
 import Portada from '../img/portada.jpg';
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
 import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
+import CarritoAndFavorito from "../Components/CarAndFavoriteIcons/CarritoAndFavorito";
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
 function Home() {
+  const {user , isAuthenticated, isLoading , logout} = useAuth0();
   return (
     <Grid
       container
@@ -16,6 +19,11 @@ function Home() {
       spacing={2}
       sx={{margin: "6vh auto" }}
     >
+      {
+        isAuthenticated?(
+          <CarritoAndFavorito/>
+        ):null
+      }
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center"}}>
 
       <Grid item sm={10} md={9} lg={9} xl={7} xs={12}>

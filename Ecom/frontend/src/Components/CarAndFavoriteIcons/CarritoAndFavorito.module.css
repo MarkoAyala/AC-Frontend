@@ -1,0 +1,28 @@
+.boxCarrito{
+    top: 16%;
+    right: 7%;
+    width: auto;
+    height: auto;
+    z-index: 1000;
+}
+.boxIcons{
+    display: flex;
+    flex-direction: column;
+    
+}
+.buttons{
+    margin: 15px 0px 15px 0px !important;
+    
+}
+
+@media screen and (max-width:1500px){
+    .boxCarrito{
+        right: 5%;
+    }
+}
+@media screen and (max-width:900px){
+    .boxCarrito{
+        display: none;
+        visibility: hidden;
+    }
+}

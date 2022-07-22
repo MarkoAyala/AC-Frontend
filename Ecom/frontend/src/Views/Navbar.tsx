@@ -19,6 +19,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 // ====== Import imagenes ========= //
 import Logo from '../img/logo.jpg';
 // ===== Components ==========//
@@ -113,9 +115,19 @@ const Navbar = () => {
             </IconButton>
             <DrawerNav toggleDrawer={toggleDrawer} state={state} isAuthenticated={isAuthenticated} user={DBUser}/>
           </Box>
-
+          {
+            isAuthenticated?(
+          <Box sx={{flexGrow:0, display:{xs:'flex',md:'none'}, margin:'0px 18px 0px 0px'}}>
+            <IconButton aria-label="cart" className={css.buttons}>
+              <Badge badgeContent={4} color="warning">
+                <ShoppingCartIcon fontSize='medium' sx={{color:"white"}}/>
+              </Badge>
+            </IconButton>
+          </Box>
+            ):null
+          }
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
-          <div className="btn fromCenter">Inicio</div>
+          <div className="btn fromCenter">Home</div>
           <div className="btn fromCenter">From Center</div>
           <div className="btn fromCenter">From Center</div>
           <div className="btn fromCenter">From Center</div>
@@ -170,11 +182,12 @@ const Navbar = () => {
             mr: 2,
             display: "flex",
             fontFamily:"sans-serif",
-            fontWeight: 700,
+            fontWeight: 600,
             letterSpacing: '.2rem',
             color: 'inherit',
             textDecoration: 'none',
-            margin:"auto"
+            margin:"auto",
+            fontSize:'18px'
           }}
         >
           {DBUser.nickname}
