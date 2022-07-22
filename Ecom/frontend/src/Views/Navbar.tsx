@@ -4,7 +4,6 @@ import css from  '../Components/Navbar/Navbar.module.css';
 // ========== Auth0 ============= //
 import { useAuth0 } from '@auth0/auth0-react';
 import LogginButton from '../Components/Loggin/LogginButton';
-import LogOutButton from '../Components/Loggin/LogOutButton';
 // ========= MUI COMPONENTS ========= //
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,7 +15,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Skeleton from '@mui/material/Skeleton';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
@@ -44,7 +42,6 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const DBUser = useAppSelector((state)=> state.user.dataUser)
-  useEffect(()=> console.log("load",isLoading),[isLoading])
 
 
   // Logic drawer //
@@ -72,7 +69,7 @@ const Navbar = () => {
     };
 // ================// 
   return (
-    <AppBar position="fixed" sx={{backgroundColor:"var(--marron)"}}>
+    <AppBar position="fixed" sx={{backgroundColor:"var(--marron)",padding:'0px !important'}} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box 
@@ -193,7 +190,7 @@ const Navbar = () => {
           {DBUser.nickname}
         </Typography>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px"}}>
                 {
                   isLoading?(
                     <Skeleton variant="circular" width={40} height={40} />
@@ -203,7 +200,7 @@ const Navbar = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '45px', overflow:'auto'}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -217,6 +214,32 @@ const Navbar = () => {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                  mt: 1.5,
+                  '& .MuiAvatar-root': {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  '&:before': {
+                    content: '""',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: 'background.paper',
+                    transform: 'translateY(-50%) rotate(45deg)',
+                    zIndex: 0,
+                  },
+                },
+              }}
             >
 
                 <MenuItem key={"Edit"} onClick={handleCloseUserMenu}>
