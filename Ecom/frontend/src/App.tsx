@@ -15,6 +15,7 @@ import { fetchUserByEmail } from './app/Reducers/userSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 // =========== COMPONENTS =========== //
 import Home from './Views/Home';
+import CreateProduct from './Views/CreateProduct';
 function App() {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ function App() {
      <Navbar/>
      <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/CreateProductAdmin" element={<CreateProduct />}/>
      </Routes>
 
     </div>
