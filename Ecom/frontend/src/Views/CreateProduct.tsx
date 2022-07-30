@@ -28,9 +28,21 @@ function CreateProduct() {
   };
   // ====== // 
 
-  const newImagen = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
-    if(render.length<=6){
+  const newImagen = () =>{
+    if(render.length<=5){
         setRender(render=[...render,render.length+1])
+    }
+  }
+  const deleteImagen = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+    if(render.length>1){
+      let num:number|undefined = render.pop()
+      console.log(num)
+      setRender(render=[])
+      if(num !== undefined){
+        for(let i = 1;i <= num-1; i++){
+          newImagen();
+        }
+      }
     }
   }
 // Conexion clodinary // 
@@ -108,10 +120,24 @@ function CreateProduct() {
         <CssTextField fullWidth label="Nombre" focused/>
       </Grid>
       <Grid item xs={5} sx={{margin:"15px 5px 15px 5px"}}>
-        <CssTextField fullWidth label="Precio" focused/>
+      <FormControl sx={{width:"100%", margin:0,padding:0,}}>
+      <CssInput id="demo-simple-select-label" sx={{margin:0,padding:0,}}>Stock</CssInput>
+        <CssSelect
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={tags}
+            label="Tags"
+            onChange={handleChange}
+            sx={{width:"100%", color:"white",margin:0,padding:0,}}
+          >
+            <MenuItem value={'hola'}>Ten</MenuItem>
+            <MenuItem value={'dos'}>Twenty</MenuItem>
+            <MenuItem value={'treh'}>Thirty</MenuItem>
+          </CssSelect>
+        </FormControl>
       </Grid>
       <Grid item xs={1} sx={{margin:"15px 5px 15px 5px"}}>
-        <CssTextField label="Stock" focused />
+        <CssTextField label="Precio" focused />
       </Grid>
       <Grid item xs={5} sx={{margin:"15px 5px 15px 5px"}}>
         <FormControl sx={{width:"100%", margin:0,padding:0,}}>
@@ -140,9 +166,14 @@ function CreateProduct() {
       </Grid>
       <Grid item xs={1} sx={{margin:"15px 5px 15px 5px"}}>
       </Grid>
-        {render? render.map((e)=>{
+
+      <Grid item xs={8} sx={{margin:"15px 5px 15px 5px"}}>
+      <CssTextField fullWidth label="Descripción" rows={4} multiline focused/>
+      </Grid>
+        {render? render.map((e,i)=>{
             return(
                 <>
+              <Grid item xs={12}>
               <FormGroup
                 style={{
                   padding: "20px",
@@ -151,7 +182,7 @@ function CreateProduct() {
                 }}
               >
                 <Label for="exampleFile">
-                  File
+                  Imagen nro {i+1}
                 </Label>
                 <Input
                   id="exampleFile"
@@ -165,11 +196,13 @@ function CreateProduct() {
                   input. It's a bit lighter and easily wraps to a new line.
                 </FormText>
               </FormGroup>
+                  </Grid>
                 </>
             )
             
         }):null }
-        <Button onClick={(e)=>newImagen(e)}>Subir otra imagen</Button>
+        <Button onClick={(e)=>deleteImagen(e)}>Eliminar imagen</Button>
+        <Button onClick={(e)=>newImagen()}>Subir otra imagen</Button>
       </Grid>
       </Box>
     </Grid>
