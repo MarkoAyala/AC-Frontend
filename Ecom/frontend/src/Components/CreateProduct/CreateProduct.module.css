@@ -1,0 +1,13 @@
+.containerForm{
+    width: 100%;
+    background: var(--azulOscuro);
+    border: 1px solid green;
+    color: white !important;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 2rem;
+}
+
+.marginTB{
+    margin-top: 10px;
+}

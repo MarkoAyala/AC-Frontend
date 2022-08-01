@@ -1,7 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import userReducer from './Reducers/userSlice';
 
 export const store = configureStore({
   reducer: {
+    user:userReducer || undefined,
+  
   },
 });
 
@@ -13,3 +16,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+//xds
