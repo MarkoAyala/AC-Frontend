@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { AsyncThunk } from "@reduxjs/toolkit";
 import { Stock } from "../Interfaces/interfaceStock";
 import { stockTemplate } from "../Utils/stockUtilities";
 import axios from 'axios';
@@ -14,7 +15,7 @@ const initialState:InitialState = {
     loading:'',
 }
 
-export const fetchStock = createAsyncThunk(
+export const fetchStock: AsyncThunk<any, void, {}> = createAsyncThunk(
     'stock/GETstock',
     async () => {
         try{
