@@ -11,9 +11,13 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Box } from "@mui/system";
 import Snackbar from '@mui/material/Snackbar';
+import { Button } from "@mui/material";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
+// ============ IMPORT UTILITIES ===============//
+import { fetchStock } from "../app/Reducers/stockSlice";
+import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
   let [info, setInfo] = React.useState({url:{}});
@@ -24,6 +28,9 @@ function CreateProduct() {
   let [saveImage , setSaveImage] = React.useState([{name:""}]);
   let [successUpload , setSuccessUpload] = React.useState(false);
   let [upload , setUpload] = React.useState(false);
+  const stock = useAppSelector((state)=> state.stock.stock);
+  const dispatch:any = useAppDispatch();
+
 
   // ALERT SUCCES AFTER UPLOAD IMAGES WITH CLUDINARY // 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -39,7 +46,12 @@ function CreateProduct() {
     setSuccessUpload(false);
   }
 
-  useEffect(()=> console.log("sabeimage",saveImage),[saveImage])
+  useEffect(()=>{
+    async function inf(){
+      let res = await dispatch(fetchStock())
+    }
+    inf();
+  },[])
   // select tags 
   const handleChange = (event:any | never) => {
     setTags(event.target.value as string);
@@ -149,7 +161,9 @@ function CreateProduct() {
   });
   return (
     <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"10rem"}, border: "1px solid white", display:'flex', alignItems:"center", flexDirection:"column"}}>
-      <TittleEfect text="Nuevo Producto" align="start" margin="0px 0px 2rem 0rem" width={'80%'}/>
+      <Button sx={{width:'50%',textAlign:"center", flexWrap:'nowrap' }}>
+      <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'}/>
+      </Button>
       <Box width={{xs:"93%",sm:"80%",lg:"70%"}} justifyContent="center">
 
       <Grid container width={{xs:"100%"}} className={css.containerForm}>
