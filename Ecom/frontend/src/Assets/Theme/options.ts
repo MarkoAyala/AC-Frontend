@@ -28,7 +28,7 @@ const togglePalette = (mode: string): object => {
         main: "#8B4F00", 
       },
       secondary: {
-        main: "#000000", //grey
+        main: "#151f28", //grey
       },
       warning: {
         main: "#ef6c00", // orange

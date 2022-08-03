@@ -1,5 +1,6 @@
 import React, { useEffect , useMemo} from "react";
 import css from '../Components/CreateProduct/CreateProduct.module.css';
+import Upload from "../Components/Upload/Upload";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -13,19 +14,17 @@ import { Box } from "@mui/system";
 import Snackbar from '@mui/material/Snackbar';
 import { Button } from "@mui/material";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { styled } from '@mui/material/styles';
 import AlertTitle from '@mui/material/AlertTitle';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
-import Divider from '@mui/material/Divider';
 // ============ IMPORT UTILITIES ===============//
 import { fetchStock } from "../app/Reducers/stockSlice";
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
-  let [render, setRender] = React.useState([1]);
+  /* let [render, setRender] = React.useState([1]); */
   let [loading, setLoading] = React.useState(false);
   let [tags, setTags] = React.useState('');
-  let [saveImage , setSaveImage] = React.useState([{name:""}]);
+  let [saveImage , setSaveImage] = React.useState([{name:''}])
   let [successUpload , setSuccessUpload] = React.useState(false);
   let [upload , setUpload] = React.useState(false);
   let [createProducts , setCreateProducts] = React.useState({
@@ -50,6 +49,10 @@ function CreateProduct() {
     stock:''
   })
 
+
+    const removeFile = (filename:any)=>{
+        setSaveImage(saveImage.filter(file=>file.name !== filename))
+    }
 
   // ALERT SUCCES AFTER UPLOAD IMAGES WITH CLUDINARY // 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -81,7 +84,7 @@ function CreateProduct() {
   };
   // ====== // 
 
-  const newImagen = () =>{
+/*   const newImagen = () =>{
     if(render.length<=5){
         setRender(render=[...render,render.length+1])
     }
@@ -101,7 +104,7 @@ function CreateProduct() {
       let newArray:any = saveImage.filter((e)=> e.name !== deleteImg[0].name);
       setSaveImage(newArray);
     }
-  }
+  } */
 // Conexion clodinary // 
   const saveImagen = async (e:any) => {
     setUpload(false)
@@ -110,7 +113,7 @@ function CreateProduct() {
   const uploadImage = async (el: any) => {
     el.forEach(async (e:any, i:number)=>{
       if(i !== 0){
-        const files: any | null = e[0];
+        const files: any | null = e;
         const data = new FormData()
         data.append("file", files)
         data.append("upload_preset", "CamperasAltoCuero")
@@ -156,7 +159,6 @@ function CreateProduct() {
     }
     let error:Error = {required:false};
     let large = input.description?.split(" ").length
-    console.log("large", large);
     if(!input.name || input.name === '' || input.name.length<3){
       error.name = 'El nombre debe tener mas de 3 caracteres';
       error.required = true;
@@ -170,7 +172,7 @@ function CreateProduct() {
       error.required = true;
     }
     if(!input.url.img1){
-      error.url = 'Debe haber minimo 1 imagen';
+      error.url = 'Debe haber minimo 1 imagen CARGADA';
       error.required = true;
     }
     if(large>200 || large<10){
@@ -187,6 +189,7 @@ function CreateProduct() {
    const submitClick = () => {
       let objError:any = validation(createProducts)
       setError(error=objError);
+      console.log('info', createProducts)
    }
    useMemo(()=>{
     let objError:any = validation(createProducts)
@@ -195,7 +198,7 @@ function CreateProduct() {
   return (
     <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column"}}>
       <Button sx={{width:{xs:'80%', sm:'50%'},textAlign:"center", flexWrap:'nowrap' }}>
-      <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'}/>
+      <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
       </Button>
       <Box width={{xs:"93%",sm:"80%",lg:"70%"}} justifyContent="center">
 
@@ -261,7 +264,7 @@ function CreateProduct() {
       <Grid item xs={12} sx={{margin:"1rem 0.5em 1rem 0.5em"}}>
       <TextField fullWidth label="Descripción" name='description' rows={4} multiline focused onChange={(e)=> handleChangeInput(e)} value={createProducts.description} autoComplete='off' sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, padding:"0px 15px 0px 15px"}}/>
       </Grid>
-        {render? render.map((e,i)=>{
+        {/* {render? render.map((e,i)=>{
             return(
                 <>
               <Grid item xs={12}>
@@ -290,9 +293,14 @@ function CreateProduct() {
                 </>
             )
             
-        }):null }
-        <Grid item xs={12} display="flex" justifyContent={"flex-start"} flexDirection="column" sx={{margin:"1.5rem 0px 0px 0px"}}>
-          <Box sx={{width:{xs:"87%", md:"60%", lg:"40%", margin:"0px 0px 10px 30px", }}}>
+        }):null } */}
+        <Grid item xs={12} sx={{ margin:'1em 27px 1em 27px'}}>
+          <Upload saveImage={saveImage} setSaveImage={setSaveImage} removeFile={removeFile} setUpload={setUpload}/>
+        </Grid>
+        <Grid item xs={12} display="flex" justifyContent={"flex-start"} flexDirection="column" sx={{margin:{xs:"1.5rem 0px 0px 0px", md:'1.5rem 0px 0px 1.2em'}, padding:{xs:'0px 10px 0px 10px', sm:''}}}>
+          {
+            error.required === true?(
+          <Box sx={{width:{xs:"100%", md:"60%", xl:"40%"}}}>
           <Alert severity="info">
             <AlertTitle>Requerimientos:</AlertTitle>
             <Box display={"flex"} flexDirection="column">
@@ -301,27 +309,30 @@ function CreateProduct() {
               <span style={{margin:error.stock && '0px 0px 10px 0px'}}>{error.stock && `-${error.stock}`}</span>
               <span style={{margin:error.tags && '0px 0px 10px 0px'}}>{error.tags && `-${error.tags}`}</span>
               <span style={{margin:error.description && '0px 0px 10px 0px'}}>{error.description && `-${error.description}`}</span>
+              <span style={{margin:error.url && '0px 0px 10px 0px'}}>{error.url && `-${error.url}`}</span>
             </Box>
           </Alert>
           </Box>
+            ):null
+          }
           {
             saveImage.length>1?(
-            <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
+            <Box sx={{ marginTop:'10px',width:{xs:"100%", md:"60%", xl:"40%"}}}>
               <Alert severity="success" color="success" sx={{color:"white"}}>Al menos 1 imagen subida</Alert>
             </Box>
             ):(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
+              <Box sx={{ marginTop:'10px',width:{xs:"100%", md:"60%", xl:"40%"}}}>
                 <Alert severity="warning">Al menos 1 imagen subida</Alert>
               </Box>
             )
           }
           {
             upload?(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
+              <Box sx={{ marginTop:'10px',width:{xs:"100%", md:"60%", xl:"40%"}}}>
               <Alert severity="success">Imagenes cargadas</Alert>
             </Box>
             ):(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
+              <Box sx={{  marginTop:'10px',width:{xs:"100%", md:"60%", xl:"40%"}}}>
               <Alert severity="error">No se han cargado imagenes</Alert>
               </Box>
             )
@@ -339,28 +350,25 @@ function CreateProduct() {
                     }
           </Grid>
           <Snackbar open={successUpload} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} color="info" severity="success" sx={{ width: '100%' }}>
+            <Alert onClose={handleClose} color="success" severity="success" sx={{ width: '100%' }}>
               Imagenes subidas con exito!
             </Alert>
           </Snackbar>
-        <Grid container sx={{display:"flex", justifyContent:"space-around", margin:"2rem 0px 0px 0px",padding:0,}}>
-        <Grid item xs={11} md={3}>
+{/*         <Grid item xs={11} md={3}>
           <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>deleteImagen()}>Eliminar imagen</div>
         </Grid>
         <Grid item xs={11} md={3}>
           <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>newImagen()}>Agregar imagen</div>
-        </Grid>
-        <Grid item xs={11} md={3}>
+        </Grid> */}
+        <Grid item xs={11} md={11} sx={{display:'flex', justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
           <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</div>
         </Grid>
-        <Grid item xs={12} sx={{margin:"2rem 0rem .5rem 0rem"}}>
-        <hr style={{borderColor:'#8B4F00'}}/>
-        </Grid>
-        </Grid>
-        <Grid item xs={5}>
+
+        <Grid item xs={11} sx={{display:'flex', justifyContent:'end'}}>
            <div style={{zIndex:1000, marginTop:'1.5rem'}} className='btn fromCenter' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</div>
         </Grid>
       </Grid>
+
       </Box>
     </Grid>
   );
