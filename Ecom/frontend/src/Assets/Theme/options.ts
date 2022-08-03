@@ -34,7 +34,7 @@ const togglePalette = (mode: string): object => {
         main: "#ef6c00", // orange
       },
       info: {
-        main: "rgb(2, 136, 209)", //black
+        main: "#313182", //black
       },
       error: {
         main: "#A10702", //red

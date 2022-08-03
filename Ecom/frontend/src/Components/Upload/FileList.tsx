@@ -13,7 +13,7 @@ function FileList({saveImage, removeFile}:any) {
             saveImage.map((f:any) =>{
                 if(f.name !== '')
                 return (
-                    <Box key={f.name}>
+                    <Box key={`${f.name + Math.random()}`}>
                         <li className={css.listItem}>
                             <DescriptionIcon color='secondary' fontSize='large' sx={{marginRight:'0.8em'}}/>
                             <p style={{flex:"1", fontSize:'0.9em'}}>{f.name}</p>

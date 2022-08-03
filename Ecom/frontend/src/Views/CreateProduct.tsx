@@ -164,7 +164,7 @@ function CreateProduct() {
       error.required = true;
     }
     if((!input.price || input.price<99) || (!isNaN(input.price)===false)){
-      error.price = 'El minimo debe ser de 100 pesos sin letras';
+      error.price = 'El minimo debe ser de 100 pesos';
       error.required = true;
     }
     if(!input.stock){
@@ -297,7 +297,7 @@ function CreateProduct() {
         <Grid item xs={12} sx={{ margin:'1em 27px 1em 27px'}}>
           <Upload saveImage={saveImage} setSaveImage={setSaveImage} removeFile={removeFile} setUpload={setUpload}/>
         </Grid>
-        <Grid item xs={12} display="flex" justifyContent={"flex-start"} flexDirection="column" sx={{margin:{xs:"1.5rem 0px 0px 0px", md:'1.5rem 0px 0px 1.2em'}, padding:{xs:'0px 10px 0px 10px', sm:''}}}>
+        <Grid item xs={12} display="flex" justifyContent={"flex-start"} flexDirection="column" sx={{margin:{xs:"1.5rem 0px 0px 0px", md:'1.5rem 0px 0px 1.2em'}, padding:{xs:'0px 20px 0px 20px', sm:''}}}>
           {
             error.required === true?(
           <Box sx={{width:{xs:"100%", md:"60%", xl:"40%"}}}>
@@ -360,12 +360,19 @@ function CreateProduct() {
         <Grid item xs={11} md={3}>
           <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>newImagen()}>Agregar imagen</div>
         </Grid> */}
-        <Grid item xs={11} md={11} sx={{display:'flex', justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
-          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</div>
+        <Grid item xs={11} md={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
+          <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
         </Grid>
 
-        <Grid item xs={11} sx={{display:'flex', justifyContent:'end'}}>
-           <div style={{zIndex:1000, marginTop:'1.5rem'}} className='btn fromCenter' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</div>
+        <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
+           <Button style={{zIndex:1000, marginTop:'1.5rem'}} color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
+        </Grid>
+        <Grid item xs={11} md={11} sx={{display:{xs:'flex', md:'none'}, justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
+          <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} fullWidth color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
+        </Grid>
+
+        <Grid item xs={11} sx={{display:{xs:'flex', md:'none'}, justifyContent:'end'}}>
+           <Button style={{zIndex:1000, marginTop:'1.5rem'}} fullWidth color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
         </Grid>
       </Grid>
 
