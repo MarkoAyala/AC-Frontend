@@ -25,7 +25,7 @@ const togglePalette = (mode: string): object => {
         main: "black",
       },
       primary: {
-        main: "#8B4F00", //yellow
+        main: "#8B4F00", 
       },
       secondary: {
         main: "#000000", //grey
@@ -34,7 +34,7 @@ const togglePalette = (mode: string): object => {
         main: "#ef6c00", // orange
       },
       info: {
-        main: "#000000", //black
+        main: "rgb(2, 136, 209)", //black
       },
       error: {
         main: "#A10702", //red

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useMemo} from "react";
 import css from '../Components/CreateProduct/CreateProduct.module.css';
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,22 +14,41 @@ import Snackbar from '@mui/material/Snackbar';
 import { Button } from "@mui/material";
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
+import AlertTitle from '@mui/material/AlertTitle';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
+import Divider from '@mui/material/Divider';
 // ============ IMPORT UTILITIES ===============//
 import { fetchStock } from "../app/Reducers/stockSlice";
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
-  let [info, setInfo] = React.useState({url:{}});
   let [render, setRender] = React.useState([1]);
   let [loading, setLoading] = React.useState(false);
   let [tags, setTags] = React.useState('');
-  let [renderTags,setRenderTags] = React.useState(['']);
   let [saveImage , setSaveImage] = React.useState([{name:""}]);
   let [successUpload , setSuccessUpload] = React.useState(false);
   let [upload , setUpload] = React.useState(false);
+  let [createProducts , setCreateProducts] = React.useState({
+    name:'',
+    price:0,
+    stock:'',
+    url:{},
+    description:'',
+    tags:[''],
+  })
   const stock = useAppSelector((state)=> state.stock.stock);
   const dispatch:any = useAppDispatch();
+  let [renderStock,setRenderStock] = React.useState(['']);
+  //Validación un submit
+  let [error, setError] = React.useState({
+    required:true,
+    name:'',
+    price:'',
+    url:'',
+    description:'',
+    tags:'',
+    stock:''
+  })
 
 
   // ALERT SUCCES AFTER UPLOAD IMAGES WITH CLUDINARY // 
@@ -49,14 +68,15 @@ function CreateProduct() {
   useEffect(()=>{
     async function inf(){
       let res = await dispatch(fetchStock())
+      setRenderStock(renderStock=res.payload)
     }
     inf();
   },[])
   // select tags 
   const handleChange = (event:any | never) => {
     setTags(event.target.value as string);
-    if(!renderTags.includes(event.target.value)){
-      setRenderTags(renderTags=[...renderTags,event.target.value])
+    if(!createProducts.tags.includes(event.target.value) &&  createProducts.tags.length<5){
+      setCreateProducts(createProducts={...createProducts, tags:[...createProducts.tags, event.target.value]})
     }
   };
   // ====== // 
@@ -107,10 +127,10 @@ function CreateProduct() {
           setSuccessUpload(true);
           setUpload(true);
         }
-        setInfo(
-          (info = {
-            ...info,
-            url:{...info.url,[`img${i}`]: file.secure_url}
+        setCreateProducts(
+          (createProducts = {
+            ...createProducts,
+            url:{...createProducts.url,[`img${i}`]: file.secure_url}
           })
         )
       }else{
@@ -120,106 +140,126 @@ function CreateProduct() {
   };
   // =========================// 
   
-  // Colores textfield//
-  const CssInput = styled(InputLabel)({
-    '&.MuiInputLabel-root':{
-      color:"white"
+   const handleChangeInput = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<unknown>)=> {
+    setCreateProducts(createProducts={...createProducts, [e.target.name]:e.target.value})
+   }
+
+   const validation = (input:any)=>{
+    interface Error{
+      required:boolean;
+      name?:string;
+      price?:string;
+      stock?:string;
+      url?:string;
+      description?:string;
+      tags?:string;
     }
-  });
-  const CssSelect = styled(Select)({
-    '&.MuiSelect-select':{
-      color:"white"
-    },
-    '& .MuiOutlinedInput-notchedOutline':{
-      borderColor:"#8B4F00"
-    },
-  })
-  const CssTextField = styled(TextField)({
-    '& label.Mui-focused': {
-      color: 'white',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#8B4F00',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#8B4F00',
-      },
-      '&:hover fieldset': {
-        borderColor: '#f9ac05',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#8B4F00',
-      },
-    },
-    '& .MuiInputLabel-root': {
-      color:"white"
-    },
-    '& .MuiInputBase-input':{
-      color:"white"
+    let error:Error = {required:false};
+    let large = input.description?.split(" ").length
+    console.log("large", large);
+    if(!input.name || input.name === '' || input.name.length<3){
+      error.name = 'El nombre debe tener mas de 3 caracteres';
+      error.required = true;
     }
-  });
+    if((!input.price || input.price<99) || (!isNaN(input.price)===false)){
+      error.price = 'El minimo debe ser de 100 pesos sin letras';
+      error.required = true;
+    }
+    if(!input.stock){
+      error.stock = 'Debe seleccionar Stock';
+      error.required = true;
+    }
+    if(!input.url.img1){
+      error.url = 'Debe haber minimo 1 imagen';
+      error.required = true;
+    }
+    if(large>200 || large<10){
+      error.description = `Debe tener mas de 10 palabras y menos de 200, actualmente tiene: ${large-1} palabras`;
+      error.required = true;
+    }
+    if(!input.tags[1]){
+      error.tags = 'Debe tener al menos 1 tag';
+      error.required = true;
+    }
+    return error;
+   } 
+
+   const submitClick = () => {
+      let objError:any = validation(createProducts)
+      setError(error=objError);
+   }
+   useMemo(()=>{
+    let objError:any = validation(createProducts)
+    setError(error=objError);
+  },[createProducts])
   return (
-    <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"10rem"}, border: "1px solid white", display:'flex', alignItems:"center", flexDirection:"column"}}>
-      <Button sx={{width:'50%',textAlign:"center", flexWrap:'nowrap' }}>
+    <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column"}}>
+      <Button sx={{width:{xs:'80%', sm:'50%'},textAlign:"center", flexWrap:'nowrap' }}>
       <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'}/>
       </Button>
       <Box width={{xs:"93%",sm:"80%",lg:"70%"}} justifyContent="center">
 
       <Grid container width={{xs:"100%"}} className={css.containerForm}>
       <Grid item xs={11} sm={5} lg={5} sx={{margin:"15px 5px 15px 5px"}}>
-        <CssTextField fullWidth label="Nombre" focused/>
+        <TextField fullWidth label="Nombre" onChange={(e)=> handleChangeInput(e)} name='name' value={createProducts.name} autoComplete='off' focused sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, "& .MuiSelect-select":{color:"white"}}}/>
       </Grid>
       <Grid item xs={11} sm={5} lg={5} sx={{margin:"15px 5px 15px 5px"}}>
       <FormControl sx={{width:"100%", margin:0,padding:0,}}>
-      <CssInput id="demo-simple-select-label" sx={{margin:0,padding:0,}}>Stock</CssInput>
-        <CssSelect
+      <InputLabel id="demo-simple-select-label" sx={{margin:0,padding:0,"&.MuiInputLabel-root":{color:"white"}}}>Stock</InputLabel>
+        <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={tags}
+            value={createProducts.stock}
             label="Tags"
-            onChange={handleChange}
-            sx={{width:"100%", color:"white",margin:0,padding:0,}}
+            name="stock"
+            onChange={(e)=>handleChangeInput(e)}
+            sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}
           >
-            <MenuItem value={'hola'}>Ten</MenuItem>
-            <MenuItem value={'dos'}>Twenty</MenuItem>
-            <MenuItem value={'treh'}>Thirty</MenuItem>
-          </CssSelect>
+            {
+              renderStock.length>1?renderStock.map((stocked:any)=>{
+                return(
+                  <MenuItem value={stocked._id}>{stocked.name}</MenuItem>
+                )
+              }):null
+            }
+          </Select>
         </FormControl>
       </Grid>
       <Grid item xs={5} sm={5} md={5} lg={1} sx={{margin:"15px 5px 15px 5px"}}>
-        <CssTextField fullWidth label="Precio" focused />
+        <TextField fullWidth label="Precio" name='price' autoComplete='off' value={createProducts.price} onChange={(e)=> handleChangeInput(e)} focused sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}}}/>
       </Grid>
       <Grid item xs={5} sx={{margin:"15px 5px 15px 5px"}}>
         <FormControl sx={{width:"100%", margin:0,padding:0,}}>
-      <CssInput id="demo-simple-select-label" sx={{margin:0,padding:0,}}>Tags</CssInput>
-        <CssSelect
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+      <InputLabel id="demo-simple-select-labels" sx={{margin:0,padding:0, "&.MuiInputLabel-root":{color:"white"}}}>Tags</InputLabel>
+        <Select
+            labelId="demo-simple-select-labels"
+            id="demo-simple-selects"
             value={tags}
+            color="primary"
             label="Tags"
-            onChange={handleChange}
-            sx={{width:"100%", color:"white",margin:0,padding:0,}}
+            onChange={(e)=>handleChange(e)}
+            sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}
           >
-            <MenuItem value={'hola'}>Ten</MenuItem>
-            <MenuItem value={'dos'}>Twenty</MenuItem>
-            <MenuItem value={'treh'}>Thirty</MenuItem>
-          </CssSelect>
+            <MenuItem value={"man"}>Man</MenuItem>
+            <MenuItem value={"woman"}>Woman</MenuItem>
+            <MenuItem value={"leather"}>Leather</MenuItem>
+          </Select>
         </FormControl>
       </Grid>
       <Grid item xs={11} sm={11} md={11} lg={5} sx={{margin:"15px 5px 15px 5px", border:"2px solid #8B4F00", borderRadius:"6px", minHeight:"56px"}} display="flex" justifyContent="center" alignItems={"center"}>
-      {renderTags.map((e)=>{
-        if(e.length>=2){
-        return(
-          <span style={{margin:"0px 0px 0px 5px"}}>{"#"+e}</span>
-        )}
-      })}
+      {createProducts.tags.length>1?createProducts.tags.map((e)=>{
+        if(e !==''){
+          return(
+            <span style={{margin:"0px 0px 0px 5px"}}>{"#"+e}</span>
+          )
+        }
+      }):null}
       </Grid>
       <Grid item xs={1} sx={{margin:"15px 5px 15px 5px"}}>
       </Grid>
 
-      <Grid item xs={12} sx={{margin:"15px 5px 15px 5px"}}>
-      <CssTextField fullWidth label="Descripción" rows={4} sx={{padding:"0px 15px 0px 15px"}} multiline focused/>
+      <Grid item xs={12} sx={{margin:"1rem 0.5em 1rem 0.5em"}}>
+      <TextField fullWidth label="Descripción" name='description' rows={4} multiline focused onChange={(e)=> handleChangeInput(e)} value={createProducts.description} autoComplete='off' sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, padding:"0px 15px 0px 15px"}}/>
       </Grid>
         {render? render.map((e,i)=>{
             return(
@@ -252,28 +292,41 @@ function CreateProduct() {
             
         }):null }
         <Grid item xs={12} display="flex" justifyContent={"flex-start"} flexDirection="column" sx={{margin:"1.5rem 0px 0px 0px"}}>
+          <Box sx={{width:{xs:"87%", md:"60%", lg:"40%", margin:"0px 0px 10px 30px", }}}>
+          <Alert severity="info">
+            <AlertTitle>Requerimientos:</AlertTitle>
+            <Box display={"flex"} flexDirection="column">
+              <span style={{margin:error.name && '10px 0px 10px 0px'}}>{error.name && `-${error.name}`}</span>
+              <span style={{margin:error.price && '0px 0px 10px 0px'}}>{error.price && `-${error.price}`}</span>
+              <span style={{margin:error.stock && '0px 0px 10px 0px'}}>{error.stock && `-${error.stock}`}</span>
+              <span style={{margin:error.tags && '0px 0px 10px 0px'}}>{error.tags && `-${error.tags}`}</span>
+              <span style={{margin:error.description && '0px 0px 10px 0px'}}>{error.description && `-${error.description}`}</span>
+            </Box>
+          </Alert>
+          </Box>
           {
             saveImage.length>1?(
-            <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"85%", md:"60%", lg:"40%"}}}>
+            <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
               <Alert severity="success" color="success" sx={{color:"white"}}>Al menos 1 imagen subida</Alert>
             </Box>
             ):(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"85%", md:"60%", lg:"40%"}}}>
+              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
                 <Alert severity="warning">Al menos 1 imagen subida</Alert>
               </Box>
             )
           }
           {
             upload?(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"85%", md:"60%", lg:"40%"}}}>
+              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
               <Alert severity="success">Imagenes cargadas</Alert>
             </Box>
             ):(
-              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"85%", md:"60%", lg:"40%"}}}>
+              <Box sx={{margin:"0px 0px 10px 30px", width:{xs:"87%", md:"60%", lg:"40%"}}}>
               <Alert severity="error">No se han cargado imagenes</Alert>
               </Box>
             )
           }
+
         </Grid>
          <Grid item xs={12} sx={{display:"flex",justifyContent:"end"}}>
                     {
@@ -292,14 +345,20 @@ function CreateProduct() {
           </Snackbar>
         <Grid container sx={{display:"flex", justifyContent:"space-around", margin:"2rem 0px 0px 0px",padding:0,}}>
         <Grid item xs={11} md={3}>
-          <div style={{zIndex:1000}} className='btn fromCenter' onClick={(e)=>deleteImagen()}>Eliminar imagen</div>
+          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>deleteImagen()}>Eliminar imagen</div>
         </Grid>
         <Grid item xs={11} md={3}>
-          <div style={{zIndex:1000}} className='btn fromCenter' onClick={(e)=>newImagen()}>Agregar imagen</div>
+          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>newImagen()}>Agregar imagen</div>
         </Grid>
         <Grid item xs={11} md={3}>
-          <div style={{zIndex:1000}} className='btn fromCenter' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</div>
+          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</div>
         </Grid>
+        <Grid item xs={12} sx={{margin:"2rem 0rem .5rem 0rem"}}>
+        <hr style={{borderColor:'#8B4F00'}}/>
+        </Grid>
+        </Grid>
+        <Grid item xs={5}>
+           <div style={{zIndex:1000, marginTop:'1.5rem'}} className='btn fromCenter' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</div>
         </Grid>
       </Grid>
       </Box>
