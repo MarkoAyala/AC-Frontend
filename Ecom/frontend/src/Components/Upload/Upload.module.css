@@ -1,0 +1,48 @@
+.fileCard{
+    background-color: #313182;
+    border:3px dashed #020024;
+    padding:1em;
+    width: 100%;
+    min-height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: .5s;
+}
+.fileCard:hover{
+    background-color: #393985;
+}
+.fileInputs{
+    position: relative;
+    margin-bottom: 1.5em;
+}
+.input{
+    position: relative;
+    max-width: 200px;
+    height: 46px;
+    z-index: 2;
+    opacity: 0;
+}
+.title{
+    font-weight: bold;
+    margin-bottom: 1em;
+    font-size: 1.2rem;
+}
+.fileList{
+    width: 100%;
+}
+.listItem{
+    list-style: none;
+    margin: 1.2rem 0;
+    background-color: #313182;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 1.2em 1.5em;
+
+}
+.actions{
+    justify-self: flex-end;
+    cursor: pointer;
+}

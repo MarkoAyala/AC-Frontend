@@ -1,11 +1,12 @@
 .containerForm{
     width: 100%;
     background: var(--azulOscuro);
-    border: 1px solid green;
     color: white !important;
     display: flex;
     justify-content: space-around;
     padding-bottom: 2rem;
+    border-radius: 15px;
+    padding: 2rem 0px 1rem 0px;
 }
 
 .marginTB{
