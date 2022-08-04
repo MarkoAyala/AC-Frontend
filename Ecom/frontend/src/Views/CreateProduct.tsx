@@ -4,7 +4,6 @@ import Upload from "../Components/Upload/Upload";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
-import { FormGroup, Label, Input, FormText } from "reactstrap";
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -21,7 +20,6 @@ import { fetchStock } from "../app/Reducers/stockSlice";
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
-  /* let [render, setRender] = React.useState([1]); */
   let [loading, setLoading] = React.useState(false);
   let [tags, setTags] = React.useState('');
   let [saveImage , setSaveImage] = React.useState([{name:''}])
@@ -82,30 +80,6 @@ function CreateProduct() {
       setCreateProducts(createProducts={...createProducts, tags:[...createProducts.tags, event.target.value]})
     }
   };
-  // ====== // 
-
-/*   const newImagen = () =>{
-    if(render.length<=5){
-        setRender(render=[...render,render.length+1])
-    }
-  }
-  const deleteImagen = ()=>{
-    if(render.length>1){
-      let num:number|undefined = render.pop()
-      setRender(render=[])
-      if(num !== undefined){
-        for(let i = 1;i <= num-1; i++){
-          newImagen();
-        }
-      }
-    }
-    if(saveImage.length>1){
-      let deleteImg:any = saveImage.pop()
-      let newArray:any = saveImage.filter((e)=> e.name !== deleteImg[0].name);
-      setSaveImage(newArray);
-    }
-  } */
-// Conexion clodinary // 
   const saveImagen = async (e:any) => {
     setUpload(false)
     setSaveImage(saveImage=[...saveImage , e.target.files])
@@ -264,36 +238,6 @@ function CreateProduct() {
       <Grid item xs={12} sx={{margin:"1rem 0.5em 1rem 0.5em"}}>
       <TextField fullWidth label="Descripción" name='description' rows={4} multiline focused onChange={(e)=> handleChangeInput(e)} value={createProducts.description} autoComplete='off' sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, padding:"0px 15px 0px 15px"}}/>
       </Grid>
-        {/* {render? render.map((e,i)=>{
-            return(
-                <>
-              <Grid item xs={12}>
-              <FormGroup
-                style={{
-                  padding: "20px",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Label for="exampleFile" style={{margin:"10px 0px 10px 0px", borderBottom:"2px solid #8B4F00", paddingBottom:"3px"}}>
-                  Imagen: {i+1}
-                </Label>
-                <Input
-                  id="exampleFile"
-                  name={`img${e}`}
-                  type="file"
-                  placeholder="Imagen 1"
-                  onChange={(e) => saveImagen(e)}
-                />
-                <FormText>
-                  Cuando salga el nombre de la imagen significa que cargo correctamente
-                </FormText>
-              </FormGroup>
-                  </Grid>
-                </>
-            )
-            
-        }):null } */}
         <Grid item xs={12} sx={{ margin:'1em 27px 1em 27px'}}>
           <Upload saveImage={saveImage} setSaveImage={setSaveImage} removeFile={removeFile} setUpload={setUpload}/>
         </Grid>
@@ -354,12 +298,6 @@ function CreateProduct() {
               Imagenes subidas con exito!
             </Alert>
           </Snackbar>
-{/*         <Grid item xs={11} md={3}>
-          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>deleteImagen()}>Eliminar imagen</div>
-        </Grid>
-        <Grid item xs={11} md={3}>
-          <div style={{zIndex:1000, margin:'2px 0px 2px 0px'}} className='btn fromCenter' onClick={(e)=>newImagen()}>Agregar imagen</div>
-        </Grid> */}
         <Grid item xs={11} md={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
           <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
         </Grid>
