@@ -51,7 +51,7 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
             console.log('ENTRE AL PRIMER ARRAY', el)
             if(property === e.target.name){
               console.log('aca modifico',el[0], "propert", property)
-              return {...el[0], [e.target.id]:e.target.value}
+              return {[property]:{...el[0][property], [e.target.id]:parseInt(`${e.target.value}`)}}
             }else{
               return el[0]
             }
