@@ -1,6 +1,7 @@
 import React, { useEffect , useMemo} from "react";
 import css from '../Components/CreateProduct/CreateProduct.module.css';
 import Upload from "../Components/Upload/Upload";
+import RefreshStock from "../Components/RefreshStock/RefreshStock";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -46,6 +47,43 @@ function CreateProduct() {
     tags:'',
     stock:''
   })
+  let [errorStock , setErrorStock] = React.useState({
+    required:true
+  })
+  //update stock
+  let [updateStock, setUpdateStock] = React.useState([{
+    name:'',
+    _id:'',
+    stock:[
+      [{
+        red:{
+          code:'#000',
+          stock_red:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        yellow:{
+          code:'#000',
+          stock_yellow:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        all:0
+      }]
+    ]
+  }])
 
 
     const removeFile = (filename:any)=>{
@@ -80,10 +118,10 @@ function CreateProduct() {
       setCreateProducts(createProducts={...createProducts, tags:[...createProducts.tags, event.target.value]})
     }
   };
-  const saveImagen = async (e:any) => {
+ /*  const saveImagen = async (e:any) => {
     setUpload(false)
     setSaveImage(saveImage=[...saveImage , e.target.files])
-  }
+  } */
   const uploadImage = async (el: any) => {
     el.forEach(async (e:any, i:number)=>{
       if(i !== 0){
@@ -160,10 +198,37 @@ function CreateProduct() {
     return error;
    } 
 
+   const validationStock = (stock:any) => {
+    console.log('ahre', stock[0])
+    let error:any = {required:false};
+    if(stock[0].name === '' || stock[0]._id === ''){
+      error.text = 'No selecciono stock'
+      error.required = true;
+    }
+    stock[0].stock.map((e:any)=>{
+      for(let property in e[0]){
+        console.log("llegue aca a vergas",e[0][property].code)
+        if(e[0][property].code?.length !== 7 && property !== 'all'){
+          error.code = {...error.code , [property]: `El color ${property}, debe ser en este formato: #123456`}
+          error.required = true;
+        }
+        if(property!=='all' && (typeof e[0][property].xs !== 'number' || typeof e[0][property].s !== 'number' || typeof e[0][property].m !== 'number' || typeof e[0][property].l !== 'number' || typeof e[0][property].xl !== 'number' || typeof e[0][property].xxl !== 'number')){
+          error.talle = {...error.talle , [property]:`El talle de ${property} tiene que ser numero`}
+          error.required = true;
+        }
+      }
+    })
+    return error
+
+   }
+
    const submitClick = () => {
       let objError:any = validation(createProducts)
       setError(error=objError);
-      console.log('info', createProducts)
+
+      let objStockError:any = validationStock(updateStock)
+      setErrorStock(errorStock=objStockError)
+      console.log('info', error, 'INFO2' , errorStock)
    }
    useMemo(()=>{
     let objError:any = validation(createProducts)
@@ -187,7 +252,7 @@ function CreateProduct() {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={createProducts.stock}
-            label="Tags"
+            label="Stocks"
             name="stock"
             onChange={(e)=>handleChangeInput(e)}
             sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}
@@ -286,7 +351,7 @@ function CreateProduct() {
          <Grid item xs={12} sx={{display:"flex",justifyContent:"end"}}>
                     {
                       loading?(
-                        <Box display="flex" margin={"0px 30px 0px 0px"} >
+                        <Box display="flex" margin={"30px 30px 0px 0px"} >
                           <h5 style={{lineHeight:"30px", margin:"0px 10px 0px 0px"}}>Subiendo imagenes</h5>
                           <CircularProgress size={30} color="primary"/>
                         </Box>
@@ -302,13 +367,20 @@ function CreateProduct() {
           <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
         </Grid>
 
-        <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
-           <Button style={{zIndex:1000, marginTop:'1.5rem'}} color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
-        </Grid>
         <Grid item xs={11} md={11} sx={{display:{xs:'flex', md:'none'}, justifyContent:'start', margin:'2rem 0px 0px 0px'}}>
           <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} fullWidth color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
         </Grid>
 
+        <Grid item xs={12}>
+          <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
+        </Grid>
+        <Grid item xs={12}>
+          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock}/>
+        </Grid>
+
+        <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
+           <Button style={{zIndex:1000, marginTop:'1.5rem'}} color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
+        </Grid>
         <Grid item xs={11} sx={{display:{xs:'flex', md:'none'}, justifyContent:'end'}}>
            <Button style={{zIndex:1000, marginTop:'1.5rem'}} fullWidth color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
         </Grid>
@@ -321,39 +393,3 @@ function CreateProduct() {
 
 export default CreateProduct;
 
-/* 
-STOCk = {
-  {
-  nombre:athenas,
-  stock:{
-    red:{
-      s:1,
-      m:5,
-      l:19
-    },
-    yellow:{
-      s:5,
-      m:0,
-      l:1
-    }
-  }
-},{
-  nombre:afrodita,
-  stock:{
-    red:{
-      s:1,
-      m:5,
-      l:19
-    },
-    yellow:{
-      s:5,
-      m:0,
-      l:1
-    }
-  }
-},
-
-}
-
-
-*/

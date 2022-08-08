@@ -7,7 +7,13 @@ import App from './App';
 import axios from 'axios';
 import './index.css';
 import { BrowserRouter as Router } from "react-router-dom";
-axios.defaults.baseURL = "http://localhost:3001"
+
+
+if(window.location.href.slice(0,16) !== 'http://localhost/'){
+  axios.defaults.baseURL = "https://altocuero-backend.herokuapp.com/"
+}else {
+  axios.defaults.baseURL = "http://localhost:3001"
+}
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
