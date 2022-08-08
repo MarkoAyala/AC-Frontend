@@ -47,14 +47,17 @@ function CreateProduct() {
     tags:'',
     stock:''
   })
+  let [errorStock , setErrorStock] = React.useState({
+    required:true
+  })
   //update stock
-  let [updateStock, setUpdateStock] = React.useState({
+  let [updateStock, setUpdateStock] = React.useState([{
     name:'',
     _id:'',
     stock:[
       [{
         red:{
-          code:'000',
+          code:'#000',
           stock_red:0,
           xs:0,
           s:0,
@@ -66,7 +69,7 @@ function CreateProduct() {
       }],
       [{
         yellow:{
-          code:'000',
+          code:'#000',
           stock_yellow:0,
           xs:0,
           s:0,
@@ -80,7 +83,7 @@ function CreateProduct() {
         all:0
       }]
     ]
-  })
+  }])
 
 
     const removeFile = (filename:any)=>{
@@ -195,10 +198,37 @@ function CreateProduct() {
     return error;
    } 
 
+   const validationStock = (stock:any) => {
+    console.log('ahre', stock[0])
+    let error:any = {required:false};
+    if(stock[0].name === '' || stock[0]._id === ''){
+      error.text = 'No selecciono stock'
+      error.required = true;
+    }
+    stock[0].stock.map((e:any)=>{
+      for(let property in e[0]){
+        console.log("llegue aca a vergas",e[0][property].code)
+        if(e[0][property].code?.length !== 7 && property !== 'all'){
+          error.code = {...error.code , [property]: `El color ${property}, debe ser en este formato: #123456`}
+          error.required = true;
+        }
+        if(property!=='all' && (typeof e[0][property].xs !== 'number' || typeof e[0][property].s !== 'number' || typeof e[0][property].m !== 'number' || typeof e[0][property].l !== 'number' || typeof e[0][property].xl !== 'number' || typeof e[0][property].xxl !== 'number')){
+          error.talle = {...error.talle , [property]:`El talle de ${property} tiene que ser numero`}
+          error.required = true;
+        }
+      }
+    })
+    return error
+
+   }
+
    const submitClick = () => {
       let objError:any = validation(createProducts)
       setError(error=objError);
-      console.log('info', createProducts)
+
+      let objStockError:any = validationStock(updateStock)
+      setErrorStock(errorStock=objStockError)
+      console.log('info', error, 'INFO2' , errorStock)
    }
    useMemo(()=>{
     let objError:any = validation(createProducts)
@@ -342,7 +372,7 @@ function CreateProduct() {
         </Grid>
 
         <Grid item xs={12}>
-          <TittleEfect text="Actualizar Stock" align="center" margin="1rempx 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
+          <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
         </Grid>
         <Grid item xs={12}>
           <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock}/>
