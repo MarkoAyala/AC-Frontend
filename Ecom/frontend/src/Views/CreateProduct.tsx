@@ -2,6 +2,7 @@ import React, { useEffect , useMemo} from "react";
 import css from '../Components/CreateProduct/CreateProduct.module.css';
 import Upload from "../Components/Upload/Upload";
 import RefreshStock from "../Components/RefreshStock/RefreshStock";
+import Dialogo from "../Components/Dialog/Dialogo";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -18,6 +19,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
 // ============ IMPORT UTILITIES ===============//
 import { fetchStock } from "../app/Reducers/stockSlice";
+
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
@@ -57,7 +59,7 @@ function CreateProduct() {
     stock:[
       [{
         red:{
-          code:'#000',
+          code:'#000000',
           stock_red:0,
           xs:0,
           s:0,
@@ -69,7 +71,7 @@ function CreateProduct() {
       }],
       [{
         yellow:{
-          code:'#000',
+          code:'#000000',
           stock_yellow:0,
           xs:0,
           s:0,
@@ -199,7 +201,6 @@ function CreateProduct() {
    } 
 
    const validationStock = (stock:any) => {
-    console.log('ahre', stock[0])
     let error:any = {required:false};
     if(stock[0].name === '' || stock[0]._id === ''){
       error.text = 'No selecciono stock'
@@ -207,7 +208,6 @@ function CreateProduct() {
     }
     stock[0].stock.map((e:any)=>{
       for(let property in e[0]){
-        console.log("llegue aca a vergas",e[0][property].code)
         if(e[0][property].code?.length !== 7 && property !== 'all'){
           error.code = {...error.code , [property]: `El color ${property}, debe ser en este formato: #123456`}
           error.required = true;
@@ -222,20 +222,38 @@ function CreateProduct() {
 
    }
 
+   //Dialog //
+   const [openDialog, setOpenDialog] = React.useState(false);
+   const [textDialog, setTextDialog] = React.useState('');
+
+   const handleClickOpendDialog = () => {
+     setOpenDialog(true);
+   };
+ 
+   const handleClosedDialog = () => {
+     setOpenDialog(false);
+   };
+   // =============//
+
+
    const submitClick = () => {
       let objError:any = validation(createProducts)
       setError(error=objError);
 
       let objStockError:any = validationStock(updateStock)
       setErrorStock(errorStock=objStockError)
-      console.log('info', error, 'INFO2' , errorStock)
+
+      handleClickOpendDialog();
+      setTextDialog('loading')
+      setTimeout(()=> setTextDialog('success'),2000);
    }
    useMemo(()=>{
     let objError:any = validation(createProducts)
     setError(error=objError);
   },[createProducts])
   return (
-    <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column"}}>
+    <Grid container width="100%" sx={{ marginTop:{xs:"6rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column", marginBottom:{xs:"4rem", md:"6rem"}}}>
+      <Dialogo handleClosedDialog={handleClosedDialog} openDialog={openDialog} textDialog={textDialog} />
       <Button sx={{width:{xs:'80%', sm:'50%'},textAlign:"center", flexWrap:'nowrap' }}>
       <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
       </Button>
@@ -358,7 +376,7 @@ function CreateProduct() {
                       ):null
                     }
           </Grid>
-          <Snackbar open={successUpload} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={successUpload} autoHideDuration={6000} onClose={handleClose} sx={{margin:'0px 0px 2em 0px'}}>
             <Alert onClose={handleClose} color="success" severity="success" sx={{ width: '100%' }}>
               Imagenes subidas con exito!
             </Alert>
@@ -375,7 +393,7 @@ function CreateProduct() {
           <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
         </Grid>
         <Grid item xs={12}>
-          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock}/>
+          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock} errorStock={errorStock}/>
         </Grid>
 
         <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>

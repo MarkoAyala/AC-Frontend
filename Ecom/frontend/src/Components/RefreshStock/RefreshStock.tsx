@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from '@mui/material/FormHelperText';
 
-function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
+function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock }: any) {
   let [colors, setColors] = React.useState(['']);
 
 
@@ -20,7 +20,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
     setUpdateStock(updateStock = renderStock.filter((e:any)=>el.target.value === e._id))
   };
 
-  useEffect(() => console.log("stock",updateStock), [updateStock]);
   useMemo(()=>{
     if(updateStock.name !== ''){
       for(const property in updateStock[0].stock){
@@ -33,6 +32,8 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
   },[updateStock])
 
   const handleChangeColor = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+
+    
     setUpdateStock((prevState:any)=>{
 
       if(e.target.id === 'code'){
@@ -63,15 +64,11 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
       
     })
   }
-  useEffect(()=>{
-    console.log("STUCKEADO",updateStock)
-  },[updateStock])
   return (
     <Grid
       container
       width="100%"
       sx={{
-        border: "1px solid white",
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
@@ -143,7 +140,7 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock }: any) {
                 <TittleEfect text={`Color:`} align='center' fontSize="20px" width={'100%'}/>
               </Grid>
               <Grid item xs={6}>
-              <TextField type='text' fullWidth label="xs" onChange={(e)=> handleChangeColor(e)} name={`${el}`} id='code' value={element[0][el].code}  autoComplete='off' focused sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, "& .MuiSelect-select":{color:"white"}, margin:'7px 0px 7px 0px'}}/>
+              <TextField type='text' error={errorStock.code?true:false} fullWidth label="xs" onChange={(e)=> handleChangeColor(e)} name={`${el}`} id='code' value={element[0][el].code}  autoComplete='off' focused sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, "& .MuiSelect-select":{color:"white"}, margin:'7px 0px 7px 0px'}}/>
               </Grid>
 
               <Grid item xs={4} sx={{alignItems:'center', display:'flex', justifyContent:'center', margin:'5px 0px 5px 0px'}}>
