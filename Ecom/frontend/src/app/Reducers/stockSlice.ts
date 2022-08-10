@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 interface InitialState {
-    stock:Stock | ''
+    stock:Stock | '' | unknown
     loading:boolean | string;
 }
 

@@ -8,8 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import CircularProgress from '@mui/material/CircularProgress';
+import InfoIcon from '@mui/icons-material/Info';
 import {Typography} from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
 import { Box } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
@@ -44,12 +46,40 @@ export default function Dialogo({handleClosedDialog , openDialog , textDialog}:a
         </DialogContent>
           ):textDialog==='success'?(
             <>
-            <DialogContent sx={{padding:'2.1em 3.5em .5em 3.5em'}}>
+            <DialogContent dividers sx={{padding:'2.1em 3.5em .5em 3.5em'}}>
             <DialogContentText id="alert-dialog-slide-description" sx={{display:'flex',justifyContent:'center', alignItems:'center'}}>
-              <Typography variant='subtitle2' style={{padding:'0px 1em 2px 0em', fontWeight:'bold', fontSize:'28px'}}>Hecho!</Typography>
+              <Typography variant='subtitle2' style={{padding:'0px 1em 6px 0em', fontWeight:'bold', fontSize:'28px'}}>Hecho!</Typography>
               <Box>
                 <CheckCircleIcon color="primary" fontSize={'large'}/>
               </Box>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClosedDialog}>Volver</Button>
+          </DialogActions>
+            </>
+          ):textDialog === 'error'?(
+            <>
+            <DialogContent dividers sx={{padding:'2.1em 1.5em .5em 1.5em'}}>
+            <DialogContentText id="alert-dialog-slide-description" sx={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+              <Box>
+                <ErrorIcon color="error" fontSize={'large'}/>
+              </Box>
+              <Typography variant='subtitle2' style={{padding:'0px 0em 6px 1em', fontWeight:'bold', fontSize:'22px',textAlign:'center'}}>Ocurrio un error</Typography>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClosedDialog}>Volver</Button>
+          </DialogActions>
+            </>
+          ):textDialog === 'complete'?(
+            <>
+            <DialogContent dividers sx={{padding:'2.1em 1.5em .5em 1.5em'}}>
+            <DialogContentText id="alert-dialog-slide-description" sx={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+              <Box>
+                <InfoIcon color="info" fontSize={'large'}/>
+              </Box>
+              <Typography variant='subtitle2' style={{padding:'0px 0em 6px 1em', fontWeight:'bold', fontSize:'18px',textAlign:'center'}}>Rellene los campos correctamente</Typography>
             </DialogContentText>
           </DialogContent>
           <DialogActions>

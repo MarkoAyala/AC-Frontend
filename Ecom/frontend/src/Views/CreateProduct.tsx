@@ -19,7 +19,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
 // ============ IMPORT UTILITIES ===============//
 import { fetchStock } from "../app/Reducers/stockSlice";
-
+import { postProduct } from "../app/Utils/postProduct";
+import { editStock } from "../app/Utils/stockUtilities";
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
@@ -235,18 +236,29 @@ function CreateProduct() {
    };
    // =============//
 
+   const handleTags = ()=>{
+    setCreateProducts(createProducts={...createProducts, tags:['']})
+   }
+
 
    const submitClick = () => {
+    setTextDialog('loading')
+    handleClickOpendDialog();
       let objError:any = validation(createProducts)
       setError(error=objError);
 
       let objStockError:any = validationStock(updateStock)
       setErrorStock(errorStock=objStockError)
 
-      handleClickOpendDialog();
-      setTextDialog('loading')
-      setTimeout(()=> setTextDialog('success'),2000);
-   }
+      if(errorStock.required === false && error.required === false){
+        postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+        .then((response:any)=>setTextDialog('success'))
+        .catch((err:any)=>setTextDialog('error'))
+      }else{
+        setTextDialog('complete')
+        handleClickOpendDialog();
+      }
+      }
    useMemo(()=>{
     let objError:any = validation(createProducts)
     setError(error=objError);
@@ -317,7 +329,9 @@ function CreateProduct() {
       </Grid>
       <Grid item xs={1} sx={{margin:"15px 5px 15px 5px"}}>
       </Grid>
-
+      <Grid item xs={11} md={3}>
+      <Button sx={{zIndex:1000, margin:{xs:'0rem 0px 1.3rem 0px', md:'1rem 0px 1.3rem 0px'}}} fullWidth color='info' variant='contained' onClick={handleTags}>Limpiar Tags</Button>
+      </Grid>
       <Grid item xs={12} sx={{margin:"1rem 0.5em 1rem 0.5em"}}>
       <TextField fullWidth label="Descripción" name='description' rows={4} multiline focused onChange={(e)=> handleChangeInput(e)} value={createProducts.description} autoComplete='off' sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, padding:"0px 15px 0px 15px"}}/>
       </Grid>

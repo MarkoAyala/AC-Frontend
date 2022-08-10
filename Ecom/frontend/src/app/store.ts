@@ -4,7 +4,7 @@ import stockReducer from './Reducers/stockSlice';
 
 export const store = configureStore({
   reducer: {
-    user:userReducer || undefined,
+    user:userReducer ,
     stock:stockReducer,
   },
 });
