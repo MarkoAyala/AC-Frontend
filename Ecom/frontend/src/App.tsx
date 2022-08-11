@@ -23,16 +23,18 @@ function App() {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const dispatch = useAppDispatch();
   const [theme, setTheme] = useState(createTheme(createOptions('light')))
+  const [loadSkeleton , setLoadSkeleton] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   useEffect(()=>{
     if(isAuthenticated){
-      dispatch(fetchUserByEmail(user));
+      setLoadSkeleton(true)
+      dispatch(fetchUserByEmail(user)).then(()=> setLoadSkeleton(false))
     }
   },[user])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-      <Navbar/> 
+      <Navbar loadSkeleton={loadSkeleton}/> 
       <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/CreateProductAdmin" element={<CreateProduct />}/>

@@ -37,8 +37,11 @@ shoppingCart: []
 updatedAt: "2022-07-12T02:51:22.576Z"
 __v: 0
 _id: "62cc6f9fb86b6aa844865dbd" */
+interface Props{
+  loadSkeleton:boolean
+}
 
-const Navbar = () => {
+const Navbar = ({loadSkeleton}:Props) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const DBUser = useAppSelector((state)=> state.user.dataUser)
@@ -131,13 +134,13 @@ const Navbar = () => {
           <div className="btn fromCenter">From Center</div>
           </Box>
 
-            {isLoading?(
+            {isLoading || loadSkeleton?(
               <Box sx={{ flexGrow: 0, display:"flex"}}>
                 <Skeleton variant="text" width={100}/>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
                   {
-                    isLoading?(
+                    isLoading||loadSkeleton?(
                       <Skeleton variant="circular" width={40} height={40} />
                     ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
                   }
@@ -192,7 +195,7 @@ const Navbar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px"}}>
                 {
-                  isLoading?(
+                  isLoading || loadSkeleton?(
                     <Skeleton variant="circular" width={40} height={40} />
                   ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
                 }

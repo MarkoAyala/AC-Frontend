@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Stock } from "../Interfaces/interfaceStock";
 
 export const stockTemplate:Stock = {
@@ -25,5 +26,14 @@ export const stockTemplate:Stock = {
             xxl:0
         },
         all:0
+    }
+}
+
+export const editStock = async (obj:any) => {
+    try{
+        let post = await axios.put('/stock',obj);
+        return post.data;
+    }catch(err){
+        console.log(`Error en editStock utils: ${err}`);
     }
 }

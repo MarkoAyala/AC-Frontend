@@ -2,6 +2,7 @@ import React, { useEffect , useMemo} from "react";
 import css from '../Components/CreateProduct/CreateProduct.module.css';
 import Upload from "../Components/Upload/Upload";
 import RefreshStock from "../Components/RefreshStock/RefreshStock";
+import Dialogo from "../Components/Dialog/Dialogo";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -18,6 +19,8 @@ import AlertTitle from '@mui/material/AlertTitle';
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
 // ============ IMPORT UTILITIES ===============//
 import { fetchStock } from "../app/Reducers/stockSlice";
+import { postProduct } from "../app/Utils/postProduct";
+import { editStock } from "../app/Utils/stockUtilities";
 import { useAppDispatch, useAppSelector} from "../app/hooks";
 
 function CreateProduct() {
@@ -56,9 +59,105 @@ function CreateProduct() {
     _id:'',
     stock:[
       [{
-        red:{
-          code:'#000',
-          stock_red:0,
+        black:{
+          code:'#000000',
+          stock_black:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        white:{
+          code:'#000000',
+          stock_white:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        beige:{
+          code:'#000000',
+          stock_beige:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        gray:{
+          code:'#000000',
+          stock_gray:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        french_blue:{
+          code:'#000000',
+          stock_french_blue:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        navy_blue:{
+          code:'#000000',
+          stock_navy_blue:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        blue:{
+          code:'#000000',
+          stock_blue:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        silver:{
+          code:'#000000',
+          stock_silver:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        chalk:{
+          code:'#000000',
+          stock_chalk:0,
           xs:0,
           s:0,
           m:0,
@@ -69,8 +168,224 @@ function CreateProduct() {
       }],
       [{
         yellow:{
-          code:'#000',
+          code:'#000000',
           stock_yellow:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        golden:{
+          code:'#000000',
+          stock_golden:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        brown:{
+          code:'#000000',
+          stock_brown:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        havana_brown:{
+          code:'#000000',
+          stock_havana_brown:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        brown_sole:{
+          code:'#000000',
+          stock_brown_sole:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        coffee_brown:{
+          code:'#000000',
+          stock_chocolate_brown:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        board:{
+          code:'#000000',
+          stock_board:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        red:{
+          code:'#000000',
+          stock_red:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        green:{
+          code:'#000000',
+          stock_green:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        dark_green:{
+          code:'#000000',
+          stock_dark_green:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        light_green:{
+          code:'#000000',
+          stock_light_green:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        mint_green:{
+          code:'#000000',
+          stock_mint_green:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        olive_green:{
+          code:'#000000',
+          stock_olive_green:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        cherry:{
+          code:'#000000',
+          stock_cherry:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        fuchsia:{
+          code:'#000000',
+          stock_fuchsia:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        purple:{
+          code:'#000000',
+          stock_purple:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        copper:{
+          code:'#000000',
+          stock_copper:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        camel:{
+          code:'#000000',
+          stock_camel:0,
+          xs:0,
+          s:0,
+          m:0,
+          l:0,
+          xl:0,
+          xxl:0
+        },
+      }],
+      [{
+        turquoise:{
+          code:'#000000',
+          stock_turquoise:0,
           xs:0,
           s:0,
           m:0,
@@ -199,7 +514,6 @@ function CreateProduct() {
    } 
 
    const validationStock = (stock:any) => {
-    console.log('ahre', stock[0])
     let error:any = {required:false};
     if(stock[0].name === '' || stock[0]._id === ''){
       error.text = 'No selecciono stock'
@@ -207,7 +521,6 @@ function CreateProduct() {
     }
     stock[0].stock.map((e:any)=>{
       for(let property in e[0]){
-        console.log("llegue aca a vergas",e[0][property].code)
         if(e[0][property].code?.length !== 7 && property !== 'all'){
           error.code = {...error.code , [property]: `El color ${property}, debe ser en este formato: #123456`}
           error.required = true;
@@ -222,20 +535,49 @@ function CreateProduct() {
 
    }
 
+   //Dialog //
+   const [openDialog, setOpenDialog] = React.useState(false);
+   const [textDialog, setTextDialog] = React.useState('');
+
+   const handleClickOpendDialog = () => {
+     setOpenDialog(true);
+   };
+ 
+   const handleClosedDialog = () => {
+     setOpenDialog(false);
+   };
+   // =============//
+
+   const handleTags = ()=>{
+    setCreateProducts(createProducts={...createProducts, tags:['']})
+   }
+
+
    const submitClick = () => {
+    setTextDialog('loading')
+    handleClickOpendDialog();
       let objError:any = validation(createProducts)
       setError(error=objError);
 
       let objStockError:any = validationStock(updateStock)
       setErrorStock(errorStock=objStockError)
-      console.log('info', error, 'INFO2' , errorStock)
-   }
+
+      if(errorStock.required === false && error.required === false){
+        postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+        .then((response:any)=>setTextDialog('success'))
+        .catch((err:any)=>setTextDialog('error'))
+      }else{
+        setTextDialog('complete')
+        handleClickOpendDialog();
+      }
+      }
    useMemo(()=>{
     let objError:any = validation(createProducts)
     setError(error=objError);
   },[createProducts])
   return (
-    <Grid container width="100%" sx={{ marginTop:{xs:"7rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column"}}>
+    <Grid container width="100%" sx={{ marginTop:{xs:"6rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column", marginBottom:{xs:"4rem", md:"6rem"}}}>
+      <Dialogo handleClosedDialog={handleClosedDialog} openDialog={openDialog} textDialog={textDialog} />
       <Button sx={{width:{xs:'80%', sm:'50%'},textAlign:"center", flexWrap:'nowrap' }}>
       <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
       </Button>
@@ -299,7 +641,9 @@ function CreateProduct() {
       </Grid>
       <Grid item xs={1} sx={{margin:"15px 5px 15px 5px"}}>
       </Grid>
-
+      <Grid item xs={11} md={3}>
+      <Button sx={{zIndex:1000, margin:{xs:'0rem 0px 1.3rem 0px', md:'1rem 0px 1.3rem 0px'}}} fullWidth color='info' variant='contained' onClick={handleTags}>Limpiar Tags</Button>
+      </Grid>
       <Grid item xs={12} sx={{margin:"1rem 0.5em 1rem 0.5em"}}>
       <TextField fullWidth label="Descripción" name='description' rows={4} multiline focused onChange={(e)=> handleChangeInput(e)} value={createProducts.description} autoComplete='off' sx={{"& .MuiInputBase-root":{color:"white"}, "& label.Mui-focused":{color:"white"}, padding:"0px 15px 0px 15px"}}/>
       </Grid>
@@ -358,7 +702,7 @@ function CreateProduct() {
                       ):null
                     }
           </Grid>
-          <Snackbar open={successUpload} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar open={successUpload} autoHideDuration={6000} onClose={handleClose} sx={{margin:'0px 0px 2em 0px'}}>
             <Alert onClose={handleClose} color="success" severity="success" sx={{ width: '100%' }}>
               Imagenes subidas con exito!
             </Alert>
@@ -375,7 +719,7 @@ function CreateProduct() {
           <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
         </Grid>
         <Grid item xs={12}>
-          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock}/>
+          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock} errorStock={errorStock}/>
         </Grid>
 
         <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
