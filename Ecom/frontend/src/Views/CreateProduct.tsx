@@ -40,6 +40,9 @@ function CreateProduct() {
   const stock = useAppSelector((state)=> state.stock.stock);
   const dispatch:any = useAppDispatch();
   let [renderStock,setRenderStock] = React.useState(['']);
+  //refresh stock
+  let [colors, setColors] = React.useState(['']);
+  let [newValue , setNewValue] = React.useState('')
   //Validación un submit
   let [error, setError] = React.useState({
     required:true,
@@ -54,7 +57,7 @@ function CreateProduct() {
     required:true
   })
   //update stock
-  let [updateStock, setUpdateStock] = React.useState([{
+  let [updateStock, setUpdateStock] = React.useState<any>([{
     name:'',
     _id:'',
     stock:[
@@ -229,7 +232,7 @@ function CreateProduct() {
       [{
         coffee_brown:{
           code:'#000000',
-          stock_chocolate_brown:0,
+          stock_coffee_brown:0,
           xs:0,
           s:0,
           m:0,
@@ -548,23 +551,33 @@ function CreateProduct() {
    };
    // =============//
 
+   
+
+
    const handleTags = ()=>{
     setCreateProducts(createProducts={...createProducts, tags:['']})
    }
 
-
+useEffect(()=>{
+  console.log("updateSTOCK",updateStock)
+},[updateStock])
    const submitClick = () => {
     setTextDialog('loading')
+    setUpdateStock(updateStock=[{...updateStock[0], stock:colors}])
     handleClickOpendDialog();
-      let objError:any = validation(createProducts)
-      setError(error=objError);
+   /*    let objError:any = validation(createProducts)
+      setError(error=objError); */
 
       let objStockError:any = validationStock(updateStock)
       setErrorStock(errorStock=objStockError)
-
-      if(errorStock.required === false && error.required === false){
-        postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+    console.log('error1',error , 'error2', errorStock)
+      if(errorStock.required === false /* && error.required === false */){
+        console.log('entre')
+       /*  postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
         .then((response:any)=>setTextDialog('success'))
+        .catch((err:any)=>setTextDialog('error')) */
+
+        editStock(updateStock[0]).then((response:any)=>setTextDialog('success'))
         .catch((err:any)=>setTextDialog('error'))
       }else{
         setTextDialog('complete')
@@ -719,7 +732,7 @@ function CreateProduct() {
           <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
         </Grid>
         <Grid item xs={12}>
-          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock} errorStock={errorStock}/>
+          <RefreshStock renderStock={renderStock} updateStock={updateStock} setUpdateStock={setUpdateStock} errorStock={errorStock} colors={colors} setColors={setColors}newValue={newValue} setNewValue={setNewValue} />
         </Grid>
 
         <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
