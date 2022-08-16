@@ -561,29 +561,35 @@ function CreateProduct() {
 useEffect(()=>{
   console.log("updateSTOCK",updateStock)
 },[updateStock])
+
    const submitClick = () => {
     setTextDialog('loading')
-    setUpdateStock(updateStock=[{...updateStock[0], stock:colors}])
+    setUpdateStock(updateStock=[{...updateStock[0], stock:[...updateStock[0].stock,...colors]}])
     handleClickOpendDialog();
    /*    let objError:any = validation(createProducts)
       setError(error=objError); */
 
       let objStockError:any = validationStock(updateStock)
       setErrorStock(errorStock=objStockError)
-    console.log('error1',error , 'error2', errorStock)
-      if(errorStock.required === false /* && error.required === false */){
-        console.log('entre')
-       /*  postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
-        .then((response:any)=>setTextDialog('success'))
-        .catch((err:any)=>setTextDialog('error')) */
+    console.log('stock', updateStock)
 
-        editStock(updateStock[0]).then((response:any)=>setTextDialog('success'))
-        .catch((err:any)=>setTextDialog('error'))
-      }else{
-        setTextDialog('complete')
-        handleClickOpendDialog();
-      }
-      }
+
+ //     if(errorStock.required === false /* && error.required === false */){
+ //       console.log('entre')
+ //      /*  postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+ //       .then((response:any)=>setTextDialog('success'))
+ //       .catch((err:any)=>setTextDialog('error')) */
+//
+ //       editStock(updateStock[0]).then((response:any)=>setTextDialog('success'))
+ //       .catch((err:any)=>setTextDialog('error'))
+ //     }else{
+ //       setTextDialog('complete')
+ //       handleClickOpendDialog();
+ //     }
+//
+      
+  }
+
    useMemo(()=>{
     let objError:any = validation(createProducts)
     setError(error=objError);

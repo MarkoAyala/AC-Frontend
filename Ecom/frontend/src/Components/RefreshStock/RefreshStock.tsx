@@ -378,9 +378,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
                 setColors(colors=[...colors, el])
                 add=false;
               }
-              if(property === 'all'){
-                return el
-              }
           }
         })
       }
@@ -390,9 +387,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
               if(property !=='all' && e.target.value === property){
                 setColors(colors=[...colors, el])
                 add=false;
-              }
-              if(property === 'all'){
-                return el
               }
           }
         })
