@@ -558,36 +558,37 @@ function CreateProduct() {
     setCreateProducts(createProducts={...createProducts, tags:['']})
    }
 
-useEffect(()=>{
-  console.log("updateSTOCK",updateStock)
-},[updateStock])
+
 
    const submitClick = () => {
     setTextDialog('loading')
-    setUpdateStock(updateStock=[{...updateStock[0], stock:[...updateStock[0].stock,...colors]}])
     handleClickOpendDialog();
-   /*    let objError:any = validation(createProducts)
-      setError(error=objError); */
 
-      let objStockError:any = validationStock(updateStock)
-      setErrorStock(errorStock=objStockError)
-    console.log('stock', updateStock)
+    let resultado = updateStock[0].stock.map((e:any)=> {
+      let filterResults = colors.map((element:any)=> {
+        for(let property in element[0]){
+          if(e[0][property] !== undefined){
+            return element[0]
+          }
+        }
+        return e[0]
+      })
+      return filterResults
+    });
+    setUpdateStock(updateStock=[{...updateStock[0], stock:resultado}]);
+      let objError:any = validation(createProducts);
+      setError(error=objError);
+      let objStockError:any = validationStock(updateStock);
+      setErrorStock(errorStock=objStockError);
 
-
- //     if(errorStock.required === false /* && error.required === false */){
- //       console.log('entre')
- //      /*  postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
- //       .then((response:any)=>setTextDialog('success'))
- //       .catch((err:any)=>setTextDialog('error')) */
-//
- //       editStock(updateStock[0]).then((response:any)=>setTextDialog('success'))
- //       .catch((err:any)=>setTextDialog('error'))
- //     }else{
- //       setTextDialog('complete')
- //       handleClickOpendDialog();
- //     }
-//
-      
+      if(errorStock.required === false && error.required === false){
+        postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+        .then((response:any)=>setTextDialog('success'))
+        .catch((err:any)=>setTextDialog('error'))
+      }else{
+        setTextDialog('complete')
+        handleClickOpendDialog();
+      }
   }
 
    useMemo(()=>{
@@ -619,7 +620,7 @@ useEffect(()=>{
             sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}
           >
             {
-              renderStock.length>1?renderStock.map((stocked:any)=>{
+              renderStock.length>0?renderStock.map((stocked:any)=>{
                 return(
                   <MenuItem value={stocked._id}>{stocked.name}</MenuItem>
                 )

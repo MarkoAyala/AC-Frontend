@@ -13,7 +13,6 @@ function FileUpload({saveImage,setSaveImage, setUpload}:any) {
     if(saveImage.length<7){
         setSaveImage(saveImage=[...saveImage, file])
         setUpload(false)
-        console.log("fileado",saveImage)
     }
   }
   return (
