@@ -3,6 +3,7 @@ import css from '../Components/CreateProduct/CreateProduct.module.css';
 import Upload from "../Components/Upload/Upload";
 import RefreshStock from "../Components/RefreshStock/RefreshStock";
 import Dialogo from "../Components/Dialog/Dialogo";
+import CreateOrRefreshDialog from "../Components/CreateOrRefreshDialog/CreateOrRefreshDialog";
 // ========== Import MUI COMPONENTS ============= //
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from "@mui/material/Grid";
@@ -56,6 +57,13 @@ function CreateProduct() {
   let [errorStock , setErrorStock] = React.useState({
     required:true
   })
+  //Create or Refresh
+  let [oneOption , setOneOption] = React.useState('')
+  const [openOptions, setOpenOptions] = React.useState(true);
+
+  const handleClickOpen = () => {
+    setOpenOptions(true);
+  };
   //update stock
   let [updateStock, setUpdateStock] = React.useState<any>([{
     name:'',
@@ -436,10 +444,6 @@ function CreateProduct() {
       setCreateProducts(createProducts={...createProducts, tags:[...createProducts.tags, event.target.value]})
     }
   };
- /*  const saveImagen = async (e:any) => {
-    setUpload(false)
-    setSaveImage(saveImage=[...saveImage , e.target.files])
-  } */
   const uploadImage = async (el: any) => {
     el.forEach(async (e:any, i:number)=>{
       if(i !== 0){
@@ -561,34 +565,59 @@ function CreateProduct() {
 
 
    const submitClick = () => {
-    setTextDialog('loading')
-    handleClickOpendDialog();
+     setTextDialog('loading')
+     handleClickOpendDialog();
 
-    let resultado = updateStock[0].stock.map((e:any)=> {
-      let filterResults = colors.map((element:any)=> {
-        for(let property in element[0]){
-          if(e[0][property] !== undefined){
-            return element[0]
+    if(oneOption === 'PRODUCT'){
+      let resultado = updateStock[0].stock.map((e:any)=> {
+        let filterResults = colors.map((element:any)=> {
+          for(let property in element[0]){
+            if(e[0][property] !== undefined){
+              return element[0]
+            }
           }
+          return e[0]
+        })
+        return filterResults
+      });
+      setUpdateStock(updateStock=[{...updateStock[0], stock:resultado}]);
+        let objError:any = validation(createProducts);
+        setError(error=objError);
+        let objStockError:any = validationStock(updateStock);
+        setErrorStock(errorStock=objStockError);
+  
+        if(errorStock.required === false && error.required === false){
+          postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+          .then((response:any)=>setTextDialog('success'))
+          .catch((err:any)=>setTextDialog('error'))
+        }else{
+          setTextDialog('complete')
         }
-        return e[0]
-      })
-      return filterResults
-    });
-    setUpdateStock(updateStock=[{...updateStock[0], stock:resultado}]);
-      let objError:any = validation(createProducts);
-      setError(error=objError);
+    }
+    if(oneOption === 'STOCK'){
+      let resultado = updateStock[0].stock.map((e:any)=> {
+        let filterResults = colors.map((element:any)=> {
+          for(let property in element[0]){
+            if(e[0][property] !== undefined){
+              return element[0]
+            }
+          }
+          return e[0]
+        })
+        return filterResults
+      });
+      setUpdateStock(updateStock=[{...updateStock[0], stock:resultado}]);
       let objStockError:any = validationStock(updateStock);
       setErrorStock(errorStock=objStockError);
-
-      if(errorStock.required === false && error.required === false){
-        postProduct(createProducts).then((res:any)=>editStock(updateStock[0]))
+      if(errorStock.required === false){
+        editStock(updateStock[0])
         .then((response:any)=>setTextDialog('success'))
         .catch((err:any)=>setTextDialog('error'))
       }else{
-        setTextDialog('complete')
-        handleClickOpendDialog();
+        setTextDialog('complete');
       }
+    }
+
   }
 
    useMemo(()=>{
@@ -597,6 +626,7 @@ function CreateProduct() {
   },[createProducts])
   return (
     <Grid container width="100%" sx={{ marginTop:{xs:"6rem", md:"9rem"}, display:'flex', alignItems:"center", flexDirection:"column", marginBottom:{xs:"4rem", md:"6rem"}}}>
+      <CreateOrRefreshDialog openOptions={openOptions} setOpenOptions={setOpenOptions} setOneOption={setOneOption} />
       <Dialogo handleClosedDialog={handleClosedDialog} openDialog={openDialog} textDialog={textDialog} />
       <Button sx={{width:{xs:'80%', sm:'50%'},textAlign:"center", flexWrap:'nowrap' }}>
       <TittleEfect text="Nuevo Producto" align="center" margin="0px 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
@@ -735,7 +765,7 @@ function CreateProduct() {
           <Button style={{zIndex:1000, margin:'2px 0px 2px 0px'}} fullWidth color='info' variant='contained' onClick={(e)=>uploadImage(saveImage)}>Cargar Imagenes</Button>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} id='refreshStock'>
           <TittleEfect text="Actualizar Stock" align="center" margin="2.4rem 0px 2rem 0rem" width={'100%'} fontSize={"50px"}/>
         </Grid>
         <Grid item xs={12}>
@@ -743,10 +773,10 @@ function CreateProduct() {
         </Grid>
 
         <Grid item xs={11} sx={{display:{xs:'none',md:'flex'}, justifyContent:'end'}}>
-           <Button style={{zIndex:1000, marginTop:'1.5rem'}} color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
+           <Button style={{zIndex:1000, marginTop:'1.5rem'}} color='info' variant='contained' onClick={(e)=>submitClick()}>{oneOption === 'STOCK'?'ACTUALIZAR STOCK':'SUBIR PRODUCTO'}</Button>
         </Grid>
         <Grid item xs={11} sx={{display:{xs:'flex', md:'none'}, justifyContent:'end'}}>
-           <Button style={{zIndex:1000, marginTop:'1.5rem'}} fullWidth color='info' variant='contained' onClick={(e)=>submitClick()}>SUBIR PRODUCTO</Button>
+           <Button style={{zIndex:1000, marginTop:'1.5rem'}} fullWidth color='info' variant='contained' onClick={(e)=>submitClick()}>{oneOption === 'STOCK'?'ACTUALIZAR STOCK':'SUBIR PRODUCTO'}</Button>
         </Grid>
       </Grid>
 
