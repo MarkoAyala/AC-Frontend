@@ -5,20 +5,20 @@ import { Box, Button, Input, Typography } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function FileList({saveImage, removeFile}:any) {
+function FileList({saveImage, removeFile, setSaveImage}:any) {
   return (
     <ul className={css.fileList}>
         {
-            saveImage &&
+            (saveImage[0]?.name !== '' || saveImage[1]?.name) &&
             saveImage.map((f:any) =>{
-                if(f.name !== '')
+                if(f && f?.name !== '')
                 return (
                     <Box key={`${f.name + Math.random()}`}>
                         <li className={css.listItem}>
                             <DescriptionIcon color='secondary' fontSize='large' sx={{marginRight:'0.8em'}}/>
                             <p style={{flex:"1", fontSize:'0.9em'}}>{f.name}</p>
                             <Box className={css.actions}>
-                                <DeleteIcon color='secondary' fontSize='large' onClick={(e)=>removeFile(f.name)} />
+                                <DeleteIcon color='secondary' fontSize='large' onClick={(e)=>removeFile(f.name,saveImage,setSaveImage)} />
                             </Box>
                         </li>
                     </Box>

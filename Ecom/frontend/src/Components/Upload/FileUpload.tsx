@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import css from "./Upload.module.css";
 // ======== IMPORT MUI COMPONENTS ============ //
 import { Box, Button, Input, Typography } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
-function FileUpload({saveImage,setSaveImage, setUpload}:any) {
+function FileUpload({saveImage,setSaveImage, setUpload,one}:any) {
   const UploadHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
     let file;
     if(event.target.files){
         file = event.target.files[0];
     }
-    if(saveImage.length<7){
-        setSaveImage(saveImage=[...saveImage, file])
+    if(one === undefined){
+      if(saveImage.length<7){
+          setSaveImage(saveImage=[...saveImage, file])
+          setUpload(false)
+      }
+    }else{
+        setSaveImage(saveImage=[file])
         setUpload(false)
     }
   }

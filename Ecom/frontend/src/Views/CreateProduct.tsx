@@ -459,6 +459,7 @@ function CreateProduct() {
           }
         );
         const file = await res.json()
+        console.log('file',file)
         if(i === (saveImage.length-1)){
           setLoading(false);
           setSuccessUpload(true);
