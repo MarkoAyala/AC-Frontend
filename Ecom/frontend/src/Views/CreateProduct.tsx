@@ -450,6 +450,7 @@ function CreateProduct() {
         const files: any | null = e;
         const data = new FormData()
         data.append("file", files)
+        data.append('api_key',"724899222591234");
         data.append("upload_preset", "CamperasAltoCuero")
         const res = await fetch(
           "http://api.cloudinary.com/v1_1/morgan22/image/upload",

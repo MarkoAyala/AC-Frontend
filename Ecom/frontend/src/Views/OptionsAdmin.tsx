@@ -26,8 +26,9 @@ function OptionsAdmin() {
     const uploadImage = async (el:any, name:string) =>{
       const files:any|null = el[0];
       const data = new FormData()
-      data.append('file', files)
-      data.append("upload_preset", "CamperasAltoCuero")
+      data.append('file', files);
+      data.append('api_key',"724899222591234");
+      data.append("upload_preset", "CamperasAltoCuero");
       const res = await fetch(
         "http://api.cloudinary.com/v1_1/morgan22/image/upload",
         {
