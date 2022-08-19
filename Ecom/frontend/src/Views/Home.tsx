@@ -18,31 +18,15 @@ function Home() {
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images)
   // Filtros //
-  let [checked, setChecked] = React.useState({
-    all:true,
-    red:false,
-    yellow:false,
-
-  });
-  function handleChangeCheckBox(e:React.ChangeEvent<HTMLInputElement>){
-    let nombre = e.target.name;
-    if(nombre === 'all'){
-      setChecked(checked={...checked, [e.target.name]:checked.all?false:true})
-    }
-    if(nombre === 'red'){
-      setChecked(checked={...checked, [e.target.name]:checked.red?false:true})
-    }
-    if(nombre === 'yellow'){
-      setChecked(checked={...checked, [e.target.name]:checked.yellow?false:true})
-    }
-  }
+  let [filter, setFilter] = React.useState({
+    color:[''],
+    tags:['']
+  })
   //=========//
   useEffect(()=>{
     dispatch(fetchImages());
   },[])
-  useEffect(()=>{
-console.log("hola rey",fetchImagenes)
-  },[fetchImagenes])
+
   return (
     <Grid
       container
@@ -60,7 +44,7 @@ console.log("hola rey",fetchImagenes)
       <Grid item sm={10} md={9} lg={9} xl={7} xs={12} display={{xs:'none', sm:'flex'}}>
         <img src={fetchImagenes[0]?.url?fetchImagenes[0].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
       </Grid>
-      <Grid item xs={11} sm={11} display={{xs:'flex', sm:'none'}}>
+      <Grid item xs={9} sm={11} display={{xs:'flex', sm:'none'}}>
         <img src={fetchImagenes[3]?.url?fetchImagenes[3].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
       </Grid>
       
@@ -77,14 +61,7 @@ console.log("hola rey",fetchImagenes)
       </Grid>
 
       {/* Filtro y cards */}
-      <Grid item xs={12} display={'flex'} sx={{border:"1px solid white", marginTop:"2rem", justifyContent:"center"}}>
-        <Grid item xs={3} sx={{border:"1px solid red"}}>
-        <Filter checked={checked} setChecked={setChecked} handleChangeCheckBox={handleChangeCheckBox}/>
-        </Grid>
-        <Grid item xs={8}>
-
-        </Grid>
-      </Grid>
+        <Filter filter={filter} setFilter={setFilter}/>
 
 
     </Grid>

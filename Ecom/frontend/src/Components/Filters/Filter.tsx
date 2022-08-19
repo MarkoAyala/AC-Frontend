@@ -1,105 +1,48 @@
 import * as React from 'react';
+import css from './Filter.module.css'
 // ====== IMPORT MUI COMPONENTS =========== //
-import SwipeableViews from 'react-swipeable-views';
-import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import { Grid } from '@mui/material';
+import { SetStateAction } from 'react';
+import { Dispatch } from 'react';
 // ================================= // 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
+
+interface Props {
+  filter:any
+  setFilter:any
 }
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  
+export default function Filter({filter , setFilter}:Props) {
+  const handleSelectChange = (event:any)=>{
+    if(filter[event.target.name][0] === ''){
+      setFilter(filter={...filter,[event.target.name]:[event.target.value]})
+    }else{
+      setFilter(filter={...filter,[event.target.name]:[...filter[event.target.name],event.target.value]})
+    }
+    console.log('filter',filter)
+  }
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
-  };
-}
-interface Props{
-  checked:{
-    all:boolean,
-    red:boolean,
-    yellow:boolean
-  },
-  setChecked:any,
-  handleChangeCheckBox:any,
-}
-export default function Filter({checked, setChecked, handleChangeCheckBox}:Props) {
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
-
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-  return (
-    <Box sx={{ /* bgcolor: 'background.paper',  */width: 500 }}>
-      <AppBar position="static" sx={{background:"#21374a"}}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor='primary'
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="Model" {...a11yProps(0)} />
-          <Tab label="Colors" {...a11yProps(1)} />
- 
-        </Tabs>
-      </AppBar>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-        style={{background:"#151f28", minHeight:'500px'}}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-        <FormGroup>
-            <FormControlLabel control={ <Checkbox {...label} sx={{"&.MuiCheckbox-root":{color:"white"}}} checked={checked.all} onChange={(e)=>handleChangeCheckBox(e)} name="all"  defaultChecked/>} label="All" sx={{color:"white"}}/>
-            <FormControlLabel control={ <Checkbox {...label} sx={{"&.MuiCheckbox-root":{color:"red"}}} checked={checked.red} onChange={(e)=>handleChangeCheckBox(e)} name="red" />} label="Red" sx={{color:"white"}}/>
-            <FormControlLabel control={ <Checkbox {...label} sx={{"&.MuiCheckbox-root":{color:"yellow"}}} checked={checked.yellow} onChange={(e)=>handleChangeCheckBox(e)} name="yellow" />} label="Yellow" sx={{color:"white"}}/>
-        </FormGroup>
-        </TabPanel>
-      </SwipeableViews>
-    </Box>
+    <Grid container sx={{width:'100%', '&.MuiGrid-item':{padding:0}, display:'flex', justifyContent:'center', margin:'1.5em 0 0 0'}}>
+      <Grid item xs={5} sx={{margin:'0 10px 0 0'}}>
+        <div className={css.boxSelect}>
+          <select name={'color'} onChange={handleSelectChange}>
+            <option value='colores_largos' selected style={{display:'none'}}>Color</option>
+            <option value={'red'}>Red</option>
+            <option value={'blue'}>Blue</option>
+            <option value={'black'}>Black</option>
+            <option value={'white'}>White</option>
+          </select>
+        </div>
+      </Grid>
+      <Grid item xs={5} sx={{margin:'0 0 0 10px'}}>
+        <div className={css.boxSelect}>
+          <select name={'tags'}  onChange={handleSelectChange}>
+            <option value='colores_largos' selected style={{display:'none'}}>Waist</option>
+            <option value={'xs'}>XS</option>
+            <option value={'s'}>S</option>
+            <option value={'m'}>M</option>
+            <option value={'l'}>L</option>
+          </select>
+        </div>
+      </Grid>
+    </Grid>
   );
 }
