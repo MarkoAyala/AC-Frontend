@@ -1,19 +1,25 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
-import { Images, ImagesTemplate } from "../Interfaces/interfaceImages";
+import { Images } from "../Interfaces/interfaceImages";
 import { AsyncThunk } from "@reduxjs/toolkit";
 
+export const ImagesTemplate = {
+    _id:'',
+    name:'',
+    url:'',
+    product_id:''
+}
 
 interface InitialState {
-    images:Array<Images>
+    images:any
 }
 
 const initialState:InitialState = {
-    images:[ImagesTemplate]
+    images:[],
 }
 
-export const fetchImages:AsyncThunk<any , void , {}> = createAsyncThunk(
-    'images/GETimages',
+export const fetchImages = createAsyncThunk(
+    "images/GETimages",
     async()=> {
         try{
             const response = (await axios('/images')).data;
@@ -32,7 +38,6 @@ export const imagesSlice = createSlice({
     name:'images',
     initialState,
     reducers:{
-
     },
     extraReducers:(builder) => {
         builder.addCase(fetchImages.fulfilled, (state,action)=>{

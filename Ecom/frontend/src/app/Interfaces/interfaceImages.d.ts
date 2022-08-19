@@ -4,10 +4,3 @@ export interface Images{
     url:string
     product_id:string
 }
-
-export const ImagesTemplate = {
-    _id:'',
-    name:'',
-    url:'',
-    product_id:''
-}
