@@ -378,9 +378,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
                 setColors(colors=[...colors, el])
                 add=false;
               }
-              if(property === 'all'){
-                return el
-              }
           }
         })
       }
@@ -390,9 +387,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
               if(property !=='all' && e.target.value === property){
                 setColors(colors=[...colors, el])
                 add=false;
-              }
-              if(property === 'all'){
-                return el
               }
           }
         })
@@ -409,42 +403,10 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
   useMemo(()=>{
 
     setColors(colors.filter((e:any)=>e!== ''))
-    console.log('colors',colors)
   },[])
 
 
   const handleChangeColor = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-
-    
-  /*   setUpdateStock((prevState:any)=>{
-
-      if(e.target.id === 'code'){
-        return [{...prevState[0], stock:
-          prevState[0].stock.map((el:any)=>{
-            for(let property in el[0]){
-              if(property === e.target.name){
-                return [{[property]:{...el[0][property], [e.target.id]:e.target.value}}]
-              }else{
-                return el
-              }
-            }
-          })
-        }]
-      }else{
-        return [{...prevState[0], stock:
-          prevState[0].stock.map((el:any)=>{
-            for(let property in el[0]){
-              if(property === e.target.name){
-                return [{[property]:{...el[0][property], [e.target.id]:parseInt(`${e.target.value}`)}}]
-              }else{
-                return el
-              }
-            }
-          })
-        }]
-      }
-    }) */
-
     setColors((prevState:any)=>{
       return prevState.map((ele:any)=>{
         for(let property in ele[0]){
@@ -456,7 +418,6 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         }
       })
     })
-
   }
   return (
     <Grid
@@ -499,7 +460,7 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
                 },
               }}
             >
-              {renderStock.length > 1
+              {renderStock.length > 0
                 ? renderStock.map((stocked: any) => {
                     return (
                       <MenuItem value={stocked._id}>{stocked.name}</MenuItem>
