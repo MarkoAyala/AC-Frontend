@@ -21,7 +21,7 @@ export default function Filter({filter , setFilter}:Props) {
   }
   return (
     <Grid container sx={{width:'100%', '&.MuiGrid-item':{padding:0}, display:'flex', justifyContent:'center', margin:'1.5em 0 0 0'}}>
-      <Grid item xs={5} sx={{margin:'0 10px 0 0'}}>
+      <Grid item xs={5} sm={5} md={5} xl={3} lg={2} sx={{margin:'0 10px 0 0'}}>
         <div className={css.boxSelect}>
           <select name={'color'} onChange={handleSelectChange}>
             <option value='colores_largos' selected style={{display:'none'}}>Color</option>
@@ -32,10 +32,10 @@ export default function Filter({filter , setFilter}:Props) {
           </select>
         </div>
       </Grid>
-      <Grid item xs={5} sx={{margin:'0 0 0 10px'}}>
+      <Grid item xs={5} sm={5} md={5} xl={3} lg={2} sx={{margin:'0 0 0 10px'}}>
         <div className={css.boxSelect}>
           <select name={'tags'}  onChange={handleSelectChange}>
-            <option value='colores_largos' selected style={{display:'none'}}>Waist</option>
+            <option value='colores_largos' selected style={{display:'none'}}>Size</option>
             <option value={'xs'}>XS</option>
             <option value={'s'}>S</option>
             <option value={'m'}>M</option>

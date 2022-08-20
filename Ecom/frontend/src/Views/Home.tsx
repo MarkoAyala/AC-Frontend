@@ -12,11 +12,13 @@ import CarritoAndFavorito from "../Components/CarAndFavoriteIcons/CarritoAndFavo
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
 import Filter from "../Components/Filters/Filter";
+import { fetchProducts } from "../app/Reducers/productSlice";
 import { fetchImages } from "../app/Reducers/ImagesSlice";
 function Home() {
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const dispatch = useAppDispatch();
-  const fetchImagenes= useAppSelector((state)=> state.images.images)
+  const fetchImagenes= useAppSelector((state)=> state.images.images);
+  const fetchProductos = useAppSelector((state)=> state.products.products)
   // Filtros //
   let [filter, setFilter] = React.useState({
     color:[''],
@@ -25,8 +27,11 @@ function Home() {
   //=========//
   useEffect(()=>{
     dispatch(fetchImages());
+    dispatch(fetchProducts());
   },[])
-
+useEffect(()=>{
+  console.log(fetchProductos)
+},[fetchProductos])
   return (
     <Grid
       container
@@ -59,10 +64,9 @@ function Home() {
           <CardsMOW imagen={CardWomen}/>
         </Grid>
       </Grid>
-
       {/* Filtro y cards */}
         <Filter filter={filter} setFilter={setFilter}/>
-
+      <div style={{width:'100%', border:'1px solid var(--azulOscuro)', margin:'2em 0 2em 0'}}></div>
 
     </Grid>
   );

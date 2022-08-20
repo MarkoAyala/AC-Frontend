@@ -1,14 +1,5 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
-import { Images } from "../Interfaces/interfaceImages";
-import { AsyncThunk } from "@reduxjs/toolkit";
-
-export const ImagesTemplate = {
-    _id:'',
-    name:'',
-    url:'',
-    product_id:''
-}
 
 interface InitialState {
     images:any
