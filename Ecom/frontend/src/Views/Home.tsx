@@ -8,12 +8,17 @@ import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
 import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
+import ProductsCards from "../Components/Home/ProductsCards/ProductsCards";
 import CarritoAndFavorito from "../Components/CarAndFavoriteIcons/CarritoAndFavorito";
+import PaidIcon from '@mui/icons-material/Paid';
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
+import {Box} from "@mui/material";
 import Filter from "../Components/Filters/Filter";
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { fetchProducts } from "../app/Reducers/productSlice";
 import { fetchImages } from "../app/Reducers/ImagesSlice";
+import { Typography } from "@mui/material";
 function Home() {
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const dispatch = useAppDispatch();
@@ -68,6 +73,22 @@ useEffect(()=>{
         <Filter filter={filter} setFilter={setFilter}/>
       <div style={{width:'100%', border:'1px solid var(--azulOscuro)', margin:'2em 0 2em 0'}}></div>
 
+      {/* Solo para celular por el momento */}
+      <Grid container width={'100%'} sx={{display:'flex', justifyContent:'center'}}>
+        <Grid item xs={8} sx={{display:'flex', justifyContent:'space-around', margin:'10px 0px 10px 0px'}}>
+          <ShoppingCartCheckoutIcon color='success'/>
+          <Box width={'80%'}>
+            <Typography variant="subtitle2" sx={{color:'green'}}>Envios gratis a todo el país</Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={8} sx={{display:'flex', justifyContent:'space-around', margin:'10px 0px 10px 0px'}}>
+          <PaidIcon color='success'/>
+          <Box width={'80%'}>
+            <Typography variant="subtitle2" sx={{color:'green'}}>10% de descuento pagando en efectivo!</Typography>
+          </Box>
+        </Grid>
+      </Grid>
+      <ProductsCards fetchProductos={fetchProductos} />
     </Grid>
   );
 }
