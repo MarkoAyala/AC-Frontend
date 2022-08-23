@@ -34,9 +34,9 @@ function Home() {
     dispatch(fetchImages());
     dispatch(fetchProducts());
   },[])
-/* useEffect(()=>{
+useEffect(()=>{
   console.log(fetchProductos)
-},[fetchProductos]) */
+},[fetchProductos])
   return (
     <Grid
       container
