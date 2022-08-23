@@ -34,9 +34,9 @@ function Home() {
     dispatch(fetchImages());
     dispatch(fetchProducts());
   },[])
-useEffect(()=>{
+/* useEffect(()=>{
   console.log(fetchProductos)
-},[fetchProductos])
+},[fetchProductos]) */
   return (
     <Grid
       container
@@ -75,15 +75,15 @@ useEffect(()=>{
 
       {/* Solo para celular por el momento */}
       <Grid container width={'100%'} sx={{display:'flex', justifyContent:'center'}}>
-        <Grid item xs={8} sx={{display:'flex', justifyContent:'space-around', margin:'10px 0px 10px 0px'}}>
+        <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px'}}>
           <ShoppingCartCheckoutIcon color='success'/>
-          <Box width={'80%'}>
+          <Box width={'80%'} margin={{xs:'none',md:'0px 0px 0px 1em'}}>
             <Typography variant="subtitle2" sx={{color:'green'}}>Envios gratis a todo el país</Typography>
           </Box>
         </Grid>
-        <Grid item xs={8} sx={{display:'flex', justifyContent:'space-around', margin:'10px 0px 10px 0px'}}>
+        <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px'}}>
           <PaidIcon color='success'/>
-          <Box width={'80%'}>
+          <Box width={'80%'} margin={{xs:'none',md:'0px 0px 0px 1em'}}>
             <Typography variant="subtitle2" sx={{color:'green'}}>10% de descuento pagando en efectivo!</Typography>
           </Box>
         </Grid>
