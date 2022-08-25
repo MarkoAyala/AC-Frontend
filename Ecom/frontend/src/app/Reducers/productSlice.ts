@@ -7,7 +7,7 @@ interface InitialState {
 }
 
 const initialState:InitialState = {
-    products:[]
+    products:[],
 }
 
 export const fetchProducts = createAsyncThunk(

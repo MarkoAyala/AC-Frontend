@@ -3,7 +3,6 @@ import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useAuth0 } from '@auth0/auth0-react';
 // =========== IMAGENES ============ //
-import Portada from '../img/portada.jpg';
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
@@ -14,6 +13,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
 import {Box} from "@mui/material";
+import Skeleton from '@mui/material/Skeleton';
 import Filter from "../Components/Filters/Filter";
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { fetchProducts } from "../app/Reducers/productSlice";
@@ -24,6 +24,7 @@ function Home() {
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
+  let [loading, setLoading] = React.useState(true);
   // Filtros //
   let [filter, setFilter] = React.useState({
     color:undefined,
@@ -33,14 +34,13 @@ function Home() {
   //=========//
   useEffect(()=>{
     dispatch(fetchImages());
-    dispatch(fetchProducts({tags:undefined, color:undefined , size:undefined}));
+    dispatch(fetchProducts({tags:undefined, color:undefined , size:undefined})).then(()=> setLoading(false))
   },[])
-useEffect(()=>{
-  console.log(filter)
-},[filter])
+
 useMemo(()=>{
   if(filter.color || filter.size || filter.tags){
-    dispatch(fetchProducts(filter))
+    setLoading(true)
+    dispatch(fetchProducts(filter)).then(()=>setLoading(false))
   }
 },[filter])
   return (
@@ -56,14 +56,28 @@ useMemo(()=>{
         ):null
       }
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center", "&.MuiGrid-item":{padding:'0px'}, margin:'1.5em 0 0 0'}}>
-
+      {
+        loading?(
+          <>
+          <Grid item sm={10} md={9} lg={9} xl={7} xs={12} display={{xs:'none', sm:'flex'}}>
+            <Skeleton variant="rectangular" width={'100%'} height={'600px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Grid>
+          <Grid item xs={9} sm={11} display={{xs:'flex', sm:'none'}}>
+          <Skeleton variant="rectangular" width={'100%'} height={'525px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Grid>
+          </>
+        ):(
+          <>
       <Grid item sm={10} md={9} lg={9} xl={7} xs={12} display={{xs:'none', sm:'flex'}}>
         <img src={fetchImagenes[0]?.url?fetchImagenes[0].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
       </Grid>
       <Grid item xs={9} sm={11} display={{xs:'flex', sm:'none'}}>
         <img src={fetchImagenes[3]?.url?fetchImagenes[3].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
       </Grid>
+          </>
       
+        )
+      }
       </Grid>
       
 
@@ -94,7 +108,7 @@ useMemo(()=>{
           </Box>
         </Grid>
       </Grid>
-      <ProductsCards fetchProductos={fetchProductos} />
+      <ProductsCards fetchProductos={fetchProductos} loading={loading}/>
     </Grid>
   );
 }

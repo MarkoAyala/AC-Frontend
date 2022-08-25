@@ -10,7 +10,7 @@ import MuiAccordionSummary, {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import { Grid , Box } from '@mui/material';
+import { Grid , Box, Skeleton } from '@mui/material';
 
 interface Productos {
   description:string
@@ -35,6 +35,7 @@ interface Productos {
 }
 interface Props {
   fetchProductos:Array<Productos>
+  loading:boolean
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -77,7 +78,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 
-function ProductsCards({fetchProductos}:Props) {
+function ProductsCards({fetchProductos, loading}:Props) {
   let [images , setImages] = React.useState<any>([{default:''}]);
 
   const handleChangeImage = (img : string | undefined , i : number) => {
@@ -96,10 +97,45 @@ function ProductsCards({fetchProductos}:Props) {
       }))
     }
   },[fetchProductos])
+  console.log(window.visualViewport.width)
   //useEffect(()=>console.log("estamos aqui",imagesPc),[imagesPc])
   return (
     <Grid container width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
-        {fetchProductos[0]?.name?(
+        {
+        loading?(
+          <>
+          <Grid key={'242'} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'block', md:'none'}}}>
+            <Skeleton variant="rectangular" width={'100%'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Grid>
+          <Grid key={'2425'} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'block', md:'none'}}}>
+          <Skeleton variant="rectangular" width={'100%'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+        </Grid>
+        <Box key={'24222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+            <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Box>
+          <Box key={'242522'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+          <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+        </Box>
+        <Box key={'242222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+            <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Box>
+          <Box key={'2425222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+          <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+        </Box>
+        {
+          window.visualViewport.width<1212?(
+            <>
+          <Box key={'242222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+            <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Box>
+          <Box key={'2425222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
+          <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
+        </Box>
+            </>
+          ):null
+        }
+          </>
+        ):fetchProductos[0]?.name?(
           fetchProductos.map((e , i)=>{
             let price = e.price.toString().split("")
             let aux = price.splice(2,0,'.');
