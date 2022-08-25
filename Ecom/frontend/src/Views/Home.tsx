@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -26,17 +26,23 @@ function Home() {
   const fetchProductos = useAppSelector((state)=> state.products.products)
   // Filtros //
   let [filter, setFilter] = React.useState({
-    color:[''],
-    tags:['']
+    color:undefined,
+    size:undefined,
+    tags:undefined
   })
   //=========//
   useEffect(()=>{
     dispatch(fetchImages());
-    dispatch(fetchProducts());
+    dispatch(fetchProducts({tags:undefined, color:undefined , size:undefined}));
   },[])
 useEffect(()=>{
-  console.log(fetchProductos)
-},[fetchProductos])
+  console.log(filter)
+},[filter])
+useMemo(()=>{
+  if(filter.color || filter.size || filter.tags){
+    dispatch(fetchProducts(filter))
+  }
+},[filter])
   return (
     <Grid
       container
@@ -63,10 +69,10 @@ useEffect(()=>{
 
       <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
-         <CardsMOW imagen={CardMan}/>
+         <CardsMOW key='123' imagen={CardMan} setFilter={setFilter} name={'man'}/>
         </Grid>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"start"}}>
-          <CardsMOW imagen={CardWomen}/>
+          <CardsMOW key='1234' imagen={CardWomen} setFilter={setFilter} name={'woman'}/>
         </Grid>
       </Grid>
       {/* Filtro y cards */}

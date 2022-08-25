@@ -79,7 +79,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 function ProductsCards({fetchProductos}:Props) {
   let [images , setImages] = React.useState<any>([{default:''}]);
-  let [imagesPc, setImagesPc] = React.useState<any>([{img:''}]);
 
   const handleChangeImage = (img : string | undefined , i : number) => {
     setImages(images=images.map((el:any, index:number)=>{
@@ -91,16 +90,13 @@ function ProductsCards({fetchProductos}:Props) {
     }))
   }
   useMemo(()=>{
-    if(fetchProductos.length>1){
+    if(fetchProductos.length>0){
       setImages(images=fetchProductos.map((e)=>{
         return {...e.url, default:e.url.img1}
       }))
-      setImagesPc(imagesPc=fetchProductos.map((e:any)=>{
-        Object.keys(e.url).map((keys:any)=>{return {[keys]:e.url[keys]}})
-      }))
     }
   },[fetchProductos])
-  useEffect(()=>console.log("estamos aqui",imagesPc),[imagesPc])
+  //useEffect(()=>console.log("estamos aqui",imagesPc),[imagesPc])
   return (
     <Grid container width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
         {fetchProductos[0]?.name?(
