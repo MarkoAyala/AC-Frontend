@@ -1,13 +1,15 @@
 import React, { useEffect, useMemo } from "react";
 import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
 // =========== IMAGENES ============ //
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
 import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
+import TittleEfect from "../Components/TitleEffect/TittleEfect";
 import ProductsCards from "../Components/Home/ProductsCards/ProductsCards";
+import ListFilter from "../Components/Home/ListFilter/ListFilter";
 import CarritoAndFavorito from "../Components/CarAndFavoriteIcons/CarritoAndFavorito";
 import PaidIcon from '@mui/icons-material/Paid';
 // =========== Import MUI COMPONENTS ============ //
@@ -79,8 +81,7 @@ useMemo(()=>{
         )
       }
       </Grid>
-      
-
+        <TittleEfect text="Filtros:" align='center' margin="3rem 0rem -2rem 0rem" width={'100%'} fontSize={'60px'}/>
       <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
          <CardsMOW key='123' imagen={CardMan} setFilter={setFilter} name={'man'}/>
@@ -106,6 +107,9 @@ useMemo(()=>{
           <Box width={'80%'} margin={{xs:'none',md:'0px 0px 0px 1em'}}>
             <Typography variant="subtitle2" sx={{color:'green'}}>10% de descuento pagando en efectivo!</Typography>
           </Box>
+        </Grid>
+        <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px', minHeight:'42px'}}>
+          <ListFilter filter={filter}/>
         </Grid>
       </Grid>
       <ProductsCards fetchProductos={fetchProductos} loading={loading}/>

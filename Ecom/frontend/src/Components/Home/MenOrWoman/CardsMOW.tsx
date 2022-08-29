@@ -11,12 +11,12 @@ function CardsMOW({imagen, setFilter , name}:Props) {
   const handleClick = ()=>{
     if(name==='man'){
       setFilter((prevState:any)=>{
-        return {...prevState, tags:'man'}
+        return {...prevState, tags:'hombre'}
       })
     }
     if(name ==='woman'){
       setFilter((prevState:any)=>{
-        return {...prevState, tags:'woman'}
+        return {...prevState, tags:'mujer'}
       })
     }
   }
