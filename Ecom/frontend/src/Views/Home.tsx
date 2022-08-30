@@ -28,7 +28,7 @@ function Home() {
   const fetchProductos = useAppSelector((state)=> state.products.products)
   let [loading, setLoading] = React.useState(true);
   // Filtros //
-  let [filter, setFilter] = React.useState({
+  let [filter, setFilter] = React.useState<{color:string|undefined , size:string|undefined , tags:string|undefined}>({
     color:undefined,
     size:undefined,
     tags:undefined
@@ -40,10 +40,8 @@ function Home() {
   },[])
 
 useMemo(()=>{
-  if(filter.color || filter.size || filter.tags){
     setLoading(true)
     dispatch(fetchProducts(filter)).then(()=>setLoading(false))
-  }
 },[filter])
   return (
     <Grid
@@ -109,7 +107,7 @@ useMemo(()=>{
           </Box>
         </Grid>
         <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px', minHeight:'42px'}}>
-          <ListFilter filter={filter}/>
+          <ListFilter filter={filter} setFilter={setFilter}/>
         </Grid>
       </Grid>
       <ProductsCards fetchProductos={fetchProductos} loading={loading}/>

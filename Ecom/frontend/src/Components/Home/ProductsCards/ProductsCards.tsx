@@ -91,13 +91,12 @@ function ProductsCards({fetchProductos, loading}:Props) {
     }))
   }
   useMemo(()=>{
-    if(fetchProductos.length>0){
+    if(fetchProductos?.length>0){
       setImages(images=fetchProductos.map((e)=>{
         return {...e.url, default:e.url.img1}
       }))
     }
   },[fetchProductos])
-  console.log(window.visualViewport.width)
   //useEffect(()=>console.log("estamos aqui",imagesPc),[imagesPc])
   return (
     <Grid container width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
@@ -228,7 +227,7 @@ function ProductsCards({fetchProductos, loading}:Props) {
                   </AccordionSummary>
                   <AccordionDetails>
                   {
-                    e.stock.stock.map((el:any)=>{
+                    e.stock?.stock.map((el:any)=>{
                       for(let property in el[0]){
                         if((el[0][property].xs>0 || el[0][property].s>0 || el[0][property].m>0 || el[0][property].l>0 || el[0][property].xl>0 || el[0][property].xxl>0) && property !== 'all' ){
                           let color = el[0][property].code

@@ -10,7 +10,12 @@ interface Props {
 }
 export default function Filter({filter , setFilter}:Props) {
   const handleSelectChange = (event:any)=>{
+    if(event.target.value ==='Todos'){
+      console.log(typeof event.target.value)
+      setFilter(filter={...filter,[event.target.name]:undefined});
+    }else{
       setFilter(filter={...filter,[event.target.name]:event.target.value});
+    }
     }
   
   return (
@@ -19,33 +24,34 @@ export default function Filter({filter , setFilter}:Props) {
         <div className={css.boxSelect}>
           <select name={'color'} onChange={handleSelectChange}>
             <option value='colores_largos' selected style={{display:'none'}}>Color</option>
-            <option value={'red'}>Rojo</option>
-            <option value={'board'}>Bordo</option>
-            <option value={'blue'}>Azul</option>
-            <option value={'black'}>Negro</option>
-            <option value={'white'}>Blanco</option>
+            <option value={undefined}>Todos</option>
+            <option value={'rojo'}>Rojo</option>
+            <option value={'bordo'}>Bordo</option>
+            <option value={'azul'}>Azul</option>
+            <option value={'negro'}>Negro</option>
+            <option value={'blanco'}>Blanco</option>
             <option value={'beige'}>Beige</option>
-            <option value={'gray'}>Gris</option>
-            <option value={'french_blue'}>Azul francia</option>
-            <option value={'navy_blue'}>Azul marino</option>
-            <option value={'silver'}>Plata</option>
-            <option value={'chalk'}>Tiza</option>
-            <option value={'yellow'}>Amarillo</option>
-            <option value={'copper'}>Cobre</option>
-            <option value={'golden'}>Dorado</option>
-            <option value={'brown'}>Marrón</option>
-            <option value={'havana_brown'}>Marrón habana</option>
-            <option value={'brown_sole'}>Marrón suela</option>
-            <option value={'coffe_brown'}>Marrón cafe</option>
-            <option value={'green'}>Verde</option>
-            <option value={'dark_green'}>Verde oscuro</option>
-            <option value={'light_green'}>Verde claro</option>
-            <option value={'mint_green'}>Verde menta</option>
-            <option value={'olive_green'}>Verde oliva</option>
-            <option value={'cherry'}>Cereza</option>
-            <option value={'fuchsia'}>Fucsia</option>
+            <option value={'gris'}>Gris</option>
+            <option value={'azul_francia'}>Azul francia</option>
+            <option value={'azul_marino'}>Azul marino</option>
+            <option value={'plata'}>Plata</option>
+            <option value={'tiza'}>Tiza</option>
+            <option value={'amarillo'}>Amarillo</option>
+            <option value={'cobre'}>Cobre</option>
+            <option value={'dorado'}>Dorado</option>
+            <option value={'marron'}>Marrón</option>
+            <option value={'marron-havana'}>Marrón havana</option>
+            <option value={'marron-suela'}>Marrón suela</option>
+            <option value={'marron-cafe'}>Marrón cafe</option>
+            <option value={'verde'}>Verde</option>
+            <option value={'verde-oscuro'}>Verde oscuro</option>
+            <option value={'verde-claro'}>Verde claro</option>
+            <option value={'verde-menta'}>Verde menta</option>
+            <option value={'verde-oliva'}>Verde oliva</option>
+            <option value={'cereza'}>Cereza</option>
+            <option value={'fucsia'}>Fucsia</option>
             <option value={'camel'}>Camel</option>
-            <option value={'turquoise'}>Turquesa</option>
+            <option value={'turquesa'}>Turquesa</option>
           </select>
         </div>
       </Grid>
@@ -53,6 +59,7 @@ export default function Filter({filter , setFilter}:Props) {
         <div className={css.boxSelect}>
           <select name={'size'}  onChange={handleSelectChange}>
             <option value='colores_largos' selected style={{display:'none'}}>Size</option>
+            <option value={undefined}>Todos</option>
             <option value={'xs'}>XS</option>
             <option value={'s'}>S</option>
             <option value={'m'}>M</option>

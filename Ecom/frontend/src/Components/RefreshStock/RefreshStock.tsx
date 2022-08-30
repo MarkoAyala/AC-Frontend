@@ -17,9 +17,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
     _id:'',
     stock:[
       [{
-        black:{
+        negro:{
           code:'#000000',
-          stock_black:0,
+          stock_negro:0,
           xs:0,
           s:0,
           m:0,
@@ -29,9 +29,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        white:{
+        blanco:{
           code:'#000000',
-          stock_white:0,
+          stock_blanco:0,
           xs:0,
           s:0,
           m:0,
@@ -53,9 +53,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        gray:{
+        gris:{
           code:'#000000',
-          stock_gray:0,
+          stock_gris:0,
           xs:0,
           s:0,
           m:0,
@@ -65,9 +65,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        french_blue:{
+        azul_francia:{
           code:'#000000',
-          stock_french_blue:0,
+          stock_azul_francia:0,
           xs:0,
           s:0,
           m:0,
@@ -77,9 +77,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        navy_blue:{
+        azul_marino:{
           code:'#000000',
-          stock_navy_blue:0,
+          stock_azul_marino:0,
           xs:0,
           s:0,
           m:0,
@@ -89,9 +89,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        blue:{
+        azul:{
           code:'#000000',
-          stock_blue:0,
+          stock_azul:0,
           xs:0,
           s:0,
           m:0,
@@ -101,9 +101,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        silver:{
+        plata:{
           code:'#000000',
-          stock_silver:0,
+          stock_plata:0,
           xs:0,
           s:0,
           m:0,
@@ -113,9 +113,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        chalk:{
+        tiza:{
           code:'#000000',
-          stock_chalk:0,
+          stock_tiza:0,
           xs:0,
           s:0,
           m:0,
@@ -125,9 +125,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        yellow:{
+        amarillo:{
           code:'#000000',
-          stock_yellow:0,
+          stock_amarillo:0,
           xs:0,
           s:0,
           m:0,
@@ -137,9 +137,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        golden:{
+        dorado:{
           code:'#000000',
-          stock_golden:0,
+          stock_dorado:0,
           xs:0,
           s:0,
           m:0,
@@ -149,9 +149,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        brown:{
+        marron:{
           code:'#000000',
-          stock_brown:0,
+          stock_marron:0,
           xs:0,
           s:0,
           m:0,
@@ -161,9 +161,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        havana_brown:{
+        marron_havana:{
           code:'#000000',
-          stock_havana_brown:0,
+          stock_marron_havana:0,
           xs:0,
           s:0,
           m:0,
@@ -173,9 +173,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        brown_sole:{
+        marron_suela:{
           code:'#000000',
-          stock_brown_sole:0,
+          stock_marron_suela:0,
           xs:0,
           s:0,
           m:0,
@@ -185,9 +185,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        coffee_brown:{
+        marron_cafe:{
           code:'#000000',
-          stock_coffee_brown:0,
+          stock_marron_cafe:0,
           xs:0,
           s:0,
           m:0,
@@ -197,9 +197,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        board:{
+        bordo:{
           code:'#000000',
-          stock_board:0,
+          stock_bordo:0,
           xs:0,
           s:0,
           m:0,
@@ -209,9 +209,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        red:{
+        rojo:{
           code:'#000000',
-          stock_red:0,
+          stock_rojo:0,
           xs:0,
           s:0,
           m:0,
@@ -221,9 +221,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        green:{
+        verde:{
           code:'#000000',
-          stock_green:0,
+          stock_verde:0,
           xs:0,
           s:0,
           m:0,
@@ -233,9 +233,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        dark_green:{
+        verde_oscuro:{
           code:'#000000',
-          stock_dark_green:0,
+          stock_verde_oscuro:0,
           xs:0,
           s:0,
           m:0,
@@ -245,9 +245,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        light_green:{
+        verde_claro:{
           code:'#000000',
-          stock_light_green:0,
+          stock_verde_claro:0,
           xs:0,
           s:0,
           m:0,
@@ -257,9 +257,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        mint_green:{
+        verde_menta:{
           code:'#000000',
-          stock_mint_green:0,
+          stock_verde_menta:0,
           xs:0,
           s:0,
           m:0,
@@ -269,9 +269,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        olive_green:{
+        verde_oliva:{
           code:'#000000',
-          stock_olive_green:0,
+          stock_verde_oliva:0,
           xs:0,
           s:0,
           m:0,
@@ -281,9 +281,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        cherry:{
+        cereza:{
           code:'#000000',
-          stock_cherry:0,
+          stock_cereza:0,
           xs:0,
           s:0,
           m:0,
@@ -293,9 +293,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        fuchsia:{
+        fucsia:{
           code:'#000000',
-          stock_fuchsia:0,
+          stock_fucsia:0,
           xs:0,
           s:0,
           m:0,
@@ -305,9 +305,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        purple:{
+        morado:{
           code:'#000000',
-          stock_purple:0,
+          stock_morado:0,
           xs:0,
           s:0,
           m:0,
@@ -317,9 +317,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        copper:{
+        cobre:{
           code:'#000000',
-          stock_copper:0,
+          stock_cobre:0,
           xs:0,
           s:0,
           m:0,
@@ -341,9 +341,9 @@ function RefreshStock({ renderStock, updateStock, setUpdateStock, errorStock, co
         },
       }],
       [{
-        turquoise:{
+        turquesa:{
           code:'#000000',
-          stock_turquoise:0,
+          stock_turquesa:0,
           xs:0,
           s:0,
           m:0,
