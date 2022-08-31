@@ -1,4 +1,5 @@
 import React from "react";
+import TittleEfect from "../../TitleEffect/TittleEfect";
 // ========= IMPORT MUI IMG ============= // 
 import mapPc from '../../../img/mapPc.png';
 import logo from '../../../img/logo.jpg';
@@ -57,7 +58,7 @@ export default function Footer(){
             <Grid item xs={9} sx={{display:'flex',justifyContent:'center', marginTop:'1rem'}}>
                     <div style={{width:'40%', border:'8px solid white',display:'flex',justifyContent:'center', position:'relative', background:'white', borderRadius:'8px',boxShadow:'1px 10px 20px black',zIndex:10}}><div style={{width:'60px', height:'60px', background:'white', position:'absolute', borderRadius:'100%',margin:'-1.9em',boxShadow:'0px 0px 4px black'}}></div></div>
             </Grid>
-            
+            <TittleEfect text='Contacto:' align='center' margin="3.5rem 0 -1.6rem 0" width={'100%'} fontSize='30px' />
             <Grid item xs={9} sx={{display:'flex',justifyContent:'center', marginTop:'2rem'}}>
                 <Box sx={{maxWidth:'343px', overflow:'hidden'}}>
                     <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
@@ -94,7 +95,7 @@ export default function Footer(){
             <Grid item xs={9} sx={{display:'flex',justifyContent:'center', marginTop:'1rem'}}>
                     <div style={{width:'90%', border:'5px solid white',display:'flex',justifyContent:'center', position:'relative', background:'white', borderRadius:'8px',boxShadow:'1px 10px 20px black',zIndex:10}}><div style={{width:'40px', height:'40px', background:'white', position:'absolute', borderRadius:'100%',margin:'-1.4em',boxShadow:'0px 0px 4px black'}}></div></div>
             </Grid>
-            
+            <TittleEfect text='Contacto:' align='center' margin="2rem 0 -1.6rem 0" width={'100%'} fontSize='25px' />
             <Grid item xs={12} sx={{display:'flex',justifyContent:'center', marginTop:'2rem'}}>
                 <Box sx={{maxWidth:'343px', overflow:'hidden'}}>
                     <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>

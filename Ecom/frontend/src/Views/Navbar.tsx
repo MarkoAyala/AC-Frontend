@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-scroll";
 // ========= CSS ================//
 import css from  '../Components/Navbar/Navbar.module.css';
 // ========== Auth0 ============= //
@@ -98,7 +99,7 @@ const Navbar = ({loadSkeleton}:Props) => {
               textDecoration: 'none',
             }}
           >
-            TITULARDO
+            ALTO CUERO
           </Typography>
           </Box>
 
@@ -127,11 +128,15 @@ const Navbar = ({loadSkeleton}:Props) => {
             ):null
           }
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
-          <div className="btn fromCenter">Home</div>
-          <div className="btn fromCenter">From Center</div>
-          <div className="btn fromCenter">From Center</div>
-          <div className="btn fromCenter">From Center</div>
-          <div className="btn fromCenter">From Center</div>
+          <Link spy={true} to='Camperas' smooth={true}>
+            <div className="btn fromCenter">Camperas</div>
+          </Link>
+          <Link spy={true} to='Ubicacion' smooth={true}>
+            <div className="btn fromCenter">Ubicación</div>
+          </Link>
+          <Link spy={true} to='Contacto' smooth={true}>
+            <div className="btn fromCenter">Contacto</div>
+          </Link>
           </Box>
 
             {isLoading || loadSkeleton?(

@@ -174,8 +174,31 @@ function ProductsCards({fetchProductos, loading}:Props) {
                     </div>
                   ):null
                 }
-                <h2 style={{fontSize:'15px'}}>{e.name} o mejor dicho de mujer</h2>
+                <h2 style={{fontSize:'15px'}}>{e.name}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Colores:</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{padding:'5px 0px 10px 0px'}}>
+                  {
+                    e.stock?.stock.map((el:any)=>{
+                      for(let property in el[0]){
+                        if((el[0][property].xs>0 || el[0][property].s>0 || el[0][property].m>0 || el[0][property].l>0 || el[0][property].xl>0 || el[0][property].xxl>0) && property !== 'all' ){
+                          let color = el[0][property].code
+                          return (
+                            <div style={{width:'14px', height:'14px', borderRadius:'4px', background:color, margin:'2px 2px 2px 2px'}}></div>
+                          )
+                        }
+                      }
+                    })
+                  }
+                  </AccordionDetails>
+              </Accordion>
               </Box>
             </Grid>
 

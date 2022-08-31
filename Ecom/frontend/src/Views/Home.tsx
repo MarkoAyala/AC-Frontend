@@ -110,12 +110,15 @@ useMemo(()=>{
             <Typography variant="subtitle2" sx={{color:'green'}}>10% de descuento pagando en efectivo!</Typography>
           </Box>
         </Grid>
-        <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px', minHeight:'42px'}}>
+        <Grid item xs={12} sm={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px', minHeight:'42px'}}>
           <ListFilter filter={filter} setFilter={setFilter}/>
         </Grid>
       </Grid>
+      <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
       <ProductsCards fetchProductos={fetchProductos} loading={loading}/>
+      <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
+      <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>
     </Grid>
   );
 }

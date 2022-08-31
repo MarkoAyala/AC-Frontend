@@ -24,27 +24,50 @@ export default function ListFilter({filter, setFilter}:Props) {
         setFilter(filter={...filter, size:undefined})
     }
   };
-if(filter.color?.indexOf('_') !== -1 && filter.color !== undefined){
-    let text = filter.color.split('_')
+if((filter.color?.indexOf('_') !== -1 || filter.color?.indexOf('-') !== -1 ) && filter.color !== undefined){
+    if(filter.color?.indexOf('-') !== -1){
+    let text = filter.color.split('-').join(" ")
     return (
         <Stack direction="row" spacing={1}>
         {
-            filter.color?(
-                <Chip label={filter.color.toUpperCase()} color='info' onDelete={(e)=>handleDelete('COLOR')} />
-            ):null
-        }
-        {
             filter.tags?(
                 <Chip label={filter.tags.toUpperCase()} color='info' onDelete={(e)=>handleDelete('TAGS')} />
-            ):null
-        }
+                ):null
+            }
         {
             filter.size?(
                 <Chip label={filter.size.toUpperCase()} color='info' onDelete={(e)=>handleDelete('SIZE')} />
+                ):null
+        }
+        {
+            filter.color?(
+                 <Chip label={text.toUpperCase()} color='info' onDelete={(e)=>handleDelete('COLOR')} />
             ):null
         }
     </Stack>
     )
+    }else{
+        let text = filter.color.split('_').join(" ")
+        return (
+            <Stack direction="row" spacing={1}>
+            {
+                filter.color?(
+                    <Chip label={text.toUpperCase()} color='info' onDelete={(e)=>handleDelete('COLOR')} />
+                ):null
+            }
+            {
+                filter.tags?(
+                    <Chip label={filter.tags.toUpperCase()} color='info' onDelete={(e)=>handleDelete('TAGS')} />
+                ):null
+            }
+            {
+                filter.size?(
+                    <Chip label={filter.size.toUpperCase()} color='info' onDelete={(e)=>handleDelete('SIZE')} />
+                ):null
+            }
+        </Stack>
+        )
+    }
 }else{
     return (
       <Stack direction="row" spacing={1}>
