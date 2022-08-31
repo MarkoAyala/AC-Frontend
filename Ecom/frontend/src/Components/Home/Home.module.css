@@ -1,0 +1,48 @@
+.filtro{
+   background: hsl(100%, -10%, 14%);
+   color:lightcyan;
+   font-family: 'Times New Roman', Times, serif;
+   font-size: 40px;
+   padding: 16px 25px 16px 30px;
+   position: relative;
+   border-radius: 20px;
+   box-shadow: 0 0 0 10px rgba(0,0,0,.01);
+   cursor: pointer;
+   letter-spacing: 2px;
+}
+.filtro::after{
+    position: absolute;
+    content: "";
+    top: 5px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(0.9) translateZ(0);
+    filter: blur(10px);
+    background: linear-gradient(to left,
+    /* #0000aa,
+    #00008e,
+    #000071,
+    #000055 */
+    #151f28,
+    #172430,
+    #182a3b,
+    #1a3650,
+    #174763
+    );
+        background-size:200% 200%;
+        animation: animateGlow 2s linear  infinite;
+}
+
+@keyframes animateGlow{
+    0%{
+        background-position: 0% 50%;
+    }
+    100%{
+        background-position: 200% 50%;
+    }
+}
+
+

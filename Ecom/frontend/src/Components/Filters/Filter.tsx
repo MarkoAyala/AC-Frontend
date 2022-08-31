@@ -58,7 +58,7 @@ export default function Filter({filter , setFilter}:Props) {
       <Grid item xs={5} sm={5} md={5} xl={3} lg={2} sx={{margin:'0 0 0 10px'}}>
         <div className={css.boxSelect}>
           <select name={'size'}  onChange={handleSelectChange}>
-            <option value='colores_largos' selected style={{display:'none'}}>Size</option>
+            <option value='colores_largos' selected style={{display:'none'}}>Talle</option>
             <option value={undefined}>Todos</option>
             <option value={'xs'}>XS</option>
             <option value={'s'}>S</option>

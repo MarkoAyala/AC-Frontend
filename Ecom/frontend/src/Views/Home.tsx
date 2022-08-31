@@ -81,7 +81,11 @@ useMemo(()=>{
         )
       }
       </Grid>
-        <TittleEfect text="Filtros:" align='center' margin="3rem 0rem -2rem 0rem" width={'100%'} fontSize={'60px'}/>
+      <Grid item xs={12} sx={{display:'flex', justifyContent:'center', margin:'2.4rem', padding:'0px !important'}}>
+        <Grid item xs={1} sx={{position:'absolute'}}>
+          <div className={css.filtro}>Filtros:</div>
+        </Grid>
+      </Grid>
       <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
          <CardsMOW key='123' imagen={CardMan} setFilter={setFilter} name={'man'}/>
@@ -90,11 +94,9 @@ useMemo(()=>{
           <CardsMOW key='1234' imagen={CardWomen} setFilter={setFilter} name={'woman'}/>
         </Grid>
       </Grid>
-      {/* Filtro y cards */}
         <Filter filter={filter} setFilter={setFilter}/>
       <div style={{width:'100%', border:'1px solid var(--azulOscuro)', margin:'2em 0 2em 0'}}></div>
 
-      {/* Solo para celular por el momento */}
       <Grid container width={'100%'} sx={{display:'flex', justifyContent:'center'}}>
         <Grid item xs={8} sx={{display:'flex', justifyContent:{xs:'space-around',md:'start'}, margin:'10px 0px 10px 0px'}}>
           <ShoppingCartCheckoutIcon color='success'/>
