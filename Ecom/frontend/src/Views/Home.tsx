@@ -21,6 +21,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { fetchProducts } from "../app/Reducers/productSlice";
 import { fetchImages } from "../app/Reducers/ImagesSlice";
 import { Typography } from "@mui/material";
+import Footer from "../Components/Home/Footer/Footer";
 function Home() {
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const dispatch = useAppDispatch();
@@ -55,6 +56,7 @@ useMemo(()=>{
           <CarritoAndFavorito/>
         ):null
       }
+      
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center", "&.MuiGrid-item":{padding:'0px'}, margin:'1.5em 0 0 0'}}>
       {
         loading?(
@@ -111,6 +113,7 @@ useMemo(()=>{
         </Grid>
       </Grid>
       <ProductsCards fetchProductos={fetchProductos} loading={loading}/>
+      <Footer/>
     </Grid>
   );
 }

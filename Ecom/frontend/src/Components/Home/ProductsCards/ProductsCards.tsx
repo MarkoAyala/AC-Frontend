@@ -176,7 +176,6 @@ function ProductsCards({fetchProductos, loading}:Props) {
                 }
                 <h2 style={{fontSize:'15px'}}>{e.name} o mejor dicho de mujer</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
-                <span style={{fontWeight:'100', margin:'4px 0px', fontSize:'20px'}}>100 USD</span>
               </Box>
             </Grid>
 
