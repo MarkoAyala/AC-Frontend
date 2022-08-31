@@ -81,7 +81,7 @@ useMemo(()=>{
         )
       }
       </Grid>
-      <Grid item xs={12} sx={{display:'flex', justifyContent:'center', margin:'2.4rem', padding:'0px !important'}}>
+      <Grid item xs={12} sx={{display:'flex', justifyContent:'center', margin:'3rem', padding:'0px !important'}}>
         <Grid item xs={1} sx={{position:'absolute'}}>
           <div className={css.filtro}>Filtros:</div>
         </Grid>

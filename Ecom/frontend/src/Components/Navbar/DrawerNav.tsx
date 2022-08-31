@@ -4,6 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
+import { Link } from 'react-scroll';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,6 +13,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import css from './Navbar.module.css'
 import { Typography } from '@mui/material';
+import Options from './OptionsAdmin';
 
 import {useAuth0} from '@auth0/auth0-react';
 
@@ -66,41 +68,48 @@ export default function DrawerNav({toggleDrawer, state,isAuthenticated, user}:Pr
     </Box>
       <Divider />
       <List>
-      
-          <ListItem key={"Home"} disablePadding>
-            <ListItemButton>
-              
-              <ListItemText primary={"Home"} />
-            </ListItemButton>
-          </ListItem>
-          {
-            isAuthenticated?(
-          <ListItem key={"Favorites"} disablePadding>
-            <ListItemButton>
-              
-              <ListItemText primary={"Favorites"} />
-            </ListItemButton>
-          </ListItem>
-            ):null
-          }
-          <ListItem key={"inicio2"} disablePadding>
-            <ListItemButton>
-              
-              <ListItemText primary={"Inicio2"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key={"inicio3"} disablePadding>
-            <ListItemButton>
-              
-              <ListItemText primary={"Inicio3"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key={"inicio4"} disablePadding>
-            <ListItemButton>
-              
-              <ListItemText primary={"Inicio4"} />
-            </ListItemButton>
-          </ListItem>
+        {
+          window.location.pathname === '/'?(
+            <>
+            <Link spy={true} to={'Camperas'} smooth={true} onClick={toggleDrawer(anchor, false)}>
+              <ListItem key={"Camperas"} disablePadding>
+                <ListItemButton>
+                  
+                  <ListItemText primary={"Camperas"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link spy={true} to={'Ubicacion'} smooth={true} onClick={toggleDrawer(anchor, false)}>
+              <ListItem key={"Ubicación"} disablePadding>
+                <ListItemButton>
+                  
+                  <ListItemText primary={"Ubicación"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            <Link spy={true} to={'Contacto'} smooth={true} onClick={toggleDrawer(anchor, false)}>
+              <ListItem key={"Contacto"} disablePadding>
+                <ListItemButton>
+                  
+                  <ListItemText primary={"Contacto"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            {
+              isAuthenticated?(
+            <ListItem key={"Productos Favoritos"} disablePadding>
+              <ListItemButton>
+                
+                <ListItemText primary={"Productos Favoritos"} />
+              </ListItemButton>
+            </ListItem>
+              ):null
+            }
+            </>
+          ):null
+        }
+          
+          <Options/>
 
       </List>
     </Box>
