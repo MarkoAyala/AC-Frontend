@@ -460,7 +460,6 @@ function CreateProduct() {
           }
         );
         const file = await res.json()
-        console.log('file',file)
         if(i === (saveImage.length-1)){
           setLoading(false);
           setSuccessUpload(true);
@@ -564,21 +563,25 @@ function CreateProduct() {
     setCreateProducts(createProducts={...createProducts, tags:['']})
    }
 
-
+   useEffect(()=> console.log('UPDATESTOCK', colors),[colors])
 
    const submitClick = () => {
      setTextDialog('loading')
      handleClickOpendDialog();
-
     if(oneOption === 'PRODUCT'){
       let resultado = updateStock[0].stock.map((e:any)=> {
-        let filterResults = colors.map((element:any)=> {
+        let filterResults;
+        let aux = false;
+        colors.forEach((element:any)=> {
           for(let property in element[0]){
             if(e[0][property] !== undefined){
-              return element[0]
+              filterResults = element
+              aux = true
             }
           }
-          return e[0]
+          if(aux === false){
+            filterResults = e
+          }
         })
         return filterResults
       });
@@ -598,14 +601,20 @@ function CreateProduct() {
     }
     if(oneOption === 'STOCK'){
       let resultado = updateStock[0].stock.map((e:any)=> {
-        let filterResults = colors.map((element:any)=> {
+        let filterResults;
+        let aux = false;
+        colors.forEach((element:any)=> {
           for(let property in element[0]){
             if(e[0][property] !== undefined){
-              return element[0]
+              filterResults = element
+              aux = true
             }
           }
-          return e[0]
+          if(aux === false){
+            filterResults = e
+          }
         })
+        console.log('filter', filterResults)
         return filterResults
       });
       setUpdateStock(updateStock=[{...updateStock[0], stock:resultado}]);
@@ -619,7 +628,6 @@ function CreateProduct() {
         setTextDialog('complete');
       }
     }
-
   }
 
    useMemo(()=>{
