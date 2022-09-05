@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-scroll";
+import OptionsNavbar from "../Components/Navbar/OptionsNavbar";
 // ========= CSS ================//
 import css from  '../Components/Navbar/Navbar.module.css';
 // ========== Auth0 ============= //
@@ -128,15 +129,22 @@ const Navbar = ({loadSkeleton}:Props) => {
             ):null
           }
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
-          <Link spy={true} to='Camperas' smooth={true}>
-            <div className="btn fromCenter">Camperas</div>
-          </Link>
-          <Link spy={true} to='Ubicacion' smooth={true}>
-            <div className="btn fromCenter">Ubicación</div>
-          </Link>
-          <Link spy={true} to='Contacto' smooth={true}>
-            <div className="btn fromCenter">Contacto</div>
-          </Link>
+            <OptionsNavbar/>
+            {
+              window.location.pathname === '/'?(
+                    <>
+                      <Link spy={true} to='Camperas' smooth={true}>
+                        <div className="btn fromCenter">Camperas</div>
+                      </Link>
+                      <Link spy={true} to='Ubicacion' smooth={true}>
+                        <div className="btn fromCenter">Ubicación</div>
+                      </Link>
+                      <Link spy={true} to='Contacto' smooth={true}>
+                        <div className="btn fromCenter">Contacto</div>
+                      </Link>
+                    </>
+              ):null
+            }
           </Box>
 
             {isLoading || loadSkeleton?(

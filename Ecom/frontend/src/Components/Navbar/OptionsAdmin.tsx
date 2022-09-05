@@ -1,7 +1,6 @@
 import React from "react";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useAppSelector } from "../../app/hooks";
 import { Link } from "react-router-dom";
