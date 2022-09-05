@@ -13,6 +13,20 @@
   box-sizing: border-box;
   
 }
+body::-webkit-scrollbar {
+	width: 10px;
+  }
+body::-webkit-scrollbar-track{
+	background: #0e1318;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+body::-webkit-scrollbar-thumb {
+	background: var(--marron); 
+	border-radius: 9px;
+  }
+body::-webkit-scrollbar-thumb:hover {
+	background: #643900; 
+  }
 
 body {
   margin: 0;

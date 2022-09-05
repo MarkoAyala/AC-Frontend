@@ -44,10 +44,11 @@ const Accordion = styled((props: AccordionProps) => (
   border:'none',
   color:'#fff',
   '&:not(:last-child)': {
-    borderBottom:'none',
+    border:'none',
   },
   '&:before': {
     display: 'none',
+    border:'none'
   },
 }));
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -60,8 +61,10 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   flexDirection: 'row',
   border:'none',
   padding:'0px',
+  minHeight:'50px',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
+    overflow:'hidden'
   },
   '& .MuiAccordionSummary-content': {
     marginLeft: theme.spacing(0),
@@ -122,7 +125,7 @@ function ProductsCards({fetchProductos, loading}:Props) {
           <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
         </Box>
         {
-          window.visualViewport.width<1212?(
+          window.visualViewport?(window.visualViewport.width<1212 && window.visualViewport.width !== null)?(
             <>
           <Box key={'242222'} sx={{border:'1px solid #2b2b2b', padding:'8px 7px 8px 7px', display:{xs:'none', md:'flex'}}}>
             <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
@@ -131,7 +134,7 @@ function ProductsCards({fetchProductos, loading}:Props) {
           <Skeleton variant="rectangular" width={'284px'} height={'570px'} sx={{bgcolor:'#222'}} animation="wave"/>
         </Box>
             </>
-          ):null
+          ):null:null
         }
           </>
         ):fetchProductos[0]?.name?(

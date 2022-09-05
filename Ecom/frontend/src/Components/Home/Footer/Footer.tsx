@@ -61,18 +61,26 @@ export default function Footer(){
             <TittleEfect text='Contacto:' align='center' margin="3.5rem 0 -1.6rem 0" width={'100%'} fontSize='30px' />
             <Grid item xs={9} sx={{display:'flex',justifyContent:'center', marginTop:'2rem'}}>
                 <Box sx={{maxWidth:'343px', overflow:'hidden'}}>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
-                        <FacebookIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
-                        <InstagramIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
-                        <LocationOnIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
-                        <WhatsAppIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
-                    </IconButton>
+                    <a href="https://www.facebook.com/malamadrecueros/" target='_blank'>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
+                            <FacebookIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
+                        </IconButton>
+                    </a>
+                    <a href="https://www.instagram.com/camperas_altocuero/" target='_blank'>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
+                            <InstagramIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
+                        </IconButton>
+                    </a>
+                    <a target='_blank' href="https://www.google.com.ar/maps/place/34%C2%B035'12.8%22S+58%C2%B023'28.3%22W/@-34.5868889,-58.3911944,19z/data=!3m1!4b1!4m5!3m4!1s0x0:0x4923f14197849578!8m2!3d-34.5868875!4d-58.3911861">
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
+                            <LocationOnIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
+                        </IconButton>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=541170995410" target='_blank'>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
+                            <WhatsAppIcon fontSize="large" sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}}/>
+                        </IconButton>
+                    </a>
                     <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'70px', minHeight:'70px'}}>
                         <PhoneCallbackIcon sx={{transition:'0.2s',"&.MuiSvgIcon-root:hover":{fontSize:'2.8rem'}, overflow:'hidden'}} fontSize="large" />
                     </IconButton>
@@ -98,18 +106,26 @@ export default function Footer(){
             <TittleEfect text='Contacto:' align='center' margin="2rem 0 -1.6rem 0" width={'100%'} fontSize='25px' />
             <Grid item xs={12} sx={{display:'flex',justifyContent:'center', marginTop:'2rem'}}>
                 <Box sx={{maxWidth:'343px', overflow:'hidden'}}>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
-                        <FacebookIcon fontSize="large" sx={{transition:'0.2s'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
-                        <InstagramIcon fontSize="large" sx={{transition:'0.2s'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
-                        <LocationOnIcon fontSize="large" sx={{transition:'0.2s'}}/>
-                    </IconButton>
-                    <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
-                        <WhatsAppIcon fontSize="large" sx={{transition:'0.2s'}}/>
-                    </IconButton>
+                    <a href="https://www.facebook.com/malamadrecueros/" target={'_blank'}>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
+                            <FacebookIcon fontSize="large" sx={{transition:'0.2s'}}/>
+                        </IconButton>
+                    </a>
+                    <a href="https://www.instagram.com/camperas_altocuero/" target='_blank'>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
+                            <InstagramIcon fontSize="large" sx={{transition:'0.2s'}}/>
+                        </IconButton>
+                    </a>
+                    <a target='_blank' href="https://www.google.com.ar/maps/place/34%C2%B035'12.8%22S+58%C2%B023'28.3%22W/@-34.5868889,-58.3911944,19z/data=!3m1!4b1!4m5!3m4!1s0x0:0x4923f14197849578!8m2!3d-34.5868875!4d-58.3911861">
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
+                            <LocationOnIcon fontSize="large" sx={{transition:'0.2s'}}/>
+                        </IconButton>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=541170995410" target='_blank'>
+                        <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
+                            <WhatsAppIcon fontSize="large" sx={{transition:'0.2s'}}/>
+                        </IconButton>
+                    </a>
                     <IconButton aria-label="delete" color='secondary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
                         <PhoneCallbackIcon sx={{transition:'0.2s'}} fontSize="large" />
                     </IconButton>
