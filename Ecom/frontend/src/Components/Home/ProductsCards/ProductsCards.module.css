@@ -22,3 +22,6 @@
     animation: ease;
     cursor: pointer;
 }
+.favorites{
+    right: 1.6em;
+}

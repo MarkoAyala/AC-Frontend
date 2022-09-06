@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo } from 'react'
 // =============== IMPORT MUI COMPONENTS ================ // 
+import IconButton from '@mui/material/IconButton';
+import { useAuth0 } from '@auth0/auth0-react';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import css from './ProductsCards.module.css';
+import { useAppSelector } from '../../../app/hooks';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
@@ -36,6 +41,8 @@ interface Productos {
 interface Props {
   fetchProductos:Array<Productos>
   loading:boolean
+  handleFavorite:Function
+
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -81,9 +88,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 
-function ProductsCards({fetchProductos, loading}:Props) {
+function ProductsCards({fetchProductos, loading, handleFavorite}:Props) {
+  const DBUser = useAppSelector((state)=> state.user.dataUser);
+  const {user , isAuthenticated, isLoading , logout} = useAuth0();
   let [images , setImages] = React.useState<any>([{default:''}]);
-
   const handleChangeImage = (img : string | undefined , i : number) => {
     setImages(images=images.map((el:any, index:number)=>{
       if(index === i){
@@ -100,7 +108,10 @@ function ProductsCards({fetchProductos, loading}:Props) {
       }))
     }
   },[fetchProductos])
-  //useEffect(()=>console.log("estamos aqui",imagesPc),[imagesPc])
+  useMemo(()=>{
+    if(DBUser.email && fetchProductos?.length){
+    }
+  },[DBUser , fetchProductos])
   return (
     <Grid container width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
         {
@@ -142,12 +153,11 @@ function ProductsCards({fetchProductos, loading}:Props) {
             let price = e.price.toString().split("")
             let aux = price.splice(2,0,'.');
             let final = price.join('')
-
             if(images[i]?.default !== ''){
             return (
               <>
             <Grid key={i} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'block', md:'none'}}}>
-                  <Box display={'flex'} justifyContent={'center'}>
+                  <Box display={'flex'} position='relative' justifyContent={'center'}>
                     <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'250px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
                   </Box>
               <Box sx={{padding:'16px 12px', display:'flex', flexDirection:'column'}} className={css.tittle}>

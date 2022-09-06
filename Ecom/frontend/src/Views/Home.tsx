@@ -1,7 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useAuth0 } from "@auth0/auth0-react";
+import { UserFavorite } from "../app/Interfaces/interfaceUser";
+import { userFavoriteTemplate } from "../app/Utils/userUtilities";
+import { editUser } from "../app/Utils/userUtilities";
 // =========== IMAGENES ============ //
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
@@ -23,7 +26,9 @@ import { fetchImages } from "../app/Reducers/ImagesSlice";
 import { Typography } from "@mui/material";
 import Footer from "../Components/Home/Footer/Footer";
 function Home() {
+  const DBUser = useAppSelector((state)=> state.user.dataUser)
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
+  let [addFavorite , setAddFavorite] = useState<UserFavorite>(userFavoriteTemplate);
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
@@ -44,6 +49,10 @@ useMemo(()=>{
     setLoading(true)
     dispatch(fetchProducts(filter)).then(()=>setLoading(false))
 },[filter])
+useEffect(()=>console.log(DBUser),[DBUser]);
+const handleFavorite = (element:any,text:string)=>{
+
+}
   return (
     <Grid
       container
@@ -115,7 +124,7 @@ useMemo(()=>{
         </Grid>
       </Grid>
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
-      <ProductsCards fetchProductos={fetchProductos} loading={loading}/>
+      <ProductsCards fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite}/>
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>

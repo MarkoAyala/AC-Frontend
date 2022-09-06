@@ -10,7 +10,7 @@ const OptionsNavbar = ()=> {
     return(
         <>
         {
-        window.location.pathname !== '/OptionsAdmin' && DBUser.role ===1?(
+        window.location.pathname !== '/OptionsAdmin' && DBUser?.role ===1?(
             <Link to={{pathname:'/OptionsAdmin'}} onClick={handlePath} style={{textDecoration:'none', color:'black'}}>
                     <div className="btn fromCenter">Administrador</div>
             </Link>
