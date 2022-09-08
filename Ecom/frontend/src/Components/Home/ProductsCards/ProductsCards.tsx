@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 // =============== IMPORT MUI COMPONENTS ================ // 
 import IconButton from '@mui/material/IconButton';
+import { fetchUserByEmail } from '../../../app/Reducers/userSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import css from './ProductsCards.module.css';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
@@ -16,6 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { Grid , Box, Skeleton } from '@mui/material';
+import { Product } from '../../../app/Interfaces/interfaceProducts';
 
 interface Productos {
   description:string
@@ -36,13 +38,18 @@ interface Productos {
     img5?:string
     img6?:string
   }
+  tags:Array<String>
   _id:string
 }
 interface Props {
   fetchProductos:Array<Productos>
   loading:boolean
   handleFavorite:Function
-
+  starProducts:any
+  setStarProducts:Function
+  images:any
+  setImages:any
+  filter:any
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -88,10 +95,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 
-function ProductsCards({fetchProductos, loading, handleFavorite}:Props) {
+
+function ProductsCards({fetchProductos, loading, handleFavorite , starProducts , setStarProducts , images, setImages, filter}:Props) {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
+  const dispatch = useAppDispatch()
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
-  let [images , setImages] = React.useState<any>([{default:''}]);
   const handleChangeImage = (img : string | undefined , i : number) => {
     setImages(images=images.map((el:any, index:number)=>{
       if(index === i){
@@ -102,14 +110,23 @@ function ProductsCards({fetchProductos, loading, handleFavorite}:Props) {
     }))
   }
   useMemo(()=>{
-    if(fetchProductos?.length>0){
-      setImages(images=fetchProductos.map((e)=>{
-        return {...e.url, default:e.url.img1}
-      }))
-    }
-  },[fetchProductos])
-  useMemo(()=>{
-    if(DBUser.email && fetchProductos?.length){
+    if(filter.color === undefined && filter.size === undefined && filter.tags === undefined){
+      if(DBUser.email && fetchProductos?.length){
+        fetchProductos.forEach((e, i)=> {
+          DBUser.favorites.forEach((el:any, index:number)=>{
+            if(el._id === e._id){
+              setStarProducts(starProducts=starProducts.map((a:any,a2:number)=>{
+                if(a.id === el._id){
+                  return {favorite:true , id:a.id,producto:e}
+                }else{
+                  return a
+                }
+                
+              }))
+            }
+          })
+        })
+      }
     }
   },[DBUser , fetchProductos])
   return (
@@ -152,13 +169,24 @@ function ProductsCards({fetchProductos, loading, handleFavorite}:Props) {
           fetchProductos.map((e , i)=>{
             let price = e.price.toString().split("")
             let aux = price.splice(2,0,'.');
-            let final = price.join('')
+            let final = price.join('');
             if(images[i]?.default !== ''){
             return (
               <>
             <Grid key={i} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'block', md:'none'}}}>
-                  <Box display={'flex'} position='relative' justifyContent={'center'}>
+                  <Box display={'flex'} position='relative' justifyContent={'center'} sx={{maxWidth:'176px'}}>
                     <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'250px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
+                    {
+                      isAuthenticated === true?(
+                      starProducts[i]?.favorite === false?(
+                      <IconButton aria-label="delete" size="large" className={css.mobile} color='warning' onClick={(es)=>handleFavorite('fav', i, e._id)}>
+                        <StarBorderIcon fontSize="large" />
+                      </IconButton>
+                      ): (<IconButton aria-label="delete" size="large" color='warning' className={css.mobile} onClick={(es)=>handleFavorite('unfav', i, e._id)}>
+                      <StarRateIcon fontSize="large" />
+                    </IconButton>)
+                      ):null
+                    }
                   </Box>
               <Box sx={{padding:'16px 12px', display:'flex', flexDirection:'column'}} className={css.tittle}>
                 <Box display={'flex'} justifyContent={'start'}>

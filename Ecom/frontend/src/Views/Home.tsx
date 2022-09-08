@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { UserFavorite } from "../app/Interfaces/interfaceUser";
 import { userFavoriteTemplate } from "../app/Utils/userUtilities";
 import { editUser } from "../app/Utils/userUtilities";
+import { fetchUserByEmail } from "../app/Reducers/userSlice";
 // =========== IMAGENES ============ //
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
@@ -28,7 +29,10 @@ import Footer from "../Components/Home/Footer/Footer";
 function Home() {
   const DBUser = useAppSelector((state)=> state.user.dataUser)
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
-  let [addFavorite , setAddFavorite] = useState<UserFavorite>(userFavoriteTemplate);
+  let [addFavorite , setAddFavorite] = useState<any>(userFavoriteTemplate);
+  let [images , setImages] = React.useState<any>([{default:''}]);
+  let [starProducts , setStarProducts] = useState([{favorite:true,id:'', producto:{}}]);
+  let [users,setUsers] = React.useState({favorites:[]})
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
@@ -46,12 +50,140 @@ function Home() {
   },[])
 
 useMemo(()=>{
-    setLoading(true)
-    dispatch(fetchProducts(filter)).then(()=>setLoading(false))
+    if(filter.color !== undefined || filter.size !== undefined || filter.tags !== undefined){
+      setLoading(true)
+      dispatch(fetchUserByEmail(user))
+      .then((res:any)=>{
+        setUsers(users=res.payload);
+        return dispatch(fetchProducts(filter))
+      })
+      .then((response:any)=>{
+        setImages(images=response.payload.map((e:any)=>{
+          return {...e.url, default:e.url.img1}
+        }))
+        setStarProducts(starProducts = response.payload.map((el:any)=>{return {favorite:false , id:el._id, producto:el}}));
+        return response.payload
+      })
+      .then((respuesta:any)=>{
+        respuesta.forEach((e:any, i:number)=> {
+          users.favorites.forEach((el:any, index:number)=>{
+            if(el._id === e._id){
+              setStarProducts(starProducts=starProducts.map((a:any,a2:number)=>{
+                if(a.id === el._id){
+                  return {favorite:true , id:a.id,producto:e}
+                }else{
+                  return a
+                }
+                
+              }))
+            }
+          })
+        })
+      })
+      .then(()=>setLoading(false))
+    }else{
+      setLoading(true)
+      dispatch(fetchProducts(filter)).then((respuesta:any)=>{
+        setImages(images=respuesta.payload.map((e:any)=>{
+          return {...e.url, default:e.url.img1}
+        }))
+        setStarProducts(starProducts = respuesta.payload.map((el:any)=>{return {favorite:false , id:el._id, producto:el}}));
+        dispatch(fetchUserByEmail(user))
+        setLoading(false);
+      })
+    }
 },[filter])
-useEffect(()=>console.log(DBUser),[DBUser]);
-const handleFavorite = (element:any,text:string)=>{
+useEffect(()=>console.log("starProducts",starProducts),[starProducts]);
+useEffect(()=>console.log("DBUser",DBUser),[DBUser]);
+const handleFavorite = (text:string, numb:number, id:string)=>{
+  if(text === 'fav'){
+    setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
+      if(i === numb){
+        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
+      }else{
+        return e
+      }
+    }))
+    let aux = starProducts.map((elemento)=>{
+      if(elemento.favorite === true){
+        return elemento.producto
+      }
+    })
+    let aux2 = DBUser.favorites.map((elem:any)=> {
+      let reto = true;
+      aux.forEach((ele2:any)=>{
+        if(ele2 !== undefined){
+          if(elem._id === ele2._id){
+            reto = false
+          }
+        }
+      })
+      if(reto){
+        return elem
+      }else{
+        return undefined
+      }
+    })
+    let aux3 = [...aux , ...aux2]
+    setAddFavorite(addFavorite={
+        _id:DBUser._id,
+        email:DBUser.email,
+        favorites:aux3.filter((ea:any)=> ea !== undefined),
+        firstName:DBUser.firstName,
+        lastName:DBUser.lastName,
+        nickname:DBUser.nickname,
+        picture:DBUser.picture,
+        role:DBUser.role,
+        shoppingCart:DBUser.shoppingCart || [],
+        country:DBUser.country
+      })
+      editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
+  }  
+  if(text === 'unfav'){
+    setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
+      if(i === numb){
+        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
+      }else{
+        return e
+      }
+    }))
 
+    let aux2 = DBUser.favorites.map((elem:any)=> {
+      let reto = true;
+      let unic = elem;
+      starProducts.forEach((ele2:any)=>{
+        if(ele2 !== undefined){
+          if(elem._id === id || ele2.favorite === false || elem._id === ele2.id){
+            reto = false
+          }
+          if(elem._id === ele2.id){
+            unic = undefined
+          }
+        }
+      })
+      if(reto || unic !== undefined){
+        return elem
+      }else{
+        return undefined
+      }
+    })
+    
+    let auxFinal2 = starProducts.map((element)=>element && element.favorite === true?element.producto:undefined)
+    let aux3 = [...aux2 , ...auxFinal2]
+    setAddFavorite(addFavorite={
+      _id:DBUser._id,
+      email:DBUser.email,
+      favorites:aux3.filter((ea)=> ea !== undefined),
+      firstName:DBUser.firstName,
+      lastName:DBUser.lastName,
+      nickname:DBUser.nickname,
+      picture:DBUser.picture,
+      role:DBUser.role,
+      shoppingCart:DBUser.shoppingCart || [],
+      country:DBUser.country
+    })
+    editUser(addFavorite)
+  }
 }
   return (
     <Grid
@@ -124,7 +256,7 @@ const handleFavorite = (element:any,text:string)=>{
         </Grid>
       </Grid>
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
-      <ProductsCards fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite}/>
+      <ProductsCards fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>

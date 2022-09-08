@@ -20,7 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import StarRateIcon from '@mui/icons-material/StarRate';
 // ====== Import imagenes ========= //
 import Logo from '../img/logo.jpg';
 // ===== Components ==========//
@@ -120,9 +120,9 @@ const Navbar = ({loadSkeleton}:Props) => {
           {
             isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'flex',md:'none'}, margin:'0px 18px 0px 0px'}}>
-            <IconButton aria-label="cart" className={css.buttons}>
-              <Badge badgeContent={4} color="warning">
-                <ShoppingCartIcon fontSize='medium' sx={{color:"white"}}/>
+            <IconButton aria-label="cart" className={css.buttons} size='medium'>
+              <Badge badgeContent={DBUser.favorites.length} color="warning">
+                <StarRateIcon fontSize='medium' sx={{color:"white"}}/>
               </Badge>
             </IconButton>
           </Box>
