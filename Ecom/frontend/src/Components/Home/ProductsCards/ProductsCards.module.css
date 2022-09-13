@@ -27,6 +27,11 @@
     top: -0.2rem;
     right: 0.2rem;
 }
+.pc{
+    position: absolute !important;
+    top: -0.2rem;
+    right: 0.2rem;
+}
 
 @media screen and (max-width:450px) and (min-width:400px) {
     .mobile{

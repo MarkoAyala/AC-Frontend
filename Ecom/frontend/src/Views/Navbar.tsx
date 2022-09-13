@@ -26,19 +26,7 @@ import Logo from '../img/logo.jpg';
 // ===== Components ==========//
 import DrawerNav from "../Components/Navbar/DrawerNav";
 import { useAppSelector } from "../app/hooks";
-/* 
-country: "Incomplete"
-createdAt: "2022-07-11T18:44:43.876Z"
-email: "markoayala3@hotmail.com"
-firstName: "Incomplete"
-lastName: "Incomplete"
-nickname: "markoayala3"
-picture: "https://s.gravatar.com/avatar/466b661626e32060fe96dff1f52eec54?s=480"
-role: 0
-shoppingCart: []
-updatedAt: "2022-07-12T02:51:22.576Z"
-__v: 0
-_id: "62cc6f9fb86b6aa844865dbd" */
+
 interface Props{
   loadSkeleton:boolean
 }
@@ -117,6 +105,7 @@ const Navbar = ({loadSkeleton}:Props) => {
             </IconButton>
             <DrawerNav toggleDrawer={toggleDrawer} state={state} isAuthenticated={isAuthenticated} user={DBUser}/>
           </Box>
+          <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%", alignItems:'center'}}>
           {
             isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'flex',md:'none'}, margin:'0px 18px 0px 0px'}}>
@@ -128,7 +117,17 @@ const Navbar = ({loadSkeleton}:Props) => {
           </Box>
             ):null
           }
-          <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%"}}>
+          {
+            isAuthenticated?(
+          <Box sx={{flexGrow:0, display:{xs:'none',md:'flex'}, margin:'0px 18px 0px 0px'}}>
+            <IconButton aria-label="cart" className={css.buttons} size='large'>
+              <Badge badgeContent={DBUser.favorites.length} color="warning">
+                <StarRateIcon fontSize='large' sx={{color:"white"}}/>
+              </Badge>
+            </IconButton>
+          </Box>
+            ):null
+          }
             <OptionsNavbar/>
             {
               window.location.pathname === '/'?(

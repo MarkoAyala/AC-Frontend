@@ -244,8 +244,19 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
             </Grid>
 
             <Box key={i+ Math.random()} className={css.motion} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'none', md:'block'}, margin:'1em 1.2em',height:'auto', minHeight:'500px', width:'284px'}}>
-                  <Box display={'flex'} justifyContent={'center'} width={'100%'}>
+                  <Box display={'flex'} position={'relative'} justifyContent={'center'} width={'100%'}>
                     <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'390px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
+                    {
+                      isAuthenticated === true?(
+                      starProducts[i]?.favorite === false?(
+                      <IconButton aria-label="delete" size="large" className={css.pc} color='warning' onClick={(es)=>handleFavorite('fav', i, e._id)}>
+                        <StarBorderIcon fontSize="large" />
+                      </IconButton>
+                      ): (<IconButton aria-label="delete" size="large" color='warning' className={css.pc} onClick={(es)=>handleFavorite('unfav', i, e._id)}>
+                      <StarRateIcon fontSize="large" />
+                    </IconButton>)
+                      ):null
+                    }
                   </Box>
                   <Box sx={{padding:'16px 12px', display:'flex', flexDirection:'column'}} className={css.tittle}>
                   <Box display={'flex'} justifyContent={e.url.img5?'center':'start'} sx={{margin:i>=2?'0em 0px 0.9em 0px':''}}>

@@ -14,7 +14,6 @@ import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
 import ProductsCards from "../Components/Home/ProductsCards/ProductsCards";
 import ListFilter from "../Components/Home/ListFilter/ListFilter";
-import CarritoAndFavorito from "../Components/CarAndFavoriteIcons/CarritoAndFavorito";
 import PaidIcon from '@mui/icons-material/Paid';
 // =========== Import MUI COMPONENTS ============ //
 import Grid from "@mui/material/Grid";
@@ -192,11 +191,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       spacing={2}
       sx={{margin: "6vh auto"}}
     >
-      {
-        isAuthenticated?(
-          <CarritoAndFavorito/>
-        ):null
-      }
+      
       
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center", "&.MuiGrid-item":{padding:'0px'}, margin:'1.5em 0 0 0'}}>
       {
