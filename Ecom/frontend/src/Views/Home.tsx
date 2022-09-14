@@ -2,35 +2,42 @@ import React, { useEffect, useMemo, useState } from "react";
 import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useAuth0 } from "@auth0/auth0-react";
-import { UserFavorite } from "../app/Interfaces/interfaceUser";
+// ========= UTILITIES =========== //
 import { userFavoriteTemplate } from "../app/Utils/userUtilities";
-import { editUser } from "../app/Utils/userUtilities";
+import { fetchProducts } from "../app/Reducers/productSlice";
 import { fetchUserByEmail } from "../app/Reducers/userSlice";
+import { fetchImages } from "../app/Reducers/ImagesSlice";
+import { editUser } from "../app/Utils/userUtilities";
+import { ProductTemplate } from "../app/Utils/postProduct";
+import { Product } from "../app/Interfaces/interfaceProducts";
+// ========== INTERFACES ============ //
+import { StarProducts } from "../app/Interfaces/interfaceRandoms";
+import { UserFavorite } from "../app/Interfaces/interfaceUser";
+import { Images } from "../app/Interfaces/interfaceRandoms";
 // =========== IMAGENES ============ //
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
+import Filter from "../Components/Filters/Filter";
 import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
 import ProductsCards from "../Components/Home/ProductsCards/ProductsCards";
 import ListFilter from "../Components/Home/ListFilter/ListFilter";
-import PaidIcon from '@mui/icons-material/Paid';
+import Footer from "../Components/Home/Footer/Footer";
 // =========== Import MUI COMPONENTS ============ //
+import PaidIcon from '@mui/icons-material/Paid';
 import Grid from "@mui/material/Grid";
 import {Box} from "@mui/material";
 import Skeleton from '@mui/material/Skeleton';
-import Filter from "../Components/Filters/Filter";
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { fetchProducts } from "../app/Reducers/productSlice";
-import { fetchImages } from "../app/Reducers/ImagesSlice";
 import { Typography } from "@mui/material";
-import Footer from "../Components/Home/Footer/Footer";
+
 function Home() {
   const DBUser = useAppSelector((state)=> state.user.dataUser)
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
-  let [addFavorite , setAddFavorite] = useState<any>(userFavoriteTemplate);
-  let [images , setImages] = React.useState<any>([{default:''}]);
-  let [starProducts , setStarProducts] = useState([{favorite:true,id:'', producto:{}}]);
+  let [addFavorite , setAddFavorite] = useState<UserFavorite>(userFavoriteTemplate);
+  let [images , setImages] = React.useState<Array<Images>>([{default:''}]);
+  let [starProducts , setStarProducts] = useState<Array<StarProducts>>([{favorite:true,id:'', producto:ProductTemplate}]);
   let [users,setUsers] = React.useState({favorites:[]})
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
@@ -57,10 +64,10 @@ useMemo(()=>{
         return dispatch(fetchProducts(filter))
       })
       .then((response:any)=>{
-        setImages(images=response.payload.map((e:any)=>{
+        setImages(images=response.payload.map((e:Product)=>{
           return {...e.url, default:e.url.img1}
         }))
-        setStarProducts(starProducts = response.payload.map((el:any)=>{return {favorite:false , id:el._id, producto:el}}));
+        setStarProducts(starProducts = response.payload.map((el:Product)=>{return {favorite:false , id:el._id, producto:el}}));
         return response.payload
       })
       .then((respuesta:any)=>{
@@ -92,17 +99,17 @@ useMemo(()=>{
       })
     }
 },[filter])
-useEffect(()=>console.log("starProducts",starProducts),[starProducts]);
-useEffect(()=>console.log("DBUser",DBUser),[DBUser]);
+/* useEffect(()=>console.log("starProducts",starProducts),[starProducts]); */
+useEffect(()=>console.log("FETCH PRODUC6TS",fetchProductos),[fetchProductos]);
 const handleFavorite = (text:string, numb:number, id:string)=>{
+  setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
+    if(i === numb){
+      return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
+    }else{
+      return e
+    }
+  }))
   if(text === 'fav'){
-    setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
-      if(i === numb){
-        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
-      }else{
-        return e
-      }
-    }))
     let aux = starProducts.map((elemento)=>{
       if(elemento.favorite === true){
         return elemento.producto
@@ -136,17 +143,8 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         shoppingCart:DBUser.shoppingCart || [],
         country:DBUser.country
       })
-      editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
   }  
   if(text === 'unfav'){
-    setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
-      if(i === numb){
-        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
-      }else{
-        return e
-      }
-    }))
-
     let aux2 = DBUser.favorites.map((elem:any)=> {
       let reto = true;
       let unic = elem;
@@ -181,8 +179,8 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       shoppingCart:DBUser.shoppingCart || [],
       country:DBUser.country
     })
-    editUser(addFavorite)
   }
+  editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
 }
   return (
     <Grid

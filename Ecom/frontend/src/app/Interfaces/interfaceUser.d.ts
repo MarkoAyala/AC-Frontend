@@ -21,6 +21,6 @@ export interface UserFavorite {
     picture:string,
     role:number,
     country:string,
-    shoppingCart:Array<Product>;
-    favorites:Array<Product>;
+    shoppingCart:Array<any>;
+    favorites:Array<any>;
 }
