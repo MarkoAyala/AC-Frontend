@@ -25,6 +25,7 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import Logo from '../img/logo.jpg';
 // ===== Components ==========//
 import DrawerNav from "../Components/Navbar/DrawerNav";
+import DialogFavorites from "../Components/Home/DialogFavorites/DialogFavorites";
 import { useAppSelector } from "../app/hooks";
 
 interface Props{
@@ -34,9 +35,12 @@ interface Props{
 const Navbar = ({loadSkeleton}:Props) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
+  let [openDialogFavorite , setOpenDialogFavorite] = React.useState<boolean>(false);
   const DBUser = useAppSelector((state)=> state.user.dataUser)
 
-
+  const handleClickOpenDialog = ()=>{
+    setOpenDialogFavorite(true);
+  }
   // Logic drawer //
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -65,6 +69,7 @@ const Navbar = ({loadSkeleton}:Props) => {
     <AppBar position="fixed" sx={{backgroundColor:"var(--marron)",padding:'0px !important'}} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <DialogFavorites openDialogFavorite={openDialogFavorite} setOpenDialogFavorite={setOpenDialogFavorite}/>
           <Box 
           display={"flex"}
           alignItems="center"
@@ -120,7 +125,7 @@ const Navbar = ({loadSkeleton}:Props) => {
           {
             isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'none',md:'flex'}, margin:'0px 18px 0px 0px'}}>
-            <IconButton aria-label="cart" className={css.buttons} size='large'>
+            <IconButton aria-label="cart" className={css.buttons} size='large' onClick={handleClickOpenDialog}>
               <Badge badgeContent={DBUser.favorites.length} color="warning">
                 <StarRateIcon fontSize='large' sx={{color:"white"}}/>
               </Badge>

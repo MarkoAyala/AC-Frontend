@@ -101,6 +101,7 @@ useMemo(()=>{
 },[filter])
 /* useEffect(()=>console.log("starProducts",starProducts),[starProducts]); */
 useEffect(()=>console.log("FETCH PRODUC6TS",fetchProductos),[fetchProductos]);
+
 const handleFavorite = (text:string, numb:number, id:string)=>{
   setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
     if(i === numb){
@@ -182,6 +183,11 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
   }
   editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
 }
+
+
+
+
+
   return (
     <Grid
       container
@@ -189,7 +195,6 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       spacing={2}
       sx={{margin: "6vh auto"}}
     >
-      
       
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center", "&.MuiGrid-item":{padding:'0px'}, margin:'1.5em 0 0 0'}}>
       {
