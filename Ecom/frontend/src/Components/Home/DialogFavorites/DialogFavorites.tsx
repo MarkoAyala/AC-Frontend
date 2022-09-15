@@ -1,4 +1,6 @@
 import * as React from 'react';
+// ========= IMPORT COMPONENTS ================= //
+import CardsFavorites from './CardsFavorites';
 // ============== IMPORT MUI COMPONENTS =================== // 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -14,7 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme:any) => ({
     dialogPaper: {
-      backgroundColor:'rgba(0,0,0,0.7)',
+      backgroundColor:'rgba(0,0,0,0.7) !important',
     }
   });
 const Transition = React.forwardRef(function Transition(
@@ -61,8 +63,10 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
                 </Typography>
             </Box>
         </DialogActions>
-            <Box sx={{width:'100%', height:'100vh', color:'white', border:'2px solid white'}}>
-                hola
+            <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center'}}>
+                <Box width={{xs:'100%',md:'70%'}}>
+                  <CardsFavorites/>
+                </Box>
             </Box>
         
       </Dialog>

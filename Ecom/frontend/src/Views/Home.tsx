@@ -99,8 +99,7 @@ useMemo(()=>{
       })
     }
 },[filter])
-/* useEffect(()=>console.log("starProducts",starProducts),[starProducts]); */
-useEffect(()=>console.log("FETCH PRODUC6TS",fetchProductos),[fetchProductos]);
+
 
 const handleFavorite = (text:string, numb:number, id:string)=>{
   setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
@@ -254,7 +253,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         </Grid>
       </Grid>
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
-      <ProductsCards fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
+      <ProductsCards key={"123123123"} fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>

@@ -173,7 +173,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
             if(images[i]?.default !== ''){
             return (
               <>
-            <Grid key={i} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'block', md:'none'}}}>
+            <Grid key={i+Math.random()} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'block', md:'none'}}}>
                   <Box display={'flex'} position='relative' justifyContent={'center'} sx={{maxWidth:'176px'}}>
                     <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'250px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
                     {
@@ -227,12 +227,12 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                   </AccordionSummary>
                   <AccordionDetails sx={{padding:'5px 0px 10px 0px'}}>
                   {
-                    e.stock?.stock.map((el:any)=>{
+                    e.stock?.stock.map((el:any,index:number)=>{
                       for(let property in el[0]){
                         if((el[0][property].xs>0 || el[0][property].s>0 || el[0][property].m>0 || el[0][property].l>0 || el[0][property].xl>0 || el[0][property].xxl>0) && property !== 'all' ){
                           let color = el[0][property].code
                           return (
-                            <div style={{width:'14px', height:'14px', borderRadius:'4px', background:color, margin:'2px 2px 2px 2px'}}></div>
+                            <div key={index+1222} style={{width:'14px', height:'14px', borderRadius:'4px', background:color, margin:'2px 2px 2px 2px'}}></div>
                           )
                         }
                       }
@@ -301,12 +301,12 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                   </AccordionSummary>
                   <AccordionDetails>
                   {
-                    e.stock?.stock.map((el:any)=>{
+                    e.stock?.stock.map((el:any, index:number)=>{
                       for(let property in el[0]){
                         if((el[0][property].xs>0 || el[0][property].s>0 || el[0][property].m>0 || el[0][property].l>0 || el[0][property].xl>0 || el[0][property].xxl>0) && property !== 'all' ){
                           let color = el[0][property].code
                           return (
-                            <div style={{width:'14px', height:'14px', borderRadius:'4px', background:color, margin:'3px 3px 3px 3px'}}></div>
+                            <div key={index+1333} style={{width:'14px', height:'14px', borderRadius:'4px', background:color, margin:'3px 3px 3px 3px'}}></div>
                           )
                         }
                       }
