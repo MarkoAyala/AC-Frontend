@@ -113,17 +113,6 @@ const Navbar = ({loadSkeleton}:Props) => {
           <Box sx={{flexGrow:1, display: {xs:"none", lg:"flex"}, justifyContent:"end", marginRight:"3%", alignItems:'center'}}>
           {
             isAuthenticated?(
-          <Box sx={{flexGrow:0, display:{xs:'flex',md:'none'}, margin:'0px 18px 0px 0px'}}>
-            <IconButton aria-label="cart" className={css.buttons} size='medium'>
-              <Badge badgeContent={DBUser.favorites.length} color="warning">
-                <StarRateIcon fontSize='medium' sx={{color:"white"}}/>
-              </Badge>
-            </IconButton>
-          </Box>
-            ):null
-          }
-          {
-            isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'none',md:'flex'}, margin:'0px 18px 0px 0px'}}>
             <IconButton aria-label="cart" className={css.buttons} size='large' onClick={handleClickOpenDialog}>
               <Badge badgeContent={DBUser.favorites.length} color="warning">
@@ -150,7 +139,17 @@ const Navbar = ({loadSkeleton}:Props) => {
               ):null
             }
           </Box>
-
+          {
+            isAuthenticated?(
+          <Box sx={{flexGrow:0, display:{xs:'flex',lg:'none'}, margin:'0px 18px 0px 0px'}}>
+            <IconButton aria-label="cart" className={css.buttons} size='medium' onClick={handleClickOpenDialog}>
+              <Badge badgeContent={DBUser.favorites.length} color="warning">
+                <StarRateIcon fontSize='medium' sx={{color:"white"}}/>
+              </Badge>
+            </IconButton>
+          </Box>
+            ):null
+          }
             {isLoading || loadSkeleton?(
               <Box sx={{ flexGrow: 0, display:"flex"}}>
                 <Skeleton variant="text" width={100}/>

@@ -17,6 +17,8 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = (theme:any) => ({
     dialogPaper: {
       backgroundColor:'rgba(0,0,0,0.7) !important',
+      padding:0,
+      margin:0,
     }
   });
 const Transition = React.forwardRef(function Transition(
@@ -44,11 +46,12 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
         fullScreen
         open={openDialogFavorite}
         onClose={handleClose}
+        scroll={'body'}
         PaperProps={{ classes: {root: classes.dialogPaper } }}
         TransitionComponent={Transition}
       >
        
-        <DialogActions sx={{display:'flex', justifyContent:'space-between'}}>
+        <DialogActions sx={{display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
             <Button
               color="primary"
               onClick={handleClose}
@@ -56,15 +59,15 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
             >
               Cerrar
             </Button>
-            <Box sx={{display:'flex', alignItems:'center'}}>
+            <Box sx={{display:'flex', alignItems:'center', justifyContent:'end'}}>
                 <WarningIcon color='primary'/>
                 <Typography sx={{ ml: 2, flex: 1, fontWeight:'800'}} variant="subtitle2" component="div" color='primary'>
                 Refrescar la pagina para ver los cambios
                 </Typography>
             </Box>
         </DialogActions>
-            <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center'}}>
-                <Box width={{xs:'100%',md:'70%'}}>
+            <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center', padding:0}}>
+                <Box sx={{width:{xs:'100%', md:'70%'}}}>
                   <CardsFavorites/>
                 </Box>
             </Box>
