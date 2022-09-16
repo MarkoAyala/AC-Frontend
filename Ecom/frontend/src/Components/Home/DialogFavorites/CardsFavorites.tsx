@@ -15,7 +15,6 @@ interface Props {
 export default function CardsFavorites({}:Props) {
 const {user , isAuthenticated, isLoading , logout} = useAuth0();
 const DBUser = useAppSelector((state)=> state.user.dataUser);
-React.useEffect(()=> console.log('user', DBUser),[DBUser]);
 if(isAuthenticated){
     return (
         <Grid container sx={{width:'100%', '&.MuiGrid-item':{width:'100% !important',padding:0, margin:0}, display:'flex', justifyContent:'center'}}>

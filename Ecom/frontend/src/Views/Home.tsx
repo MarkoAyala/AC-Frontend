@@ -185,8 +185,6 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
 
 
 
-
-
   return (
     <Grid
       container
