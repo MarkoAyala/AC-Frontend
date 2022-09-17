@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 // =============== IMPORT MUI COMPONENTS ================ // 
 import IconButton from '@mui/material/IconButton';
-import { fetchUserByEmail } from '../../../app/Reducers/userSlice';
+import TittleEfect from '../../TitleEffect/TittleEfect';
 import { useAuth0 } from '@auth0/auth0-react';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -14,10 +14,10 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import { Grid , Box, Skeleton } from '@mui/material';
-import { Product } from '../../../app/Interfaces/interfaceProducts';
+import { Grid , Box, Skeleton , Button } from '@mui/material';
 
 interface Productos {
   description:string
@@ -320,7 +320,25 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
               </>
           )}
           })
-        ):null }
+        ):(
+          <Grid item xs={12} lg={8} sx={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
+            <TittleEfect text={`No contamos con stock ${filter.color?"para el color "+ filter.color.toUpperCase():""}${filter.size?" talle "+filter.size.toUpperCase():""}`} align='center' margin='1rem 0 1rem 0' width={'100%'} fontSize='25px'/>
+            <Box
+            width='100%'
+            display='flex'
+            justifyContent={'center'}
+            >
+              <TittleEfect text="Pedidos por WhatsApp" align={'center'} margin="0" width={'auto'} fontSize='22px' lineHeight='70px'/>
+           
+              <a href="https://api.whatsapp.com/send?phone=541170995410" target='_blank'>
+                        <IconButton aria-label="delete" color='primary' size='large' sx={{minWidth:'30px', minHeight:'70px'}}>
+                            <WhatsAppIcon fontSize="large" sx={{transition:'0.2s'}}/>
+                        </IconButton>
+              </a>
+            </Box>
+            <TittleEfect text="Tu consulta no molesta! 😄" align={'center'} margin="0" width={'auto'} fontSize='22px' lineHeight='70px'/>
+          </Grid>
+        ) }
     </Grid>
   )
 }

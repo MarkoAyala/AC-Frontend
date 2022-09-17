@@ -51,14 +51,22 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
         TransitionComponent={Transition}
       >
        
-        <DialogActions sx={{display:'flex', justifyContent:'space-between', flexDirection:'column', position:'fixed', top:'0px', width:'100%', backgroundColor:'rgba(0,0,0,1)', paddingBottom:'10px'}}>
+        <DialogActions sx={{display:'flex', justifyContent:'space-between', flexDirection:'column', position:'fixed', top:'0px', width:'100%', backgroundColor:'rgba(0,0,0,1)', paddingBottom:'20px', zIndex:10}}>
+          <Box
+          width='100%'
+          display={'flex'}
+          justifyContent={'end'}
+          margin='0.5rem 5rem 1rem 0'
+          >
             <Button
               color="primary"
+              variant='contained'
               onClick={handleClose}
-              sx={{fontWeight:'800', fontSize:'20px'}}
+              sx={{fontWeight:'700', fontSize:'20px'}}
             >
               Cerrar
             </Button>
+          </Box>
             <Box sx={{display:'flex', alignItems:'center', justifyContent:'end'}}>
                 <WarningIcon color='primary'/>
                 <Typography sx={{ ml: 2, flex: 1, fontWeight:'800'}} variant="subtitle2" component="div" color='primary'>

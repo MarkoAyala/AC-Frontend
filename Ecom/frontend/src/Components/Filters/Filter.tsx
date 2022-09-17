@@ -11,7 +11,6 @@ interface Props {
 export default function Filter({filter , setFilter}:Props) {
   const handleSelectChange = (event:any)=>{
     if(event.target.value ==='Todos'){
-      console.log(typeof event.target.value)
       setFilter(filter={...filter,[event.target.name]:undefined});
     }else{
       setFilter(filter={...filter,[event.target.name]:event.target.value});
@@ -22,7 +21,7 @@ export default function Filter({filter , setFilter}:Props) {
     <Grid container sx={{width:'100%', '&.MuiGrid-item':{padding:0}, display:'flex', justifyContent:'center', margin:'1.5em 0 0 0'}}>
       <Grid item xs={5} sm={5} md={5} xl={3} lg={2} sx={{margin:'0 10px 0 0'}}>
         <div className={css.boxSelect}>
-          <select name={'color'} onChange={handleSelectChange}>
+          <select name={'color'} onChange={handleSelectChange} value={filter.color === undefined?'Todos':filter.color}>
             <option value='colores_largos' selected style={{display:'none'}}>Color</option>
             <option value={undefined}>Todos</option>
             <option value={'rojo'}>Rojo</option>
@@ -57,7 +56,7 @@ export default function Filter({filter , setFilter}:Props) {
       </Grid>
       <Grid item xs={5} sm={5} md={5} xl={3} lg={2} sx={{margin:'0 0 0 10px'}}>
         <div className={css.boxSelect}>
-          <select name={'size'}  onChange={handleSelectChange}>
+          <select name={'size'}  onChange={handleSelectChange} value={filter.size === undefined?'Todos':filter.size}>
             <option value='colores_largos' selected style={{display:'none'}}>Talle</option>
             <option value={undefined}>Todos</option>
             <option value={'xs'}>XS</option>

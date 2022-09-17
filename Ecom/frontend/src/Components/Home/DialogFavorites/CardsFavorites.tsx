@@ -35,7 +35,7 @@ if(isAuthenticated){
                                     <TittleEfect text={`Precio: $${final}`} align="start" margin='20px 0px' width={'100%'} fontSize='23px'/>
 
                                 </Box>
-                                <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em'}}>
+                                <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
                                     <Button variant='contained' color='info'>Ver producto</Button>
                                 </Box>
                             </Box>
@@ -47,7 +47,7 @@ if(isAuthenticated){
                                     <TittleEfect text={`Precio: $${final}`} align="start" margin='20px 0px' width={'100%'} fontSize='20px'/>
 
                                 </Box>
-                                <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em'}}>
+                                <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
                                     <Button variant='contained' color='info'>Ver</Button>
                                 </Box>
                             </Box>

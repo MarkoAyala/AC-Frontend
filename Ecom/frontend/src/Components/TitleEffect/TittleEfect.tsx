@@ -10,11 +10,12 @@ interface Props {
     align?:any
     fontSize?:string
     margin?:string
+    lineHeight?:string
 }
 
-function TittleEfect({width, height , text, align, fontSize, margin}:Props) {
+function TittleEfect({width, height , text, align, fontSize, margin, lineHeight}:Props) {
   return (
-    <Typography component={'h4'} variant={'h4'} sx={{textAlign:align?align:"start", width:width?width:'100%' , height:height?height:'auto', color:"white", fontSize:fontSize?fontSize:'', margin:margin?margin:'auto'}} className={css.font}>{text}</Typography>
+    <Typography component={'h4'} variant={'h4'} sx={{textAlign:align?align:"start", width:width?width:'100%' , height:height?height:'auto', color:"white", fontSize:fontSize?fontSize:'', margin:margin?margin:'auto', lineHeight:lineHeight?lineHeight:'auto'}} className={css.font}>{text}</Typography>
   )
 }
 
