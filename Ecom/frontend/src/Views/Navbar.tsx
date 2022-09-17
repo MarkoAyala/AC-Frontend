@@ -112,7 +112,7 @@ const Navbar = () => {
             isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'none',md:'flex'}, margin:'0px 18px 0px 0px'}}>
             <IconButton aria-label="cart" className={css.buttons} size='large' onClick={handleClickOpenDialog}>
-              <Badge badgeContent={DBUser.favorites.length} color="warning">
+              <Badge badgeContent={DBUser.nickname !== '' && DBUser.nickname !== "undefined"?DBUser.favorites?.length:null} color="warning">
                 <StarRateIcon fontSize='large' sx={{color:"white"}}/>
               </Badge>
             </IconButton>
@@ -140,7 +140,7 @@ const Navbar = () => {
             isAuthenticated?(
           <Box sx={{flexGrow:0, display:{xs:'flex',lg:'none'}, margin:'0px 18px 0px 0px'}}>
             <IconButton aria-label="cart" className={css.buttons} size='medium' onClick={handleClickOpenDialog}>
-              <Badge badgeContent={DBUser.favorites.length} color="warning">
+              <Badge badgeContent={DBUser.nickname !== '' && DBUser.nickname !== "undefined"?DBUser.favorites?.length:null} color="warning">
                 <StarRateIcon fontSize='medium' sx={{color:"white"}}/>
               </Badge>
             </IconButton>

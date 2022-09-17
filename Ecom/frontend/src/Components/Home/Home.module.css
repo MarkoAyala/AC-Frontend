@@ -7,7 +7,6 @@
    position: relative;
    border-radius: 20px;
    box-shadow: 0 0 0 10px rgba(0,0,0,.01);
-   cursor: pointer;
    letter-spacing: 2px;
 }
 .filtro::after{
