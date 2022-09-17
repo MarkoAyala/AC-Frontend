@@ -107,14 +107,15 @@ useMemo(()=>{
 
 
 const handleFavorite = (text:string, numb:number, id:string)=>{
-  setStarProducts(starProducts = starProducts.map((e:StarProducts , i:number)=>{
-    if(i === numb){
-      return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
-    }else{
-      return e
-    }
-  }))
+  
   if(text === 'fav'){
+    setStarProducts(starProducts = starProducts.map((e:StarProducts , i:number)=>{
+      if(i === numb){
+        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
+      }else{
+        return e
+      }
+    }))
     let aux = starProducts.map((elemento:StarProducts)=>{
       if(elemento.favorite === true){
         return elemento.producto
@@ -122,9 +123,9 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
     })
     let aux2 = DBUser.favorites.map((elem:Product)=> {
       let reto = true;
-      aux.forEach((ele2:any)=>{
+      starProducts.forEach((ele2:any)=>{
         if(ele2 !== undefined){
-          if(elem._id === ele2._id){
+          if(elem._id === ele2.producto._id){
             reto = false
           }
         }
@@ -148,8 +149,16 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         shoppingCart:DBUser.shoppingCart || [],
         country:DBUser.country
       })
+      editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
   }  
   if(text === 'unfav'){
+    setStarProducts(starProducts = starProducts.map((e:StarProducts , i:number)=>{
+      if(i === numb){
+        return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
+      }else{
+        return e
+      }
+    }))
     let aux2 = DBUser.favorites.map((elem:Product)=> {
       let reto:boolean = true;
       let unic:Product|undefined = elem;
@@ -184,8 +193,9 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       shoppingCart:DBUser.shoppingCart || [],
       country:DBUser.country
     })
+    editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
   }
-  editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
+  
 }
 
 
