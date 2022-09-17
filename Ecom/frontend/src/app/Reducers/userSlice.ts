@@ -24,8 +24,10 @@ export const fetchUserByEmail = createAsyncThunk(
     "user/fetchUserById",
     async (date: any | undefined) => {
       try{
-        const response = (await axios(`/user?email=${date?.email}&picture=${date?.picture}&nickname=${date?.nickname}`)).data;
-        return response;
+        if(date.email !== 'undefined' && date.email !== '' && date.email !== undefined){
+          const response = (await axios(`/user?email=${date?.email}&picture=${date?.picture}&nickname=${date?.nickname}`)).data;
+          return response;
+        }
       }catch (err) {
         if (err instanceof Error) {
           console.log(err.message);

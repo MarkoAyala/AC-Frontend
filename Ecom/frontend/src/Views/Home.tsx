@@ -97,7 +97,7 @@ useMemo(()=>{
           return {...e.url, default:e.url.img1}
         }))
         setStarProducts(starProducts = respuesta.payload.map((el:Product)=>{return {favorite:false , id:el._id, producto:el}}));
-        if(user?.nickname !== '' && user?.nickname !== 'undefined'){
+        if(user?.nickname !== "undefined" && user?.nickname !=='' && user?.nickname !==undefined && isAuthenticated){
           dispatch(fetchUserByEmail(user))
         }
         setLoading(false);
