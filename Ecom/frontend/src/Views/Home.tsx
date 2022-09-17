@@ -224,10 +224,10 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       </Grid>
       <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
-         <CardsMOW key='123' imagen={CardMan} setFilter={setFilter} name={'man'}/>
+         <CardsMOW key='123' imagen={fetchImagenes[1]?.url?fetchImagenes[1].url:null} setFilter={setFilter} name={'man'}/>
         </Grid>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"start"}}>
-          <CardsMOW key='1234' imagen={CardWomen} setFilter={setFilter} name={'woman'}/>
+          <CardsMOW key='1234' imagen={fetchImagenes[2]?.url?fetchImagenes[2].url:null} setFilter={setFilter} name={'woman'}/>
         </Grid>
       </Grid>
         <Filter filter={filter} setFilter={setFilter}/>

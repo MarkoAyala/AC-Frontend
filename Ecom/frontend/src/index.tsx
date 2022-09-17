@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 if(window.location.href.slice(0,16) !== 'http://localhost'){
   console.log('entre', window.location.href.slice(0,16))
-  axios.defaults.baseURL = "https://altocuero-backend.herokuapp.com/"
+  axios.defaults.baseURL = "https://altocuero-backend.onrender.com/"
 }else {
   axios.defaults.baseURL = "http://localhost:3001"
 }
