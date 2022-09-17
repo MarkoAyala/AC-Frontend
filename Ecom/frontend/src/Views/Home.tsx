@@ -31,6 +31,7 @@ import {Box} from "@mui/material";
 import Skeleton from '@mui/material/Skeleton';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { Typography } from "@mui/material";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 function Home() {
   const DBUser = useAppSelector((state)=> state.user.dataUser)
@@ -42,7 +43,7 @@ function Home() {
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
-  let [loading, setLoading] = React.useState(true);
+  let [loading, setLoading] = React.useState<boolean>(true);
   // Filtros //
   let [filter, setFilter] = React.useState<{color:string|undefined , size:string|undefined , tags:string|undefined}>({
     color:undefined,
@@ -63,7 +64,7 @@ useMemo(()=>{
         setUsers(users=res.payload);
         return dispatch(fetchProducts(filter))
       })
-      .then((response:any)=>{
+      .then((response:PayloadAction<any>)=>{
         setImages(images=response.payload.map((e:Product)=>{
           return {...e.url, default:e.url.img1}
         }))
@@ -71,10 +72,10 @@ useMemo(()=>{
         return response.payload
       })
       .then((respuesta:any)=>{
-        respuesta.forEach((e:any, i:number)=> {
-          users.favorites.forEach((el:any, index:number)=>{
+        respuesta.forEach((e:Product, i:number)=> {
+          users.favorites.forEach((el:Product, index:number)=>{
             if(el._id === e._id){
-              setStarProducts(starProducts=starProducts.map((a:any,a2:number)=>{
+              setStarProducts(starProducts=starProducts.map((a:StarProducts,a2:number)=>{
                 if(a.id === el._id){
                   return {favorite:true , id:a.id,producto:e}
                 }else{
@@ -89,11 +90,11 @@ useMemo(()=>{
       .then(()=>setLoading(false))
     }else{
       setLoading(true)
-      dispatch(fetchProducts(filter)).then((respuesta:any)=>{
-        setImages(images=respuesta.payload.map((e:any)=>{
+      dispatch(fetchProducts(filter)).then((respuesta:PayloadAction<any>)=>{
+        setImages(images=respuesta.payload.map((e:Product)=>{
           return {...e.url, default:e.url.img1}
         }))
-        setStarProducts(starProducts = respuesta.payload.map((el:any)=>{return {favorite:false , id:el._id, producto:el}}));
+        setStarProducts(starProducts = respuesta.payload.map((el:Product)=>{return {favorite:false , id:el._id, producto:el}}));
         dispatch(fetchUserByEmail(user))
         setLoading(false);
       })
@@ -102,7 +103,7 @@ useMemo(()=>{
 
 
 const handleFavorite = (text:string, numb:number, id:string)=>{
-  setStarProducts(starProducts = starProducts.map((e:any , i:number)=>{
+  setStarProducts(starProducts = starProducts.map((e:StarProducts , i:number)=>{
     if(i === numb){
       return {favorite:e.favorite === true?false:true, id:e.id , producto:e.producto}
     }else{
@@ -110,12 +111,12 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
     }
   }))
   if(text === 'fav'){
-    let aux = starProducts.map((elemento)=>{
+    let aux = starProducts.map((elemento:StarProducts)=>{
       if(elemento.favorite === true){
         return elemento.producto
       }
     })
-    let aux2 = DBUser.favorites.map((elem:any)=> {
+    let aux2 = DBUser.favorites.map((elem:Product)=> {
       let reto = true;
       aux.forEach((ele2:any)=>{
         if(ele2 !== undefined){
@@ -134,7 +135,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
     setAddFavorite(addFavorite={
         _id:DBUser._id,
         email:DBUser.email,
-        favorites:aux3.filter((ea:any)=> ea !== undefined),
+        favorites:aux3.filter((ea:Product|undefined)=> ea !== undefined),
         firstName:DBUser.firstName,
         lastName:DBUser.lastName,
         nickname:DBUser.nickname,
@@ -145,10 +146,10 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       })
   }  
   if(text === 'unfav'){
-    let aux2 = DBUser.favorites.map((elem:any)=> {
-      let reto = true;
-      let unic = elem;
-      starProducts.forEach((ele2:any)=>{
+    let aux2 = DBUser.favorites.map((elem:Product)=> {
+      let reto:boolean = true;
+      let unic:Product|undefined = elem;
+      starProducts.forEach((ele2:StarProducts)=>{
         if(ele2 !== undefined){
           if(elem._id === id || ele2.favorite === false || elem._id === ele2.id){
             reto = false
@@ -165,12 +166,12 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       }
     })
     
-    let auxFinal2 = starProducts.map((element)=>element && element.favorite === true?element.producto:undefined)
+    let auxFinal2 = starProducts.map((element:StarProducts)=>element && element.favorite === true?element.producto:undefined)
     let aux3 = [...aux2 , ...auxFinal2]
     setAddFavorite(addFavorite={
       _id:DBUser._id,
       email:DBUser.email,
-      favorites:aux3.filter((ea)=> ea !== undefined),
+      favorites:aux3.filter((ea:Product|undefined)=> ea !== undefined),
       firstName:DBUser.firstName,
       lastName:DBUser.lastName,
       nickname:DBUser.nickname,
