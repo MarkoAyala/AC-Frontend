@@ -26,7 +26,7 @@ function App() {
   const [theme, setTheme] = useState(createTheme(createOptions('light')))
   const { isAuthenticated, user } = useAuth0();
   useEffect(()=>{
-    if(isAuthenticated && user?.nickname !== undefined){
+    if(isAuthenticated && user?.nickname !== "undefined"){
       dispatch(fetchUserByEmail(user))
     }
   },[user])

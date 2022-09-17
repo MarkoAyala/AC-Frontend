@@ -39,7 +39,7 @@ function Home() {
   let [addFavorite , setAddFavorite] = useState<UserFavorite>(userFavoriteTemplate);
   let [images , setImages] = React.useState<Array<Images>>([{default:''}]);
   let [starProducts , setStarProducts] = useState<Array<StarProducts>>([{favorite:true,id:'', producto:ProductTemplate}]);
-  let [users,setUsers] = React.useState({favorites:[]})
+  let [users,setUsers] = React.useState({favorites:[], email:''})
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
@@ -73,18 +73,20 @@ useMemo(()=>{
       })
       .then((respuesta:any)=>{
         respuesta.forEach((e:Product, i:number)=> {
-          users.favorites.forEach((el:Product, index:number)=>{
-            if(el._id === e._id){
-              setStarProducts(starProducts=starProducts.map((a:StarProducts,a2:number)=>{
-                if(a.id === el._id){
-                  return {favorite:true , id:a.id,producto:e}
-                }else{
-                  return a
-                }
-                
-              }))
-            }
-          })
+          if(users.email !== '' && fetchProductos[0]?._id){
+            users.favorites.forEach((el:Product, index:number)=>{
+              if(el._id === e._id){
+                setStarProducts(starProducts=starProducts.map((a:StarProducts,a2:number)=>{
+                  if(a.id === el._id){
+                    return {favorite:true , id:a.id,producto:e}
+                  }else{
+                    return a
+                  }
+                  
+                }))
+              }
+            })
+          }
         })
       })
       .then(()=>setLoading(false))
@@ -223,6 +225,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
           <div className={css.filtro}>Filtros:</div>
         </Grid>
       </Grid>
+
       <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
         <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
          <CardsMOW key='123' imagen={fetchImagenes[1]?.url?fetchImagenes[1].url:null} setFilter={setFilter} name={'man'}/>
@@ -231,6 +234,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
           <CardsMOW key='1234' imagen={fetchImagenes[2]?.url?fetchImagenes[2].url:null} setFilter={setFilter} name={'woman'}/>
         </Grid>
       </Grid>
+
         <Filter filter={filter} setFilter={setFilter}/>
       <div style={{width:'100%', border:'1px solid var(--azulOscuro)', margin:'2em 0 2em 0'}}></div>
 

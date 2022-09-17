@@ -111,7 +111,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
   }
   useMemo(()=>{
     if(filter.color === undefined && filter.size === undefined && filter.tags === undefined){
-      if(DBUser.email && fetchProductos?.length){
+      if(DBUser.email && fetchProductos[0]?._id){
         fetchProductos.forEach((e, i)=> {
           DBUser.favorites.forEach((el:any, index:number)=>{
             if(el._id === e._id){
@@ -127,6 +127,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
           })
         })
       }
+
     }
   },[DBUser , fetchProductos])
   return (
