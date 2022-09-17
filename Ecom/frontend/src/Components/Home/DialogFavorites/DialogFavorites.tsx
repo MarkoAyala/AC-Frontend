@@ -51,7 +51,7 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
         TransitionComponent={Transition}
       >
        
-        <DialogActions sx={{display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
+        <DialogActions sx={{display:'flex', justifyContent:'space-between', flexDirection:'column', position:'fixed', top:'0px', width:'100%', backgroundColor:'rgba(0,0,0,1)', paddingBottom:'10px'}}>
             <Button
               color="primary"
               onClick={handleClose}
@@ -66,7 +66,7 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
                 </Typography>
             </Box>
         </DialogActions>
-            <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center', padding:0}}>
+            <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center', padding:0 , marginTop:'100px'}}>
                 <Box sx={{width:{xs:'100%', md:'70%'}}}>
                   <CardsFavorites/>
                 </Box>

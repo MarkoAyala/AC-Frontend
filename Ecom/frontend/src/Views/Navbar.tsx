@@ -28,11 +28,8 @@ import DrawerNav from "../Components/Navbar/DrawerNav";
 import DialogFavorites from "../Components/Home/DialogFavorites/DialogFavorites";
 import { useAppSelector } from "../app/hooks";
 
-interface Props{
-  loadSkeleton:boolean
-}
 
-const Navbar = ({loadSkeleton}:Props) => {
+const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   let [openDialogFavorite , setOpenDialogFavorite] = React.useState<boolean>(false);
@@ -150,13 +147,13 @@ const Navbar = ({loadSkeleton}:Props) => {
           </Box>
             ):null
           }
-            {isLoading || loadSkeleton?(
+            {isLoading?(
               <Box sx={{ flexGrow: 0, display:"flex"}}>
                 <Skeleton variant="text" width={100}/>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px" }}>
                   {
-                    isLoading||loadSkeleton?(
+                    isLoading?(
                       <Skeleton variant="circular" width={40} height={40} />
                     ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
                   }
@@ -188,7 +185,7 @@ const Navbar = ({loadSkeleton}:Props) => {
                   </MenuItem>
               </Menu>
             </Box>
-            ):isAuthenticated?(
+            ):isAuthenticated && !isLoading?(
               <Box sx={{ flexGrow: 0, display:"flex"}}>
               <Typography
           variant="h6"
@@ -206,12 +203,12 @@ const Navbar = ({loadSkeleton}:Props) => {
             fontSize:'18px'
           }}
         >
-          {DBUser.nickname}
+          {user?.nickname}
         </Typography>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p:0,marginLeft:"9px"}}>
                 {
-                  isLoading || loadSkeleton?(
+                  isLoading?(
                     <Skeleton variant="circular" width={40} height={40} />
                   ): <Avatar alt="Remy Sharp" src={DBUser.picture} />
                 }
