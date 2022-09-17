@@ -97,7 +97,9 @@ useMemo(()=>{
           return {...e.url, default:e.url.img1}
         }))
         setStarProducts(starProducts = respuesta.payload.map((el:Product)=>{return {favorite:false , id:el._id, producto:el}}));
-        dispatch(fetchUserByEmail(user))
+        if(user?.nickname !== '' && user?.nickname !== 'undefined'){
+          dispatch(fetchUserByEmail(user))
+        }
         setLoading(false);
       })
     }
@@ -226,14 +228,27 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
-        <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
-         <CardsMOW key='123' imagen={fetchImagenes[1]?.url?fetchImagenes[1].url:null} setFilter={setFilter} name={'man'}/>
-        </Grid>
-        <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"start"}}>
-          <CardsMOW key='1234' imagen={fetchImagenes[2]?.url?fetchImagenes[2].url:null} setFilter={setFilter} name={'woman'}/>
-        </Grid>
-      </Grid>
+      {
+        loading?(
+          <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
+          <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
+            <Skeleton variant="rectangular" width={'100%'} height={'300px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Grid>
+          <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"start"}}>
+            <Skeleton variant="rectangular" width={'100%'} height={'300px'} sx={{bgcolor:'#222'}} animation="wave"/>
+          </Grid>
+        </Grid> 
+        ):(
+          <Grid item xs={12} sx={{display:"flex", padding:"0px !important", justifyContent:"center" , marginTop:"4rem"}}>
+            <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"end"}}>
+            <CardsMOW key='123' imagen={fetchImagenes[1]?.url?fetchImagenes[1].url:null} setFilter={setFilter} name={'man'}/>
+            </Grid>
+            <Grid item lg={4} xl={3} md={5} sm={6} xs={6} sx={{color:"white",display:"flex", justifyContent:"start"}}>
+              <CardsMOW key='1234' imagen={fetchImagenes[2]?.url?fetchImagenes[2].url:null} setFilter={setFilter} name={'woman'}/>
+            </Grid>
+          </Grid>
+        )
+      }
 
         <Filter filter={filter} setFilter={setFilter}/>
       <div style={{width:'100%', border:'1px solid var(--azulOscuro)', margin:'2em 0 2em 0'}}></div>

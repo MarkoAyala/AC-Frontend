@@ -61,6 +61,7 @@ const Navbar = () => {
       }
       setState({ ...state, [anchor]: open });
     };
+    useEffect(()=>console.log(DBUser),[DBUser])
 // ================// 
   return (
     <AppBar position="fixed" sx={{backgroundColor:"var(--marron)",padding:'0px !important'}} >
