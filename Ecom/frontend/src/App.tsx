@@ -18,6 +18,7 @@ import { fetchUserByEmail } from './app/Reducers/userSlice';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 // =========== COMPONENTS =========== //
 import Home from './Views/Home';
+import DeleteCreateStock from './Views/DeleteCreateStock';
 import OptionsAdmin from './Views/OptionsAdmin';
 import CreateProduct from './Views/CreateProduct';
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/CreateProductAdmin" element={<CreateProduct />}/>
           <Route path='/OptionsAdmin' element={<OptionsAdmin/>}/>
+          <Route path='/DeleteCreateStock' element={<DeleteCreateStock/>}/>
       </Routes>
       </div>
     </ThemeProvider>

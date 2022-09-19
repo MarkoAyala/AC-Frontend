@@ -24,7 +24,7 @@ function OptionsAdmin() {
         navigate('/CreateProductAdmin');
       }
       if(text === 'DELETE STOCK'){
-
+        navigate('/DeleteCreateStock');
       }
     };
     const removeFile = (filename:string,state:any, setState:any) => {
@@ -75,7 +75,7 @@ function OptionsAdmin() {
             <Button onClick={(e)=>handleNavigate('REFRESH STOCK')} sx={{height:'80px', borderRadius:'12px', fontSize:{xs:'14px', md:'20px'}}}  variant='contained' color='info' fullWidth>Crear porducto / Actualizar Stock</Button>
         </Grid>
         <Grid item xs={11} sm={8} md={7} margin='1rem 0 1rem 0'>
-            <Button onClick={(e)=>handleNavigate('DELETE STOCK')} sx={{height:'80px', borderRadius:'12px', fontSize:{xs:'14px', md:'20px'}}}  variant='contained' color='info' fullWidth>Eliminar STOCK</Button>
+            <Button onClick={(e)=>handleNavigate('DELETE STOCK')} sx={{height:'80px', borderRadius:'12px', fontSize:{xs:'14px', md:'20px'}}}  variant='contained' color='info' fullWidth>Eliminar o Crear STOCK</Button>
         </Grid>
         <Grid item xs={11} sm={8} sx={{display:'flex', flexDirection:'column',alignItems:'center', margin:'2em 0 0 0'}}>
           <TittleEfect text="Imagen home compu" align='center' margin="20px 0px 20px 0px" width={'100%'} fontSize={'24px'}/>
