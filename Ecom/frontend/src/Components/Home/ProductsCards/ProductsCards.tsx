@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 // =============== IMPORT MUI COMPONENTS ================ // 
+import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import TittleEfect from '../../TitleEffect/TittleEfect';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -98,6 +99,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 function ProductsCards({fetchProductos, loading, handleFavorite , starProducts , setStarProducts , images, setImages, filter}:Props) {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const {user , isAuthenticated, isLoading , logout} = useAuth0();
   const handleChangeImage = (img : string | undefined , i : number) => {
@@ -218,6 +220,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                 }
                 <h2 style={{fontSize:'15px'}}>{e.name}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
+                <Button variant='contained' sx={{margin:'15px 0px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='info'>Ver producto</Button>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
@@ -289,9 +292,9 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                     </div>
                   ):null
                 }
-                <h2 style={{fontSize:'15px'}}>{e.name.toUpperCase()}</h2>
+                <h2 style={{fontSize:'15px',marginTop:i>=2?'35px':''}}>{e.name.toUpperCase()}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
-
+                <Button variant='contained' sx={{margin:'15px 10px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='info'>Ver producto</Button>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
