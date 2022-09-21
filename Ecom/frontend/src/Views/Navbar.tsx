@@ -24,6 +24,7 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 // ====== Import imagenes ========= //
 import Logo from '../img/logo.jpg';
 // ===== Components ==========//
+import DenseAppBar from "../Components/Navbar/DenseAppBar";
 import DrawerNav from "../Components/Navbar/DrawerNav";
 import DialogFavorites from "../Components/Home/DialogFavorites/DialogFavorites";
 import { useAppSelector } from "../app/hooks";
@@ -64,6 +65,7 @@ const Navbar = () => {
 // ================// 
   return (
     <AppBar position="fixed" sx={{backgroundColor:"var(--marron)",padding:'0px !important'}} >
+      <DenseAppBar/>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <DialogFavorites openDialogFavorite={openDialogFavorite} setOpenDialogFavorite={setOpenDialogFavorite}/>
@@ -73,7 +75,7 @@ const Navbar = () => {
           sx={{flexGrow:0}}
           >
           <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 1 , height:"8vh"}}>
-          <img src={Logo} style={{width:"100%", height:"auto"}} alt="noimge" />
+          <img src={Logo} style={{width:"100%", height:"auto", marginTop:'1px'}} alt="noimge" />
           </Box>
           <Typography
             variant="h6"

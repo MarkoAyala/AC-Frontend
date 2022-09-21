@@ -192,7 +192,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                     }
                   </Box>
               <Box sx={{padding:'16px 12px', display:'flex', flexDirection:'column'}} className={css.tittle}>
-                <Box display={'flex'} justifyContent={'start'}>
+                <Box display={'flex'} justifyContent={'start'} className={css.fotoMiniaturas}>
                   {
                     e.url.img1 && 
                     (<img src={e.url.img1} alt='noImage' className={e.url.img1 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img1 , i)} style={{height:'55px', maxHeight:'55px', maxWidth:'100%', width:'36.7px', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img1 === images[i]?.default?'3px solid green':''}} />)
@@ -220,7 +220,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                 }
                 <h2 style={{fontSize:'15px'}}>{e.name}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
-                <Button variant='contained' sx={{margin:'15px 0px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='info'>Ver producto</Button>
+                <Button variant='contained' sx={{margin:'15px 0px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='primary'>Detalle</Button>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
