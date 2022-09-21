@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import Home from './Views/Home';
 import DeleteCreateStock from './Views/DeleteCreateStock';
 import OptionsAdmin from './Views/OptionsAdmin';
+import ProductDetail from './Views/ProductDetail';
 import CreateProduct from './Views/CreateProduct';
 function App() {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/CreateProductAdmin" element={<CreateProduct />}/>
           <Route path='/OptionsAdmin' element={<OptionsAdmin/>}/>
           <Route path='/DeleteCreateStock' element={<DeleteCreateStock/>}/>
+          <Route path='/Producto/:_id' element={<ProductDetail/>}/>
       </Routes>
       </div>
     </ThemeProvider>
