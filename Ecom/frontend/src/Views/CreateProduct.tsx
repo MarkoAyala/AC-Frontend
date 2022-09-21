@@ -563,7 +563,6 @@ function CreateProduct() {
     setCreateProducts(createProducts={...createProducts, tags:['']})
    }
 
-   useEffect(()=> console.log('UPDATESTOCK', colors),[colors])
 
    const submitClick = () => {
      setTextDialog('loading')

@@ -176,7 +176,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
               <>
             <Grid key={i+Math.random()} item xs={6} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'block', md:'none'}}}>
                   <Box display={'flex'} position='relative' justifyContent={'center'} sx={{maxWidth:'176px'}}>
-                    <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'250px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
+                    <img src={images[i]?.default} alt="" className={css.image} style={{height:'250px',maxHeight:'250px',maxWidth:'100%',width:'167px', objectFit:'cover', borderRadius:'7px'}} />
                     {
                       isAuthenticated === true?(
                       starProducts[i]?.favorite === false?(
@@ -193,19 +193,19 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                 <Box display={'flex'} justifyContent={'start'}>
                   {
                     e.url.img1 && 
-                    (<img src={e.url.img1} alt='noImage' className={e.url.img1 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img1 , i)} style={{height:'auto', maxHeight:'55px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img1 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img1} alt='noImage' className={e.url.img1 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img1 , i)} style={{height:'55px', maxHeight:'55px', maxWidth:'100%', width:'36.7px', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img1 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img2 && 
-                    (<img src={e.url.img2} alt='noImage' className={e.url.img2 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img2 , i)} style={{height:'auto', maxHeight:'55px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img2 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img2} alt='noImage' className={e.url.img2 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img2 , i)} style={{height:'55px', maxHeight:'55px', maxWidth:'100%', width:'36.7px', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img2 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img3 && 
-                    (<img src={e.url.img3} alt='noImage' className={e.url.img3 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img3 , i)} style={{height:'auto', maxHeight:'55px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img3 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img3} alt='noImage' className={e.url.img3 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img3 , i)} style={{height:'55px', maxHeight:'55px', maxWidth:'100%', width:'36.7px', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img3 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img4 && 
-                    (<img src={e.url.img4} alt='noImage' className={e.url.img4 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img4 , i)} style={{height:'auto', maxHeight:'55px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img4 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img4} alt='noImage' className={e.url.img4 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img4 , i)} style={{height:'55px', maxHeight:'55px', maxWidth:'100%', width:'36.7px', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img4 === images[i]?.default?'3px solid green':''}} />)
                   }
                   
                 </Box>
@@ -246,7 +246,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
 
             <Box key={i+ Math.random()} className={css.motion} sx={{border:'1px solid #2b2b2b', padding:'8px 0px 8px 0px', display:{xs:'none', md:'block'}, margin:'1em 1.2em',height:'auto', minHeight:'500px', width:'284px'}}>
                   <Box display={'flex'} position={'relative'} justifyContent={'center'} width={'100%'}>
-                    <img src={images[i]?.default} alt="" className={css.image} style={{height:'auto',maxHeight:'390px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}} />
+                    <img src={images[i]?.default} alt="" className={css.image} style={{height:'390px',maxHeight:'390px',maxWidth:'100%',width:'260px', objectFit:'cover', borderRadius:'7px'}} />
                     {
                       isAuthenticated === true?(
                       starProducts[i]?.favorite === false?(
