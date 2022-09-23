@@ -205,7 +205,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       container
       maxWidth={"xl"}
       spacing={2}
-      sx={{margin: "6vh auto"}}
+      sx={{margin:"6vh auto 0px auto"}}
     >
       
       <Grid item xs={12} sx={{display:"flex", justifyContent:"center", "&.MuiGrid-item":{padding:'0px'}, margin:'1.5em 0 0 0'}}>
