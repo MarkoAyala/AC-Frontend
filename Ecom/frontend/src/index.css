@@ -40,7 +40,14 @@ body {
   background-color: #121212;
   overflow-y: scroll !important;
 }
-
+.swiper img{
+	border-radius: 5px;
+	left: -12.5%;
+transform: translateX(12.5%);
+}
+.swiper-pagination-bullet{
+	background:var(--marron);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
