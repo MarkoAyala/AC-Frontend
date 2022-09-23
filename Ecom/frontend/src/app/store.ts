@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import userReducer from './Reducers/userSlice';
 import imageReducer from './Reducers/ImagesSlice';
+import productByIdReducer from './Reducers/productByIdSlice';
 import productReducer from './Reducers/productSlice';
 import stockReducer from './Reducers/stockSlice';
 
@@ -10,6 +11,7 @@ export const store = configureStore({
     stock:stockReducer,
     images:imageReducer,
     products:productReducer,
+    productById:productByIdReducer,
   },
 });
 

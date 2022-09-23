@@ -10,6 +10,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 // ============ IMPORT UTILITIES ============ //
+import { refreshProductById } from './app/Reducers/productByIdSlice';
 import { useAuth0 } from "@auth0/auth0-react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { createOptions } from './Assets/Theme/options';
@@ -24,6 +25,7 @@ import ProductDetail from './Views/ProductDetail';
 import CreateProduct from './Views/CreateProduct';
 function App() {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
+  const producto = useAppSelector((state)=> state.productById.productById);
   const dispatch = useAppDispatch();
   const [theme, setTheme] = useState(createTheme(createOptions('light')))
   const { isAuthenticated, user } = useAuth0();
@@ -32,6 +34,14 @@ function App() {
       dispatch(fetchUserByEmail(user))
     }
   },[user])
+  useEffect(()=>{
+    if(window.location.pathname.slice(0,9) !== '/Producto'){
+      refreshProductById();
+    }
+  },[window.location.pathname])
+  useEffect(()=>{
+    console.log("producto", producto)
+  },[producto])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

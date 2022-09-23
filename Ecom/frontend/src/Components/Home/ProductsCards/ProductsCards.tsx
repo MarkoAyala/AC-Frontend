@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 // =============== IMPORT MUI COMPONENTS ================ // 
+import { Link as a } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import TittleEfect from '../../TitleEffect/TittleEfect';
@@ -220,7 +221,9 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                 }
                 <h2 style={{fontSize:'15px'}}>{e.name}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
-                <Button variant='contained' sx={{margin:'15px 0px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='primary'>Detalle</Button>
+                <a href={`/Producto/${e._id}`} target='_blank' className={css.etiquetaB}>
+                  <Button variant='contained' sx={{margin:'15px 0px'}} fullWidth color='info'>Detalle</Button>
+                </a>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
@@ -294,7 +297,9 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                 }
                 <h2 style={{fontSize:'15px',marginTop:i>=2?'35px':''}}>{e.name.toUpperCase()}</h2>
                 <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {final}</span>
-                <Button variant='contained' sx={{margin:'15px 10px'}} onClick={(event)=>navigate(`/Producto/${e._id}`)} color='info'>Ver producto</Button>
+                <a href={`/Producto/${e._id}`} target="_blank" className={css.etiquetaA}>
+                  <Button variant='contained' fullWidth color='info'>Ver producto</Button>
+                </a>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon color='primary' fontSize='large' />}
