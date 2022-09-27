@@ -24,7 +24,7 @@ if(isAuthenticated){
                     let aux = price.splice(2,0,'.');
                     let final = price.join('');
                     return(
-                          <Grid item xs={12} sm={10} md={10} lg={9} className={css.container} sx={{width:'100% !important'}}>
+                          <Grid key={element.name} item xs={12} sm={10} md={10} lg={9} className={css.container} sx={{width:'100% !important'}}>
                             <Box sx={{display:'flex', alignItems:'center', height:'100%',width:'155px', margin:'0px 0.5rem 0px 0.5rem'}}>
                                 <img src={element.url.img1}  style={{height:'auto',maxHeight:'180px',maxWidth:'100%',width:'auto', objectFit:'cover', borderRadius:'7px'}}/>
                             </Box>

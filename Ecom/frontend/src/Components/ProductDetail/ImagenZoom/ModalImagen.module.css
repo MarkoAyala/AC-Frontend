@@ -1,0 +1,9 @@
+.imagen{
+    height: 88vh;
+}
+
+@media screen and (max-width:450px){
+    .imagen{
+        height: 87vh;
+    }
+}

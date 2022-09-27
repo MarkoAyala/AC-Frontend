@@ -39,9 +39,6 @@ function App() {
       refreshProductById();
     }
   },[window.location.pathname])
-  useEffect(()=>{
-    console.log("producto", producto)
-  },[producto])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
