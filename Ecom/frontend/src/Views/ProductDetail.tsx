@@ -28,7 +28,7 @@ SwiperCore.use([Keyboard,Scrollbar,Pagination,Navigation])
 function ProductDetail(){
     let [openDialogZoom , setOpenDialogZoom] = React.useState<boolean>(false);
     let [currentZoom , setCurrentZoom] = React.useState<any>();
-    let [color , setColor] = React.useState<string|unknown>('');
+    let [color , setColor] = React.useState<string|unknown>('default');
     let [talle, setTalle] = React.useState<string>("null");
     let [renderColor , setRenderColor] = React.useState<any>([]);
     const producto:any = useAppSelector<any>((state:any)=> state.productById.productById);
@@ -350,6 +350,7 @@ function ProductDetail(){
                         value={color}
                         onChange={(e)=>handleChangeInput(e)}
                         sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}>
+                            <MenuItem key={'123321'} value={'default'} sx={{visibility:'hidden', display:'none'}} >Selecciona un color</MenuItem>
                             {
                                 renderColor?renderColor.map((color:any)=>{
                                     let name = Object.keys(color[0]);
@@ -430,6 +431,19 @@ function ProductDetail(){
                             
                         }
                     </Grid>
+                    <p style={{width:'100%', fontSize:'25px',margin:'1rem 1rem 0.1rem 1rem', display:'flex', textAlign:'start', color:'#db9844'}}>{`Precio:`}</p>
+                    <p style={{width:'100%', fontSize:'35px',margin:'0.1rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${final}`}</p>
+                    <Grid item xs={12} sx={{display:'flex', justifyContent:'center'}}>
+                        <Button variant='contained' className={css.buttonBuyNaw} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}}}>Comprar ahora</Button>
+                    </Grid>
+                    <p style={{width:'100%', fontSize:'25px',margin:'1rem 1rem 0.1rem 1rem', display:'flex', textAlign:'start', color:'#db9844'}}>{`Descripción:`}</p>
+                    <p style={{width:"90%", margin:'0.3rem auto 1rem auto'}}>{producto[0].description}</p>
+                    <Box sx={{display:'flex', margin:'1rem 1rem 1rem 1.2rem', alignItems:'center', width:{md:'100%',lg:'80%'}}}>
+                        <LocalShippingIcon color='success' fontSize='large' /><p style={{color:'#239037', margin:'0px 0px 0px 10px'}}>Finalizada la compra, recibiras un correo electrónico con nuestros datos de contacto para estar al tanto del envio.</p>
+                    </Box>
+                    <Box width='100%' sx={{margin:'1rem', display:'flex', justifyContent:'center'}}>
+                            <img src={MercadoPagoImagen} alt='noimg' style={{objectFit:'cover', width:'240px'}}/>
+                    </Box>
                 </Grid>
             </Grid>
             </>
