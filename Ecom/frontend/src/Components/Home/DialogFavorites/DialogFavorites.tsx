@@ -44,7 +44,6 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
     <div>
       
       <Dialog
-        key='favoritos'
         fullScreen
         open={openDialogFavorite}
         onClose={handleClose}
@@ -69,12 +68,6 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
               Cerrar
             </Button>
           </Box>
-            <Box sx={{display:'flex', alignItems:'center', justifyContent:'end'}}>
-                <WarningIcon color='warning'/>
-                <Typography sx={{ ml: 2, flex: 1, fontWeight:'700'}} variant="subtitle2" component="div" color='#ffffff'>
-                Refrescar la pagina para ver los cambios
-                </Typography>
-            </Box>
         </DialogActions>
             <Box sx={{width:'100%', height:'100vh', color:'white',backgroundColor:'none', display:'flex', justifyContent:'center', padding:0 , marginTop:'100px'}}>
                 <Box sx={{width:{xs:'100%', md:'70%'}}}>

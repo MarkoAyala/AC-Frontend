@@ -5,6 +5,7 @@ import MercadoPagoImagen from '../img/mercadopago.png';
 import FormUser from "../Components/ProductDetail/FormUser/FormUser";
 // ========= IMPORT MUI COMPONENTS ========== //
 import { Grid , Box, Skeleton , Button } from '@mui/material';
+import Footer from "../Components/Home/Footer/Footer";
 import ModalImagenZoomeable from "../Components/ProductDetail/ImagenZoom/ModalImagenZoomeable";
 // ============= IMPORT UTILITIES ======== //
 import { Compra , RenderColor } from "../app/Interfaces/interfaceRandoms";
@@ -107,8 +108,8 @@ function ProductDetail(){
             <>
             <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra}/>
             <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom}/>
-            <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem'}}>
-                <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px'}}>
+            <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem', marginBottom:'9rem'}}>
+                <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px', paddingBottom:'2rem'}}>
     
                     {/* Container miniaturas */}
     
@@ -507,6 +508,7 @@ function ProductDetail(){
                     </Box>
                 </Grid>
             </Grid>
+            <Footer/>
             </>
         )
     }else{

@@ -19,6 +19,7 @@ import { Images } from "../app/Interfaces/interfaceRandoms";
 import CardWomen from '../img/mujer.jpg';
 import CardMan from '../img/hombre.jpg';
 // =========== IMPORT COMPONENTS ================//
+import Ubicacion from "../Components/Home/Ubicacion/Ubicacion";
 import Filter from "../Components/Filters/Filter";
 import CardsMOW from "../Components/Home/MenOrWoman/CardsMOW";
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
@@ -155,7 +156,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         shoppingCart:DBUser.shoppingCart || [],
         country:DBUser.country
       })
-      editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
+      editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate)).then((response)=>dispatch(fetchUserByEmail(user)))
   }  
   if(text === 'unfav'){
     setStarProducts(starProducts = starProducts.map((e:StarProducts , i:number)=>{
@@ -199,7 +200,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       shoppingCart:DBUser.shoppingCart || [],
       country:DBUser.country
     })
-    editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate))
+    editUser(addFavorite).then((res)=>setAddFavorite(userFavoriteTemplate)).then((response)=>dispatch(fetchUserByEmail(user)))
   }
   
 }
@@ -294,6 +295,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
       <ProductsCards fetchProductos={fetchProductos} loading={loadingCards} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
+      <Ubicacion/>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>
     </Grid>
