@@ -23,7 +23,7 @@ function CardsMOW({imagen, setFilter , name}:Props) {
   return (
     <Tilt className={css.cardsMOW}>
     <div onClick={handleClick}>
-      <img src={imagen} alt="noencontroimagen" style={{width:'100%', height:"auto", objectFit:"cover"}}/>
+      <img src={imagen} alt="noencontroimagen" className='noSelect' style={{width:'100%', height:"auto", objectFit:"cover"}}/>
     </div>
     </Tilt>
   )

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@mui/material";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -20,7 +21,7 @@ export default function DenseAppBar() {
         setActiveStep(step);
     },2000)
   };
-
+  const { isAuthenticated, user, isLoading } = useAuth0();
   return (
     <Box sx={{ height: "2rem" }}>
       <AppBar position="static" sx={{boxShadow:'none'}}>
@@ -30,6 +31,25 @@ export default function DenseAppBar() {
           onChangeIndex={handleStepChange}
           enableMouseEvents
         >
+          {
+            !isAuthenticated && !isLoading?(
+              <Toolbar
+            variant="dense"
+            sx={{
+            background:"#a35e04",
+              color: "black",
+              display: "flex",
+              justifyContent: "center",
+              minHeight: "2rem",
+              boxShadow:'none',
+            }}
+          >
+            <Typography sx={{fontWeight:'600'}}>
+              {"Inicia sesión para mas funcionalidades!"}
+            </Typography>
+          </Toolbar>
+            ):null
+          }
           <Toolbar
             variant="dense"
             sx={{

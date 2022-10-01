@@ -3,6 +3,7 @@ import css from '../Components/Home/Home.module.css';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useAuth0 } from "@auth0/auth0-react";
 // ========= UTILITIES =========== //
+import { Link } from "react-scroll";
 import { userFavoriteTemplate } from "../app/Utils/userUtilities";
 import { fetchProducts } from "../app/Reducers/productSlice";
 import { fetchUserByEmail } from "../app/Reducers/userSlice";
@@ -44,6 +45,7 @@ function Home() {
   const fetchImagenes= useAppSelector((state)=> state.images.images);
   const fetchProductos = useAppSelector((state)=> state.products.products)
   let [loading, setLoading] = React.useState<boolean>(true);
+  let [loadingCards, setLoadingCards] = React.useState<boolean>(true);
   // Filtros //
   let [filter, setFilter] = React.useState<{color:string|undefined , size:string|undefined , tags:string|undefined}>({
     color:undefined,
@@ -53,12 +55,15 @@ function Home() {
   //=========//
   useEffect(()=>{
     dispatch(fetchImages());
-    dispatch(fetchProducts({tags:undefined, color:undefined , size:undefined})).then(()=> setLoading(false))
+    dispatch(fetchProducts({tags:undefined, color:undefined , size:undefined})).then(()=>{
+      setLoading(false);
+      setLoadingCards(false);
+    })
   },[])
 
 useMemo(()=>{
     if(filter.color !== undefined || filter.size !== undefined || filter.tags !== undefined){
-      setLoading(true)
+      setLoadingCards(true)
       dispatch(fetchUserByEmail(user))
       .then((res:any)=>{
         setUsers(users=res.payload);
@@ -67,13 +72,14 @@ useMemo(()=>{
       .then((response:PayloadAction<any>)=>{
         setImages(images=response.payload.map((e:Product)=>{
           return {...e.url, default:e.url.img1}
-        }))
+        }));
+        setLoadingCards(false);
         setStarProducts(starProducts = response.payload.map((el:Product)=>{return {favorite:false , id:el._id, producto:el}}));
         return response.payload
       })
       .then((respuesta:any)=>{
         respuesta.forEach((e:Product, i:number)=> {
-          if(users.email !== '' && fetchProductos[0]?._id){
+          if(users && users.email !== '' && fetchProductos[0]?._id){
             users.favorites.forEach((el:Product, index:number)=>{
               if(el._id === e._id){
                 setStarProducts(starProducts=starProducts.map((a:StarProducts,a2:number)=>{
@@ -91,7 +97,7 @@ useMemo(()=>{
       })
       .then(()=>setLoading(false))
     }else{
-      setLoading(true)
+      setLoadingCards(true)
       dispatch(fetchProducts(filter)).then((respuesta:PayloadAction<any>)=>{
         setImages(images=respuesta.payload.map((e:Product)=>{
           return {...e.url, default:e.url.img1}
@@ -100,7 +106,7 @@ useMemo(()=>{
         if(user?.nickname !== "undefined" && user?.nickname !=='' && user?.nickname !==undefined && isAuthenticated){
           dispatch(fetchUserByEmail(user))
         }
-        setLoading(false);
+        setLoadingCards(false);
       })
     }
 },[filter])
@@ -221,11 +227,16 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
           </>
         ):(
           <>
+
       <Grid item sm={10} md={9} lg={9} xl={7} xs={12} display={{xs:'none', sm:'flex'}}>
-        <img src={fetchImagenes[0]?.url?fetchImagenes[0].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
+           <Link spy={true} to='Camperas' smooth={true}>
+        <img src={fetchImagenes[0]?.url?fetchImagenes[0].url:null} className='noSelect' alt="alto cuero" style={{width:'100%', height:"auto", cursor:'pointer'}} />
+           </Link>
       </Grid>
       <Grid item xs={9} sm={11} display={{xs:'flex', sm:'none'}}>
-        <img src={fetchImagenes[3]?.url?fetchImagenes[3].url:null} alt="alto cuero" style={{width:'100%', height:"auto"}} />
+        <Link spy={true} to='Camperas' smooth={true}>
+          <img src={fetchImagenes[3]?.url?fetchImagenes[3].url:null} className='noSelect' alt="alto cuero" style={{width:'100%', height:"auto"}} />
+        </Link>
       </Grid>
           </>
       
@@ -281,7 +292,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         </Grid>
       </Grid>
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
-      <ProductsCards key={"123123123"} fetchProductos={fetchProductos} loading={loading} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
+      <ProductsCards key={"123123123"} fetchProductos={fetchProductos} loading={loadingCards} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>

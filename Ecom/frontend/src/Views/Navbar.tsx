@@ -179,11 +179,8 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
   
-                  <MenuItem key={"Edit"} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Editar mi información</Typography>
-                  </MenuItem>
                   <MenuItem key={"Close"} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Cerrar sesión</Typography>
+                    <Typography textAlign="center" onClick={()=> logout({returnTo: window.location.origin})}>Cerrar sesión</Typography>
                   </MenuItem>
               </Menu>
             </Box>
@@ -259,10 +256,6 @@ const Navbar = () => {
                 },
               }}
             >
-
-                <MenuItem key={"Edit"} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Editar mi información</Typography>
-                </MenuItem>
                 <MenuItem key={"Close"} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center" onClick={()=> logout({returnTo: window.location.origin})}>Cerrar sesión</Typography>
                 </MenuItem>
@@ -279,12 +272,3 @@ const Navbar = () => {
   );
 };
 export default Navbar;
-
-/* email: "markoayala3@hotmail.com"
-email_verified: false
-name: "markoayala3@hotmail.com"
-nickname: "markoayala3"
-picture: "https://s.gravatar.com/avatar/466b661626e32060fe96dff1f52eec54?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fma.png"
-sub: "auth0|62be23768cc36d316ecf1dde"
-updated_at: "2022-06-30T22:30:40.182Z" */
-/* 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 */

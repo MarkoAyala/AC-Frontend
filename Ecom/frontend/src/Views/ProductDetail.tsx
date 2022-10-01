@@ -289,7 +289,7 @@ function ProductDetail(){
                     </Grid>
                         </Grid>
                         <Box width='100%' sx={{margin:'1rem'}}>
-                            <img src={MercadoPagoImagen} alt='noimg' style={{objectFit:'cover', width:'240px'}}/>
+                            <img src={MercadoPagoImagen} alt='noimg' className="noSelect" style={{objectFit:'cover', width:'240px'}}/>
                         </Box>
                         
                         <Box sx={{display:'flex', margin:'1rem 1rem 1rem 1.2rem', alignItems:'center', width:{md:'100%',lg:'80%'}}}>
@@ -458,8 +458,18 @@ function ProductDetail(){
                     </Grid>
                     <p style={{width:'100%', fontSize:'25px',margin:'1rem 1rem 0.1rem 1rem', display:'flex', textAlign:'start', color:'#db9844'}}>{`Precio:`}</p>
                     <p style={{width:'100%', fontSize:'35px',margin:'0.1rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${final}`}</p>
-                    <Grid item xs={12} sx={{display:'flex', justifyContent:'center'}}>
-                        <Button variant='contained' className={css.buttonBuyNaw} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}}}>Comprar ahora</Button>
+                    <Grid item xs={12} sx={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
+                        <Button variant='contained' className={css.buttonBuyNaw} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}, margin:'1.5rem auto 0rem auto'}} onClick={handleComprarAhora}>Comprar ahora</Button>
+                        {
+                            error.bloq && isAuthenticated?(
+                                <p style={{display:!error.color && !error.talle?'none':'block' , width:'90%' }} className={css.errorMobile}>{error.color && error.talle?"Debe seleccionar un color y talle":error.color?"Debe seleccionar un color":error.talle?'Debe seleccionar un talle':null}</p>
+                            ):null
+                        }
+                        {
+                            !isAuthenticated && !isLoading?(
+                                <p className={css.errorMobile} style={{color:"#f9ac05" , width:'90%'}}>Debes iniciar sesión para hacer una compra</p>
+                            ):null
+                        }
                     </Grid>
                     <p style={{width:'100%', fontSize:'25px',margin:'1rem 1rem 0.1rem 1rem', display:'flex', textAlign:'start', color:'#db9844'}}>{`Descripción:`}</p>
                     <p style={{width:"90%", margin:'0.3rem auto 1rem auto'}}>{producto[0].description}</p>
