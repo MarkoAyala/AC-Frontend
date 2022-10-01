@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import css from '../Components/ProductDetail/ProductDetail.module.css';
 import MercadoPagoImagen from '../img/mercadopago.png';
+import FormUser from "../Components/ProductDetail/FormUser/FormUser";
 // ========= IMPORT MUI COMPONENTS ========== //
 import { Grid , Box, Skeleton , Button } from '@mui/material';
 import ModalImagenZoomeable from "../Components/ProductDetail/ImagenZoom/ModalImagenZoomeable";
@@ -22,15 +23,21 @@ import { Product } from "../app/Interfaces/interfaceProducts";
 import { ProductTemplate } from "../app/Utils/postProduct";
 import { getProductById } from "../app/Utils/getProductById";
 import TittleEfect from "../Components/TitleEffect/TittleEfect";
+import { useAuth0 } from "@auth0/auth0-react";
 
 SwiperCore.use([Keyboard,Scrollbar,Pagination,Navigation])
 // name, descriptiom, picture , price, nombreComprador, emailComprador, telefono, codigodeArea, dni , calle, numero , codigoPostal
+//
 function ProductDetail(){
+    const { isAuthenticated, user, isLoading } = useAuth0();
     let [openDialogZoom , setOpenDialogZoom] = React.useState<boolean>(false);
     let [currentZoom , setCurrentZoom] = React.useState<any>();
     let [color , setColor] = React.useState<string|unknown>('default');
     let [talle, setTalle] = React.useState<string>("null");
     let [renderColor , setRenderColor] = React.useState<any>([]);
+    let [openCompra, setOpenCompra] = React.useState<boolean>(false);
+    let [compra , setCompra] = React.useState({});
+    let [error, setError] = React.useState<{bloq:boolean,talle:boolean,color:boolean}>({bloq:false,talle:true,color:true});
     const producto:any = useAppSelector<any>((state:any)=> state.productById.productById);
     const dispatch:any = useAppDispatch();
     const {_id} = useParams();
@@ -57,16 +64,24 @@ function ProductDetail(){
       const handleChangeInput = (e:SelectChangeEvent<unknown|string>)=> {
         setColor(color = e.target.value);
         setTalle(talle='null')
+        setError(error={bloq:false, talle:true,color:false})
        }
       const handleChangeTalle = (e:any) =>{
-        setTalle(talle=e.target.id)
+        setTalle(talle=e.target.id);
+        setError(error={bloq:false, color:false,talle:false})
       }
+
+    const handleComprarAhora = () =>{
+        if(error.talle || error.color)setError(error={...error, bloq:true});
+        if(!error.bloq && !error.talle && !error.color)setOpenCompra(true);
+    }
     if(producto[0] && producto[0].name !==''){
         let price = producto[0].price.toString().split("")
         let aux = price.splice(2,0,'.');
         let final = price.join('');
         return (
             <>
+            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra}/>
             <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom} />
             <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem'}}>
                 <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px'}}>
@@ -260,7 +275,17 @@ function ProductDetail(){
                         }
                     </Grid>
                     <Grid item xs={8}>
-                        <Button variant='contained' className={css.buttonBuyNow} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}}}>Comprar ahora</Button>
+                        <Button variant='contained' className={css.buttonBuyNow} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}}} onClick={handleComprarAhora}>Comprar ahora</Button>
+                        {
+                            error.bloq && isAuthenticated?(
+                                <p style={{display:!error.color && !error.talle?'none':'block' }} className={css.error}>{error.color && error.talle?"Debe seleccionar un color y talle":error.color?"Debe seleccionar un color":error.talle?'Debe seleccionar un talle':null}</p>
+                            ):null
+                        }
+                        {
+                            !isAuthenticated && !isLoading?(
+                                <p className={css.error} style={{color:"#f9ac05"}}>Debes iniciar sesión para hacer una compra</p>
+                            ):null
+                        }
                     </Grid>
                         </Grid>
                         <Box width='100%' sx={{margin:'1rem'}}>
@@ -442,7 +467,7 @@ function ProductDetail(){
                         <LocalShippingIcon color='success' fontSize='large' /><p style={{color:'#239037', margin:'0px 0px 0px 10px'}}>Finalizada la compra, recibiras un correo electrónico con nuestros datos de contacto para estar al tanto del envio.</p>
                     </Box>
                     <Box width='100%' sx={{margin:'1rem', display:'flex', justifyContent:'center'}}>
-                            <img src={MercadoPagoImagen} alt='noimg' style={{objectFit:'cover', width:'240px'}}/>
+                            <img src={MercadoPagoImagen} alt='noimg' style={{objectFit:'cover', width:'240px'}} className="noSelect"/>
                     </Box>
                 </Grid>
             </Grid>
