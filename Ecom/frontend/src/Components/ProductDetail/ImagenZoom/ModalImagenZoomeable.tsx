@@ -47,6 +47,7 @@ function ModalImagenZoomeable({openDialogZoom , setOpenDialogZoom , classes, cur
       
       <Dialog
         fullScreen
+        key='imageZoom'
         open={openDialogZoom}
         onClose={handleClose}
         scroll={'body'}

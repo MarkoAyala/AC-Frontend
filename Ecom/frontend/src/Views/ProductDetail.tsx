@@ -7,6 +7,7 @@ import FormUser from "../Components/ProductDetail/FormUser/FormUser";
 import { Grid , Box, Skeleton , Button } from '@mui/material';
 import ModalImagenZoomeable from "../Components/ProductDetail/ImagenZoom/ModalImagenZoomeable";
 // ============= IMPORT UTILITIES ======== //
+import { Compra , RenderColor } from "../app/Interfaces/interfaceRandoms";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import {Swiper , SwiperSlide} from 'swiper/react';
 import SwiperCore, {Keyboard , Scrollbar,Pagination , Navigation,} from 'swiper';
@@ -34,9 +35,24 @@ function ProductDetail(){
     let [currentZoom , setCurrentZoom] = React.useState<any>();
     let [color , setColor] = React.useState<string|unknown>('default');
     let [talle, setTalle] = React.useState<string>("null");
-    let [renderColor , setRenderColor] = React.useState<any>([]);
+    let [renderColor , setRenderColor] = React.useState<Array<Array<RenderColor>>|[]>([]);
     let [openCompra, setOpenCompra] = React.useState<boolean>(false);
-    let [compra , setCompra] = React.useState({});
+    let [compra , setCompra] = React.useState<Compra>({
+        name:'',
+        email:'',
+        description:'',
+        picture:'',
+        price:0,
+        nombre_comprador:'',
+        email_comprador:'',
+        codigo_de_area:'',
+        celular:'',
+        dni:'',
+        provincia:'',
+        calle:'',
+        numeracion:'',
+        codigo_postal:''
+    });
     let [error, setError] = React.useState<{bloq:boolean,talle:boolean,color:boolean}>({bloq:false,talle:true,color:true});
     const producto:any = useAppSelector<any>((state:any)=> state.productById.productById);
     const dispatch:any = useAppDispatch();
@@ -75,14 +91,22 @@ function ProductDetail(){
         if(error.talle || error.color)setError(error={...error, bloq:true});
         if(!error.bloq && !error.talle && !error.color)setOpenCompra(true);
     }
+    const handleChangeCompra = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+        setCompra(compra={...compra, [e.target.name]:e.target.value})
+    }
+    useEffect(()=>{
+        if(compra){
+            console.log(compra)
+        }
+    },[compra])
     if(producto[0] && producto[0].name !==''){
         let price = producto[0].price.toString().split("")
         let aux = price.splice(2,0,'.');
         let final = price.join('');
         return (
             <>
-            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra}/>
-            <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom} />
+            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra}/>
+            <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom}/>
             <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem'}}>
                 <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px'}}>
     
@@ -194,6 +218,8 @@ function ProductDetail(){
                                     value={color}
                                     onChange={(e)=>handleChangeInput(e)}
                                     sx={{width:"100%", color:"white",margin:0,padding:0,"& .MuiOutlinedInput-notchedOutline":{borderColor:"#8B4F00", borderWidth:"2px"}}}>
+                                    <MenuItem key={'12332122'} value={'default'} sx={{visibility:'hidden', display:'none'}} >Selecciona un color</MenuItem>
+
                                         {
                                             renderColor?renderColor.map((color:any)=>{
                                                 let name = Object.keys(color[0]);
@@ -222,7 +248,7 @@ function ProductDetail(){
                             </Grid>
                             <Grid key={'1234'}item xs={10} sx={{margin:'20px 0rem 20px 1rem'}}>
                         {
-                            color && color !== ''?renderColor.map((element:any)=>{
+                            color && color !== '' && renderColor !==null?renderColor.map((element:any)=>{
                                 let name = Object.keys(element[0]);
                                 if(name[0] === color){
                                     return(

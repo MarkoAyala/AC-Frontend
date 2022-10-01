@@ -55,7 +55,7 @@ interface Props {
 }
 
 const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
+  <MuiAccordion disableGutters elevation={0} square {...props} key={'accordeonsito2'+Math.random()}/>
 ))(({ theme }) => ({
   border:'none',
   color:'#fff',
@@ -69,7 +69,7 @@ const Accordion = styled((props: AccordionProps) => (
 }));
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} key={'accordeonsito'+Math.random()} />}
     {...props}
   />
 ))(({ theme }) => ({
@@ -134,7 +134,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
     }
   },[DBUser , fetchProductos])
   return (
-    <Grid container width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
+    <Grid container key={"chir123"} width={'100%'} sx={{backgroundColor:'var(--azulOscuro)', margin:'0px 5px 1em 5px', padding:'5px 0px 5px 0px',display:{md:'flex'}, justifyContent:{md:'center'}}}>
         {
         loading?(
           <>
@@ -269,23 +269,23 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                   <Box display={'flex'} justifyContent={e.url.img5?'center':'start'} sx={{margin:i>=2?'0em 0px 0.9em 0px':''}}>
                   {
                     e.url.img1 && 
-                    (<img src={e.url.img1} alt='noImage' className={e.url.img1 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img1 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img1 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img1} id={e.url.img1} alt='noImage' className={e.url.img1 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img1 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img1 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img2 && 
-                    (<img src={e.url.img2} alt='noImage' className={e.url.img2 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img2 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img2 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img2} id={e.url.img2} alt='noImage' className={e.url.img2 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img2 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img2 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img3 && 
-                    (<img src={e.url.img3} alt='noImage' className={e.url.img3 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img3 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img3 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img3} id={e.url.img3} alt='noImage' className={e.url.img3 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img3 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img3 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img4 && 
-                    (<img src={e.url.img4} alt='noImage' className={e.url.img4 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img4 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img4 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img4} id={e.url.img4} alt='noImage' className={e.url.img4 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img4 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img4 === images[i]?.default?'3px solid green':''}} />)
                   }
                   {
                     e.url.img5 && 
-                    (<img src={e.url.img5} alt='noImage' className={e.url.img5 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img5 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img5 === images[i]?.default?'3px solid green':''}} />)
+                    (<img src={e.url.img5} id={e.url.img5} alt='noImage' className={e.url.img5 === images[i]?.default?css.image:''} onClick={(el)=>handleChangeImage(e.url.img5 , i)} style={{height:'auto', maxHeight:'70px', maxWidth:'100%', width:'auto', objectFit:'cover', margin:'0px 2px 10px 2px', borderBottom:e.url.img5 === images[i]?.default?'3px solid green':''}} />)
                   }
                 </Box>
                   {

@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { Compra } from '../../../app/Interfaces/interfaceRandoms';
 import { useAppSelector } from '../../../app/hooks';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -16,8 +17,10 @@ import { useTheme } from '@mui/material/styles';
 interface Props{
     openCompra:boolean
     setOpenCompra:Function
+    compra:Compra
+    handleChangeCompra:any
 }
-export default function FormUser({openCompra , setOpenCompra}:Props) {
+export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra}:Props) {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -29,12 +32,12 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
   return (
     <div>
       <Dialog
+        key='compra'
         fullScreen={fullScreen}
         open={openCompra}
         onClose={handleCloseCompra}
-        aria-labelledby="responsive-dialog-title"
       >
-        <DialogTitle id="responsive-dialog-title">
+        <DialogTitle id="responsive-dialog-title-compra">
           {"Ingresa tus datos antes de comprar!"}
         </DialogTitle>
         <DialogContent className="scroll" sx={{width:{xs:'auto', md:'650px'}, "&.MuiDialogContent-root":{margin:0}}}>
@@ -43,7 +46,8 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
           <TextField
             required
             id="name"
-            name="name"
+            name="nombre_comprador"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Nombre"
             fullWidth
             autoComplete="off"
@@ -57,7 +61,8 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
           <TextField
             required
             id="codigo_area"
-            name="codigo_area"
+            name="codigo_de_area"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Cod"
             fullWidth
             autoComplete="off"
@@ -68,7 +73,8 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
           <TextField
             required
             id="numero_celular"
-            name="numero_celular"
+            name="celular"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Numero celular"
             fullWidth
             autoComplete="off"
@@ -80,6 +86,7 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
             required
             id="dni"
             name="dni"
+            onChange={(e)=>handleChangeCompra(e)}
             label="DNI"
             fullWidth
             autoComplete="off"
@@ -95,6 +102,7 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
             id="provincia"
             name="provincia"
             label="Provincia"
+            onChange={(e)=>handleChangeCompra(e)}
             fullWidth
             autoComplete="off"
             variant="standard"
@@ -105,6 +113,7 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
           <TextField
             id="calle"
             name="calle"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Dirección"
             fullWidth
             variant="standard"
@@ -115,7 +124,8 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
           <TextField
             required
             id="numero"
-            name="numero"
+            name="numeracion"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Numero"
             fullWidth
             autoComplete="off"
@@ -127,6 +137,7 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
             required
             id="codigo_postal"
             name="codigo_postal"
+            onChange={(e)=>handleChangeCompra(e)}
             label="Cod. Postal"
             fullWidth
             autoComplete="off"
@@ -139,8 +150,9 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
         <Grid item xs={12} sx={{"&.MuiGrid-item":{padding:'15px 0px 0px 24px'}}}>
           <TextField
             required
-            id="country"
-            name="country"
+            id="email"
+            name="email"
+            onChange={(e)=>handleChangeCompra(e)}
             label={'Mail'}
             fullWidth
             autoComplete="shipping country"
@@ -150,7 +162,7 @@ export default function FormUser({openCompra , setOpenCompra}:Props) {
       </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseCompra}>
+          <Button onClick={handleCloseCompra}>
             Disagree
           </Button>
           <Button onClick={handleCloseCompra} autoFocus>

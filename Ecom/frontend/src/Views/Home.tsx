@@ -43,7 +43,7 @@ function Home() {
   let [users,setUsers] = React.useState({favorites:[], email:''})
   const dispatch = useAppDispatch();
   const fetchImagenes= useAppSelector((state)=> state.images.images);
-  const fetchProductos = useAppSelector((state)=> state.products.products)
+  const fetchProductos = useAppSelector((state)=> state.products.products);
   let [loading, setLoading] = React.useState<boolean>(true);
   let [loadingCards, setLoadingCards] = React.useState<boolean>(true);
   // Filtros //
@@ -292,7 +292,7 @@ const handleFavorite = (text:string, numb:number, id:string)=>{
         </Grid>
       </Grid>
       <div id="Camperas" style={{width:'0px', visibility:'hidden'}}></div>
-      <ProductsCards key={"123123123"} fetchProductos={fetchProductos} loading={loadingCards} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
+      <ProductsCards fetchProductos={fetchProductos} loading={loadingCards} handleFavorite={handleFavorite} starProducts={starProducts} setStarProducts={setStarProducts} images={images} setImages={setImages} filter={filter} />
       <div id="Ubicacion" style={{width:'0px', visibility:'hidden'}}></div>
       <Footer/>
       <div id="Contacto" style={{width:'0px', visibility:'hidden'}}></div>

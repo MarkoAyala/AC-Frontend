@@ -14,3 +14,32 @@ export interface Images {
     img5?:string
     img6?:string
 }
+
+export interface Compra {
+    name:string
+    email:string
+    description:string
+    picture:string
+    price:number
+    nombre_comprador:string
+    email_comprador:string
+    codigo_de_area:string
+    celular:string
+    dni:string
+    provincia:string
+    calle:string
+    numeracion:string
+    codigo_postal:string
+}
+
+export interface RenderColor {
+    [index:string]:{
+        xs:number
+        s:number
+        [index:`stock_${string}`]:number
+        m:number
+        l:number
+        xl:number
+        xxl:number
+    }
+}

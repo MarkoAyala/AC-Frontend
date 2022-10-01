@@ -44,6 +44,7 @@ function DialogFavorites({openDialogFavorite , setOpenDialogFavorite , classes}:
     <div>
       
       <Dialog
+        key='favoritos'
         fullScreen
         open={openDialogFavorite}
         onClose={handleClose}

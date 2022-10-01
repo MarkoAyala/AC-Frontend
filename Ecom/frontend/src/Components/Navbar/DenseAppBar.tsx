@@ -48,7 +48,23 @@ export default function DenseAppBar() {
               {"Inicia sesión para mas funcionalidades!"}
             </Typography>
           </Toolbar>
-            ):null
+            ):(
+              <Toolbar
+            variant="dense"
+            sx={{
+            background:"#a35e04",
+              color: "black",
+              display: "flex",
+              justifyContent: "center",
+              minHeight: "2rem",
+              boxShadow:'none',
+            }}
+          >
+            <Typography sx={{fontWeight:'600'}}>
+              {"Envios a todo el pais"}
+            </Typography>
+          </Toolbar>
+            )
           }
           <Toolbar
             variant="dense"
