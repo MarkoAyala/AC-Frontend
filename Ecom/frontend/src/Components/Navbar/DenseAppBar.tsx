@@ -24,7 +24,7 @@ export default function DenseAppBar() {
   const { isAuthenticated, user, isLoading } = useAuth0();
   return (
     <Box sx={{ height: "2rem" }}>
-      <AppBar position="static" sx={{boxShadow:'none'}}>
+      <AppBar sx={{boxShadow:'none'}}>
         <AutoPlaySwipeableViews
           axis="x-reverse"
           index={activeStep}

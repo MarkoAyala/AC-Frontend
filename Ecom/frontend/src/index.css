@@ -47,7 +47,7 @@ body {
 	background: #dfdfdf;
 }
 .scroll::-webkit-scrollbar-thumb {
-	background:#cdcdcd; 
+	background:#656565; 
 	border-radius: 9px;
   }
 .scroll::-webkit-scrollbar-thumb:hover {

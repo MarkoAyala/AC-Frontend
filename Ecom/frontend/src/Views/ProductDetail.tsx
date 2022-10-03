@@ -31,6 +31,7 @@ SwiperCore.use([Keyboard,Scrollbar,Pagination,Navigation])
 // name, descriptiom, picture , price, nombreComprador, emailComprador, telefono, codigodeArea, dni , calle, numero , codigoPostal
 //
 function ProductDetail(){
+    const DBUser = useAppSelector((state)=> state.user.dataUser);
     const { isAuthenticated, user, isLoading } = useAuth0();
     let [openDialogZoom , setOpenDialogZoom] = React.useState<boolean>(false);
     let [currentZoom , setCurrentZoom] = React.useState<any>();
@@ -40,7 +41,6 @@ function ProductDetail(){
     let [openCompra, setOpenCompra] = React.useState<boolean>(false);
     let [compra , setCompra] = React.useState<Compra>({
         name:'',
-        email:'',
         description:'',
         picture:'',
         price:0,
@@ -70,7 +70,8 @@ function ProductDetail(){
                 if(element[0][name[0]][`stock_${name[0]}`] > 0 && name[0] !== 'all'){
                     setRenderColor(renderColor = [...renderColor , element])
                 }
-            })
+            });
+            setCompra(compra={...compra, name:producto[0].name,picture:producto[0].url.img1, price:producto[0].price})
         }
     },[producto])
 
@@ -90,8 +91,11 @@ function ProductDetail(){
 
     const handleComprarAhora = () =>{
         if(error.talle || error.color)setError(error={...error, bloq:true});
-        if(!error.bloq && !error.talle && !error.color)setOpenCompra(true);
-    }
+        if(!error.bloq && !error.talle && !error.color && isAuthenticated){
+            setOpenCompra(true);
+            setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email});
+        }
+    }   
     const handleChangeCompra = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         setCompra(compra={...compra, [e.target.name]:e.target.value})
     }

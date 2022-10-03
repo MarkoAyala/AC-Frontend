@@ -17,7 +17,6 @@ export interface Images {
 
 export interface Compra {
     name:string
-    email:string
     description:string
     picture:string
     price:number

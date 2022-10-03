@@ -64,8 +64,9 @@ const Navbar = () => {
     };
 // ================// 
   return (
-    <AppBar position="fixed" sx={{backgroundColor:"var(--marron)",padding:'0px !important'}} >
-      <DenseAppBar/>
+    <>
+    <DenseAppBar/>
+    <AppBar position="sticky" sx={{backgroundColor:"var(--marron)",padding:'0px !important', marginTop:0}} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <DialogFavorites openDialogFavorite={openDialogFavorite} setOpenDialogFavorite={setOpenDialogFavorite}/>
@@ -269,6 +270,8 @@ const Navbar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </>
+    
   );
 };
 export default Navbar;

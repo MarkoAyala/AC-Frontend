@@ -151,7 +151,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
           <TextField
             required
             id="email"
-            name="email"
+            name="email_comprador"
+            value={compra.email_comprador}
             onChange={(e)=>handleChangeCompra(e)}
             label={'Mail'}
             fullWidth
