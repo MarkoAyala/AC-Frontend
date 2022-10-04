@@ -36,7 +36,9 @@ if(isAuthenticated){
 
                                 </Box>
                                 <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
+                                <a href={`/Producto/${element._id}`} target='_blank' className={css.etiquetaA}>
                                     <Button variant='contained' color='info'>Ver producto</Button>
+                                </a>
                                 </Box>
                             </Box>
                             </Box>
@@ -48,7 +50,9 @@ if(isAuthenticated){
 
                                 </Box>
                                 <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
+                                <a href={`/Producto/${element._id}`} target='_blank' className={css.etiquetaB}>
                                     <Button variant='contained' color='info'>Ver</Button>
+                                </a>
                                 </Box>
                             </Box>
                             </Box>

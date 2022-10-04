@@ -29,6 +29,7 @@ export interface Compra {
     calle:string
     numeracion:string
     codigo_postal:string
+    id_producto:string | undefined
 }
 
 export interface RenderColor {
@@ -42,3 +43,16 @@ export interface RenderColor {
         xxl:number
     }
 }
+
+export interface ErrorCompra{
+     required : boolean
+     nombre_comprador: string
+     email_comprador:string
+     celular:string
+     codigo_de_area:string
+     dni:string
+     calle:string
+     provincia:string
+     numeracion:string
+     codigo_postal:string
+    }

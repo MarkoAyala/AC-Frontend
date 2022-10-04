@@ -8,7 +8,7 @@ import { Grid , Box, Skeleton , Button } from '@mui/material';
 import Footer from "../Components/Home/Footer/Footer";
 import ModalImagenZoomeable from "../Components/ProductDetail/ImagenZoom/ModalImagenZoomeable";
 // ============= IMPORT UTILITIES ======== //
-import { Compra , RenderColor } from "../app/Interfaces/interfaceRandoms";
+import { Compra , RenderColor, ErrorCompra } from "../app/Interfaces/interfaceRandoms";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import {Swiper , SwiperSlide} from 'swiper/react';
 import SwiperCore, {Keyboard , Scrollbar,Pagination , Navigation,} from 'swiper';
@@ -38,6 +38,18 @@ function ProductDetail(){
     let [color , setColor] = React.useState<string|unknown>('default');
     let [talle, setTalle] = React.useState<string>("null");
     let [renderColor , setRenderColor] = React.useState<Array<Array<RenderColor>>|[]>([]);
+    let [errorCompra , setErrorCompra] = React.useState<ErrorCompra>({
+            required : false, 
+            nombre_comprador: '', 
+            email_comprador:'', 
+            celular:'',
+             codigo_de_area:'',
+             dni:'',
+             calle:'',
+             provincia:'',
+             numeracion:'',
+             codigo_postal:''
+    });
     let [openCompra, setOpenCompra] = React.useState<boolean>(false);
     let [compra , setCompra] = React.useState<Compra>({
         name:'',
@@ -52,7 +64,8 @@ function ProductDetail(){
         provincia:'',
         calle:'',
         numeracion:'',
-        codigo_postal:''
+        codigo_postal:'',
+        id_producto:''
     });
     let [error, setError] = React.useState<{bloq:boolean,talle:boolean,color:boolean}>({bloq:false,talle:true,color:true});
     const producto:any = useAppSelector<any>((state:any)=> state.productById.productById);
@@ -91,14 +104,72 @@ function ProductDetail(){
 
     const handleComprarAhora = () =>{
         if(error.talle || error.color)setError(error={...error, bloq:true});
-        if(!error.bloq && !error.talle && !error.color && isAuthenticated){
+        if(!error.bloq && !error.talle && !error.color && isAuthenticated && errorCompra.required === false){
             setOpenCompra(true);
-            setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email});
+            setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email, id_producto:_id});
         }
     }   
     const handleChangeCompra = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        setCompra(compra={...compra, [e.target.name]:e.target.value})
+        setCompra(compra={...compra, [e.target.name]:e.target.value});
+        let objError = buyValidation({...compra , [e.target.name]:e.target.value});
+        setErrorCompra(objError);
     }
+
+    const buyValidation = (input:Compra)=>{
+        let errores = {required : false , nombre_comprador: '', email_comprador:'', celular:'', codigo_de_area:'', dni:'', calle:'', provincia:'', numeracion:'', codigo_postal:''};
+        if(input.nombre_comprador.length >= 13){
+            errores.nombre_comprador = 'Max 13 caracteres';
+            errores.required = true;
+        }
+        if(!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input.email_comprador))){
+            errores.email_comprador = "Mail invalido";
+            errores.required = true;
+        }
+        if(input.celular !== ''){
+            if(!(/^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/.test(input.celular))){
+                errores.celular = 'Cel invalido, Ejemplo: 1180554325';
+                errores.required = true;
+            }
+        }
+        if(input.codigo_de_area !== ''){
+            if(!(/^([0-9])*$/.test(input.codigo_de_area))){
+                errores.codigo_de_area = 'Solo numeros';
+                errores.required = true;
+            }
+        }
+        if(input.dni !== ''){
+            if(!(/^([0-9])*$/.test(input.dni))){
+                errores.dni = 'Solo numeros';
+                errores.required = true;
+            }
+        }
+        if(input.calle !== ''){
+            if(!(/^[A-Z]+$/i.test(input.calle))){
+                errores.calle = 'Solo letras';
+                errores.required = true;
+            }
+        }
+        if(input.provincia !== ''){
+            if(!(/^[A-Z]+$/i.test(input.provincia))){
+                errores.provincia = 'Solo letras';
+                errores.required = true;
+            }
+        }
+        if(input.numeracion !== ''){
+            if(!(/^([0-9])*$/.test(input.numeracion))){
+                errores.numeracion = 'Solo numeros';
+                errores.required = true;
+            }
+        }
+        if(input.codigo_postal !== ''){
+            if(!(/^([0-9])*$/.test(input.codigo_postal)) || input.codigo_postal.length >=7){
+                errores.codigo_postal = 'Max 6nums';
+                errores.required = true;
+            }
+        }
+        return errores
+    }
+
     useEffect(()=>{
         if(compra){
             console.log(compra)
@@ -110,7 +181,7 @@ function ProductDetail(){
         let final = price.join('');
         return (
             <>
-            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra}/>
+            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra} errorCompra={errorCompra}/>
             <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom}/>
             <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem', marginBottom:'9rem'}}>
                 <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px', paddingBottom:'2rem'}}>

@@ -9,7 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { Compra } from '../../../app/Interfaces/interfaceRandoms';
+import { Compra, ErrorCompra } from '../../../app/Interfaces/interfaceRandoms';
 import { useAppSelector } from '../../../app/hooks';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -19,8 +19,9 @@ interface Props{
     setOpenCompra:Function
     compra:Compra
     handleChangeCompra:any
+    errorCompra:ErrorCompra
 }
-export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra}:Props) {
+export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra, errorCompra}:Props) {
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -47,11 +48,13 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
             required
             id="name"
             name="nombre_comprador"
+            error={errorCompra.nombre_comprador !== ''?true:false}
             onChange={(e)=>handleChangeCompra(e)}
             label="Nombre"
             fullWidth
             autoComplete="off"
             variant="standard"
+            helperText={errorCompra.nombre_comprador !==''?errorCompra.nombre_comprador:''}
           />
         </Grid>
     <Typography variant="h6" sx={{margin:'1rem 0.5rem 0rem 1.5rem', fontSize:'18px', width:'100%'}}>
@@ -60,6 +63,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={4} sx={{"&.MuiGrid-item":{padding:'15px 0px 0px 24px'}}}>
           <TextField
             required
+            error={errorCompra.codigo_de_area !==''?true:false}
+            helperText={errorCompra.codigo_de_area !==''?errorCompra.codigo_de_area:''}
             id="codigo_area"
             name="codigo_de_area"
             onChange={(e)=>handleChangeCompra(e)}
@@ -72,6 +77,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={8} sx={{"&.MuiGrid-item":{padding:'15px 0px 0px 24px'}}}>
           <TextField
             required
+            error={errorCompra.celular !==''?true:false}
+            helperText={errorCompra.celular !==''?errorCompra.celular:''}
             id="numero_celular"
             name="celular"
             onChange={(e)=>handleChangeCompra(e)}
@@ -84,6 +91,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={12}>
           <TextField
             required
+            error={errorCompra.dni !==''?true:false}
+            helperText={errorCompra.dni !==''?errorCompra.dni:''}
             id="dni"
             name="dni"
             onChange={(e)=>handleChangeCompra(e)}
@@ -99,6 +108,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={12} sx={{"&.MuiGrid-item":{padding:'15px 0px 0px 24px'}}}>
           <TextField
             required
+            error={errorCompra.provincia !==''?true:false}
+            helperText={errorCompra.provincia !==''?errorCompra.provincia:''}
             id="provincia"
             name="provincia"
             label="Provincia"
@@ -112,6 +123,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={12}>
           <TextField
             id="calle"
+            error={errorCompra.calle !==''?true:false}
+            helperText={errorCompra.calle !==''?errorCompra.calle:''}
             name="calle"
             onChange={(e)=>handleChangeCompra(e)}
             label="Dirección"
@@ -123,6 +136,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={6}>
           <TextField
             required
+            error={errorCompra.numeracion !==''?true:false}
+            helperText={errorCompra.numeracion !==''?errorCompra.numeracion:''}
             id="numero"
             name="numeracion"
             onChange={(e)=>handleChangeCompra(e)}
@@ -135,6 +150,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
         <Grid item xs={6}>
           <TextField
             required
+            error={errorCompra.codigo_postal !==''?true:false}
+            helperText={errorCompra.codigo_postal !==''?errorCompra.codigo_postal:''}
             id="codigo_postal"
             name="codigo_postal"
             onChange={(e)=>handleChangeCompra(e)}
@@ -151,6 +168,8 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
           <TextField
             required
             id="email"
+            error={errorCompra.email_comprador !==''?true:false}
+            helperText={errorCompra.email_comprador !==''?errorCompra.email_comprador:''}
             name="email_comprador"
             value={compra.email_comprador}
             onChange={(e)=>handleChangeCompra(e)}
@@ -163,11 +182,11 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
       </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseCompra}>
-            Disagree
+          <Button onClick={handleCloseCompra} variant='contained' color='error'>
+            Cancelar
           </Button>
-          <Button onClick={handleCloseCompra} autoFocus>
-            Agree
+          <Button onClick={handleCloseCompra} variant='contained' color='success'>
+            Comprar
           </Button>
         </DialogActions>
       </Dialog>

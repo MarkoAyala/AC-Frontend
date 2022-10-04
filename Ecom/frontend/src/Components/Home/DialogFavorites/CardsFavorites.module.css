@@ -12,3 +12,22 @@
 .container:hover{
     background-color: rgba(0, 0, 0, 0.95);
 }
+
+.etiquetaA{
+    width: 80%;
+    margin: 13px auto;
+    display: flex;
+    justify-content: end;
+}
+.etiquetaA:link, .etiquetaA:visited, .etiquetaA:active{
+    text-decoration: none;
+}
+.etiquetaB{
+    width: 100%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: end;
+}
+.etiquetaB:link, .etiquetaB:visited, .etiquetaB:active{
+    text-decoration: none;
+}
