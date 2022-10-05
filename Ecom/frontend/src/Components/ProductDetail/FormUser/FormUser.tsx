@@ -2,7 +2,9 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import { Payment } from '../../../app/Utils/paymentUtils';
 import DialogContent from '@mui/material/DialogContent';
+import { useNavigate } from "react-router-dom";
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -22,6 +24,7 @@ interface Props{
     errorCompra:ErrorCompra
 }
 export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra, errorCompra}:Props) {
+  const navigate = useNavigate();
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -29,6 +32,11 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
   const handleCloseCompra = () => {
     setOpenCompra(false);
   };
+  const compraRealizada = ()=>{
+    if(errorCompra.required === false){
+      Payment(compra).then((res:any)=> navigate(res.init_point))
+    }
+  }
 
   return (
     <div>
@@ -185,7 +193,7 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
           <Button onClick={handleCloseCompra} variant='contained' color='error'>
             Cancelar
           </Button>
-          <Button onClick={handleCloseCompra} variant='contained' color='success'>
+          <Button onClick={compraRealizada} variant='contained' color='success'>
             Comprar
           </Button>
         </DialogActions>
