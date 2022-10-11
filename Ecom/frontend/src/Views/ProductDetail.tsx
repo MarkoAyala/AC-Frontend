@@ -104,7 +104,7 @@ function ProductDetail(){
 
     const handleComprarAhora = () =>{
         if(error.talle || error.color)setError(error={...error, bloq:true});
-        if(!error.bloq && !error.talle && !error.color && isAuthenticated && errorCompra.required === false){
+        if(!error.bloq && !error.talle && !error.color && errorCompra.required === false){
             setOpenCompra(true);
             setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email, id_producto:_id});
         }
@@ -150,7 +150,7 @@ function ProductDetail(){
             }
         }
         if(input.provincia !== ''){
-            if(!(/^[A-Z]+$/i.test(input.provincia))){
+            if(input.provincia){
                 errores.provincia = 'Solo letras';
                 errores.required = true;
             }
