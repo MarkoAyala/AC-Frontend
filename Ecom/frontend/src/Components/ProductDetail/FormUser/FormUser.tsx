@@ -34,7 +34,9 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
   };
   const compraRealizada = ()=>{
     if(errorCompra.required === false){
-      Payment(compra).then((res:any)=> navigate(res.init_point))
+      Payment(compra).then((res:any)=>{
+        window.location.href = res.init_point;
+      })
     }
   }
 
