@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 // =========== COMPONENTS =========== //
 import Home from './Views/Home';
 import { Success } from './Views/Success';
+import { Failed } from './Views/Failed';
 import DeleteCreateStock from './Views/DeleteCreateStock';
 import OptionsAdmin from './Views/OptionsAdmin';
 import ProductDetail from './Views/ProductDetail';
@@ -51,6 +52,7 @@ function App() {
           <Route path='/DeleteCreateStock' element={<DeleteCreateStock/>}/>
           <Route path='/Producto/:_id' element={<ProductDetail/>}/>
           <Route path='/Successbuy' element={<Success/>}/>
+          <Route path='/Failedbuy' element={<Failed/>}/>
       </Routes>
       </div>
     </ThemeProvider>
