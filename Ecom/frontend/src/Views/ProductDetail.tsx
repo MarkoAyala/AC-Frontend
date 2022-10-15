@@ -104,7 +104,7 @@ function ProductDetail(){
 
     const handleComprarAhora = () =>{
         if(error.talle || error.color)setError(error={...error, bloq:true});
-        if(!error.bloq && !error.talle && !error.color && errorCompra.required === false){
+        if(!error.bloq && !error.talle && !error.color){
             setOpenCompra(true);
             setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email, id_producto:_id});
         }
@@ -150,7 +150,7 @@ function ProductDetail(){
             }
         }
         if(input.provincia !== ''){
-            if(input.provincia){
+            if(input.provincia.length > 20){
                 errores.provincia = 'Solo letras';
                 errores.required = true;
             }
@@ -181,7 +181,7 @@ function ProductDetail(){
         let final = price.join('');
         return (
             <>
-            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra} errorCompra={errorCompra}/>
+            <FormUser openCompra={openCompra} setOpenCompra={setOpenCompra} compra={compra} handleChangeCompra={handleChangeCompra} errorCompra={errorCompra} buyValidation={buyValidation} setErrorCompra={setErrorCompra}/>
             <ModalImagenZoomeable openDialogZoom={openDialogZoom} setOpenDialogZoom={setOpenDialogZoom} currentZoom={currentZoom}/>
             <Grid container sx={{width:'100%', display:{xs:'none', md:'flex'}, justifyContent:'center', marginTop:'2rem', marginBottom:'9rem'}}>
                 <Grid container sx={{width:{xs:'96%',xl:'80%'},marginTop:'8rem', background:'var(--azulOscuro)', color:'white', borderRadius:'10px', paddingBottom:'2rem'}}>
@@ -379,13 +379,8 @@ function ProductDetail(){
                     <Grid item xs={8}>
                         <Button variant='contained' className={css.buttonBuyNow} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}}} onClick={handleComprarAhora}>Comprar ahora</Button>
                         {
-                            error.bloq && isAuthenticated?(
+                            error.bloq?(
                                 <p style={{display:!error.color && !error.talle?'none':'block' }} className={css.error}>{error.color && error.talle?"Debe seleccionar un color y talle":error.color?"Debe seleccionar un color":error.talle?'Debe seleccionar un talle':null}</p>
-                            ):null
-                        }
-                        {
-                            !isAuthenticated && !isLoading?(
-                                <p className={css.error} style={{color:"#f9ac05"}}>Debes iniciar sesión para hacer una compra</p>
                             ):null
                         }
                     </Grid>
@@ -563,13 +558,8 @@ function ProductDetail(){
                     <Grid item xs={12} sx={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
                         <Button variant='contained' className={css.buttonBuyNaw} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}, margin:'1.5rem auto 0rem auto'}} onClick={handleComprarAhora}>Comprar ahora</Button>
                         {
-                            error.bloq && isAuthenticated?(
+                            error.bloq?(
                                 <p style={{display:!error.color && !error.talle?'none':'block' , width:'90%' }} className={css.errorMobile}>{error.color && error.talle?"Debe seleccionar un color y talle":error.color?"Debe seleccionar un color":error.talle?'Debe seleccionar un talle':null}</p>
-                            ):null
-                        }
-                        {
-                            !isAuthenticated && !isLoading?(
-                                <p className={css.errorMobile} style={{color:"#f9ac05" , width:'90%'}}>Debes iniciar sesión para hacer una compra</p>
                             ):null
                         }
                     </Grid>
