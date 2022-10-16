@@ -498,8 +498,8 @@ function CreateProduct() {
       error.name = 'El nombre debe tener mas de 3 caracteres';
       error.required = true;
     }
-    if((!input.price || input.price<99) || (!isNaN(input.price)===false)){
-      error.price = 'El minimo debe ser de 100 pesos';
+    if((!input.price || input.price<1) || (!isNaN(input.price)===false)){
+      error.price = 'El minimo debe ser de 1 pesos';
       error.required = true;
     }
     if(!input.stock){

@@ -280,7 +280,7 @@ function ProductDetail(){
                     <Box className={css.containerInfo}  sx={{overflow:'hidden'}}>
                         <TittleEfect text={producto[0].name} align='start' width='100%' fontSize={"50px"} margin='1rem 1rem'/>
                         {/* <TittleEfect text={`$ ${final}`} align='start' width='100%' fontSize={"35px"} margin='3rem 1rem 1rem 1rem'/> */}
-                        <p style={{width:'100%', fontSize:'35px',margin:'3rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${final}`}</p>
+                        <p style={{width:'100%', fontSize:'35px',margin:'3rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${producto[0].price.toString().length >= 5?final:producto[0].price}`}</p>
                         <p style={{margin:'2rem 0rem 3rem 1rem'}}>{producto[0].description}</p>
                         <Grid container width='100%'>
                             <Grid item xs={7} sx={{margin:'1rem 0rem 1rem 1rem'}}>
@@ -559,7 +559,7 @@ function ProductDetail(){
                         }
                     </Grid>
                     <p style={{width:'100%', fontSize:'25px',margin:'1rem 1rem 0.1rem 1rem', display:'flex', textAlign:'start', color:'#db9844'}}>{`Precio:`}</p>
-                    <p style={{width:'100%', fontSize:'35px',margin:'0.1rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${final}`}</p>
+                    <p style={{width:'100%', fontSize:'35px',margin:'0.1rem 1rem 1rem 1rem', display:'flex', textAlign:'start'}}>{`$ ${producto[0].price.toString().length >= 5?final:producto[0].price}`}</p>
                     <Grid item xs={12} sx={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
                         <Button variant='contained' className={css.buttonBuyNaw} sx={{"&.MuiButton-root:hover":{backgroundColor:'#2968c8 !important'}, margin:'1.5rem auto 0rem auto'}} onClick={handleComprarAhora}>Comprar ahora</Button>
                         {
