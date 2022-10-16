@@ -220,7 +220,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                   ):null
                 }
                 <h2 style={{fontSize:'15px', minHeight:'34px', fontWeight:'bold'}}>{e.name}</h2>
-                <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {e.price.toString().length >= 5?final:e.price}</span>
+                <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {e.price}</span>
                 <a href={`/Producto/${e._id}`} target='_blank' className={css.etiquetaB}>
                   <Button variant='contained' sx={{margin:'15px 0px'}} fullWidth color='info'>Detalle</Button>
                 </a>
@@ -296,7 +296,7 @@ function ProductsCards({fetchProductos, loading, handleFavorite , starProducts ,
                   ):null
                 }
                 <span style={{fontSize:'15px',marginTop:i>=2?'35px':'', minHeight:'34px', fontWeight:'bold'}}>{e.name.toUpperCase()}</span>
-                <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {e.price.toString().length >= 5?final:e.price}</span>
+                <span style={{fontWeight:'100', margin:'15px 0px 0px 0px', fontSize:'20px'}}>$ {e.price}</span>
                 <a href={`/Producto/${e._id}`} target="_blank" className={css.etiquetaA}>
                   <Button variant='contained' fullWidth color='info'>Ver producto</Button>
                 </a>

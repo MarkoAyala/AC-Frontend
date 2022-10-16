@@ -32,7 +32,7 @@ if(isAuthenticated){
                                 <TittleEfect text={element.name} align="start" margin='0px' width={'100%'} fontSize='32px'/>
                             <Box display={'flex'}>
                                 <Box sx={{flex:1}}>
-                                    <TittleEfect text={`Precio: $${element.price.toString().length >= 5?final:element.price}`} align="start" margin='20px 0px' width={'100%'} fontSize='23px'/>
+                                    <TittleEfect text={`Precio: $${element.price}`} align="start" margin='20px 0px' width={'100%'} fontSize='23px'/>
 
                                 </Box>
                                 <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
@@ -46,7 +46,7 @@ if(isAuthenticated){
                                 <TittleEfect text={element.name} align="start" margin='0px' width={'100%'} fontSize='25px'/>
                             <Box display={'flex'}>
                                 <Box sx={{flex:1}}>
-                                    <TittleEfect text={`Precio: $${element.price.toString().length >= 5?final:element.price}`} align="start" margin='20px 0px' width={'100%'} fontSize='20px'/>
+                                    <TittleEfect text={`Precio: $${element.price}`} align="start" margin='20px 0px' width={'100%'} fontSize='20px'/>
 
                                 </Box>
                                 <Box sx={{flex:1, display:'flex', alignItems:'center', justifyContent:'end', marginRight:'1em', zIndex:2}}>
