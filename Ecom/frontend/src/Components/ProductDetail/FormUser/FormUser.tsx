@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -20,20 +22,31 @@ interface Props{
     openCompra:boolean
     setOpenCompra:Function
     compra:Compra
-    handleChangeCompra:any
+    handleChangeCompra:Function
     errorCompra:ErrorCompra
+    setErrorCompra:Function
+    buyValidation:Function
 }
-export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra, errorCompra}:Props) {
+export default function FormUser({openCompra , setOpenCompra , compra , handleChangeCompra, errorCompra, setErrorCompra, buyValidation}:Props) {
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const DBUser = useAppSelector((state)=> state.user.dataUser);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+const handleOpen = () => {
+    setOpen(true);
+  };
   const handleCloseCompra = () => {
     setOpenCompra(false);
   };
   const compraRealizada = ()=>{
+    if(compra.nombre_comprador === '' || compra.email_comprador === '' || compra.celular === '' || compra.codigo_de_area === '' || compra.dni === '' || compra.calle === '' || compra.provincia === '' || compra.numeracion === '' || compra.codigo_postal === ''){
+      setErrorCompra(errorCompra = {...errorCompra , required:true});
+      console.log('entre a error');
+    }
     if(errorCompra.required === false){
+      console.log('entre a compra');
+      handleOpen();
       Payment(compra).then((res:any)=>{
         window.location.href = res.init_point;
       })
@@ -190,6 +203,13 @@ export default function FormUser({openCompra , setOpenCompra , compra , handleCh
           />
         </Grid>
       </Grid>
+          <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseCompra} variant='contained' color='error'>
