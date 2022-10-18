@@ -106,7 +106,7 @@ function ProductDetail(){
         if(error.talle || error.color)setError(error={...error, bloq:true});
         if(!error.bloq && !error.talle && !error.color){
             setOpenCompra(true);
-            setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:DBUser.email, id_producto:_id});
+            setCompra(compra={...compra, description:`campera de cuero color ${color}, talle ${talle}`, email_comprador:compra.email_comprador?compra.email_comprador:DBUser.email, id_producto:_id});
         }
     }   
     const handleChangeCompra = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
@@ -144,7 +144,7 @@ function ProductDetail(){
             }
         }
         if(input.calle !== ''){
-            if(!(/^[A-Z]+$/i.test(input.calle))){
+            if(input.calle.length > 50){
                 errores.calle = 'Solo letras';
                 errores.required = true;
             }
