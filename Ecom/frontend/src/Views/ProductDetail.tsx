@@ -115,7 +115,7 @@ function ProductDetail(){
         setErrorCompra(objError);
     }
 
-    const buyValidation = (input:Compra)=>{
+    const buyValidation:any = (input:Compra)=>{
         let errores = {required : false , nombre_comprador: '', email_comprador:'', celular:'', codigo_de_area:'', dni:'', calle:'', provincia:'', numeracion:'', codigo_postal:''};
         if(input.nombre_comprador.length >= 13){
             errores.nombre_comprador = 'Max 13 caracteres';
